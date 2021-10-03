@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Backbone.BoardGame
 {
-    public interface IBoard
+    public interface IBoard : IGameComponent
     {
     }
 }

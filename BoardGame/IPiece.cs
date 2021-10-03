@@ -4,8 +4,7 @@ using System.Text;
 
 namespace Backbone.BoardGame
 {
-    public interface IPlayer : IZone
+    class IPiece
     {
-        List<IZone> Zones { get; set; }
     }
 }

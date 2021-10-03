@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Backbone.BoardGame
 {
-    public interface IResource
+    public interface IResource : IGameComponent
     {
         /// <summary>
         /// Copies this game component and returns a copy.
