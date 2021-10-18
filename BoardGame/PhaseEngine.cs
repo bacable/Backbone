@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Backbone.BoardGame
 {
-    class PhaseEngine
+    public class PhaseEngine
     {
     }
 }

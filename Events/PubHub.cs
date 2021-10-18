@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Events
@@ -53,15 +54,22 @@ namespace Backbone.Events
 
         public static void FinishedAction(T eventType, int id, object payload)
         {
-            var actionList = RegisteredGroupActions[eventType];
-            if (actionList != null && actionList.Contains(id))
+            try
             {
-                actionList.Remove(id);
-            }
+                var actionList = RegisteredGroupActions[eventType];
+                if (actionList != null && actionList.Contains(id))
+                {
+                    actionList.Remove(id);
+                }
 
-            if(actionList.Count == 0)
+                if (actionList.Count == 0)
+                {
+                    Raise(eventType, payload);
+                }
+            }
+            catch(Exception ex)
             {
-                Raise(eventType, payload);
+                Console.WriteLine(ex.Message);
             }
         }
 
@@ -84,6 +92,8 @@ namespace Backbone.Events
             LastEvent = eventType;
 
             var eventSubscribers = Subscriptions[eventType];
+
+            Debug.WriteLine("Event fired: " + eventType.ToString());
 
             eventSubscribers.ForEach(x => x.HandleEvent(eventType, payload));
         }
