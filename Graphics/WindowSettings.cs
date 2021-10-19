@@ -8,6 +8,7 @@ namespace Backbone.Graphics
     public class WindowSettings<T>
     {
         public T Type { get; set; }
-        public Rectangle Bounds { get; set; }
+        public Rectangle Size { get; set; }
+        public Vector3 Position { get; set; }
     }
 }
