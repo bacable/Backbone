@@ -15,6 +15,7 @@ namespace Backbone.Graphics
         #region Instance Properties
         private Rectangle Size { get; set; }
         private Movable3D Background { get; set; }
+        private TextGroup Header { get; set; }
         #endregion
 
         public Window(WindowSettings<T> windowSettings)
@@ -26,16 +27,22 @@ namespace Backbone.Graphics
                 throw new NullReferenceException("Windows Background Model not set");
             }
 
-            Background = new Movable3D(BackgroundModel, windowSettings.Position, 10.0f);
+            Background = new Movable3D(BackgroundModel, windowSettings.Position, 200.0f);
+
+            Header = new TextGroup(0, Background, windowSettings.Position, 200f);
+            Header.SetColor(ColorType.Blue);
+            Header.SetText(windowSettings.HeaderText);
         }
 
         public void Draw(Matrix view, Matrix projection)
         {
             Background.Draw(view, projection);
+            Header.Draw(view, projection);
         }
 
         public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
         {
+
         }
 
         public void TransitionIn()
@@ -51,6 +58,7 @@ namespace Backbone.Graphics
         public void Update(GameTime gameTime)
         {
             Background.Update(gameTime);
+            Header.Update(gameTime);
         }
     }
 }
