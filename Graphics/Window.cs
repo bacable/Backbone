@@ -29,9 +29,10 @@ namespace Backbone.Graphics
 
             Background = new Movable3D(BackgroundModel, windowSettings.Position, 200.0f);
 
-            Header = new TextGroup(0, Background, windowSettings.Position, 200f);
-            Header.SetColor(ColorType.Blue);
+            var headerPosition = new Vector3(windowSettings.Position.X + 100, windowSettings.Position.Y, windowSettings.Position.Z + 10f);
+            Header = new TextGroup(0, Background, headerPosition, 200f);
             Header.SetText(windowSettings.HeaderText);
+            Header.SetColor(ColorType.Blue);
         }
 
         public void Draw(Matrix view, Matrix projection)

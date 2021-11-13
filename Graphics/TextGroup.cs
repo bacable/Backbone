@@ -8,52 +8,17 @@ namespace Backbone.Graphics
 {
     public class TextGroup : IGUI3D
     {
-        static Dictionary<char, float> LetterWidths = new Dictionary<char, float>() {
-            { '0', 0.507f },
-            { '1', 0.507f },
-            { '2', 0.507f },
-            { '3', 0.507f },
-            { '4', 0.507f },
-            { '5', 0.507f },
-            { '6', 0.507f },
-            { '7', 0.507f },
-            { '8', 0.507f },
-            { '9', 0.507f },
-            { 'A', 0.507f },
-            { 'B', 0.49f },
-            { 'C', 0.5f },
-            { 'D', 0.48f },
-            { 'E', 0.38f },
-            { 'F', 0.43f },
-            { 'G', 0.5f },
-            { 'H', 0.48f },
-            { 'I', 0.25f },
-            { 'J', 0.35f },
-            { 'K', 0.5f },
-            { 'L', 0.4f },
-            { 'M', 0.65f },
-            { 'N', 0.48f },
-            { 'O', 0.5f },
-            { 'P', 0.49f },
-            { 'Q', 0.49f },
-            { 'R', 0.49f },
-            { 'S', 0.49f },
-            { 'T', 0.49f },
-            { 'U', 0.49f },
-            { 'V', 0.56f },
-            { 'W', 0.80f },
-            { 'X', 0.49f },
-            { 'Y', 0.52f },
-            { 'Z', 0.43f },
-            { ' ', 0.38f },
-            { ':', 0.25f },
-            { '<', 0.52f },
-            { '>', 0.52f },
-            { 'É', 0.38f },
-            { '!', 0.25f },
-            { '\\', 0.35f },
-            { '/', 0.35f }
-        };
+        // NOTE: Set this in your game before you use a TextGroup! Just populate the Dictionary with the acceptable characters (0-1,A-Z, accented characters and punctuation, etc), plus how wide they are compared to the other letter
+        // Example: { '0', 0.507f }, { 'L', '0.4f' }.... L in this character set has a smaller width than the 0, so it will be a smaller number here.
+        // Very trial and error here right now, not automatically calculated.
+        public static Dictionary<char, float> LetterWidths { get; set; } = new Dictionary<char, float>();
+
+        // NOTE: set this to the name of the mesh in the model that you want to control the color for
+        public static string MeshNameToColor = string.Empty;
+
+        // NOTE: set this so each supported character has a Monogame Model object associated with it
+        public static Dictionary<char, Model> Letters { get; set; } = new Dictionary<char, Model>();
+
 
         List<Movable3D> letters = new List<Movable3D>();
         float baseScale = 0f;
@@ -78,11 +43,17 @@ namespace Backbone.Graphics
             this.baseScale = scale;
             this.Position = position;
             this.parent = parent;
+
+            if(LetterWidths.Count == 0 || Letters.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
+            {
+                throw new Exception("Please set these before using this class or else things will break.");
+            }
         }
 
         public void SetColor(ColorType color)
         {
-            //.ForEach(x => x.MeshColors[ModelStore.MeshNames[MeshType.TextCharacter]] = color);
+            letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
+            textColor = color;
         }
 
         public void SetText(string text)
@@ -106,18 +77,17 @@ namespace Backbone.Graphics
                     var halfCharWidth = 0.5f * (baseScale * LetterWidths[text[i]]);
                     var currentPlusHalfChar = currentPositionX + halfCharWidth;
 
-                    /*
-                    var model = new Movable3D(ModelStore.Letters[character], new Vector3(currentPlusHalfChar, Position.Y, Position.Z), baseScale);
+                    var model = new Movable3D(Letters[character], new Vector3(currentPlusHalfChar, Position.Y, Position.Z), baseScale);
                     model.Parent = parent;
                     model.RotationY = 0f;
                     model.RotationX = 0f;
 
                     if(textColor != ColorType.None)
                     {
-                        model.MeshColors[ModelStore.MeshNames[MeshType.TextCharacter]] = textColor;
+                        model.MeshColors[MeshNameToColor] = textColor;
                     }
 
-                    letters.Add(model);*/
+                    letters.Add(model);
 
                     if(i == (text.Length - 1))
                     {
@@ -156,8 +126,6 @@ namespace Backbone.Graphics
 
         public IAction3D IdleAnimation2(int characterIndex, Vector3 origPosition)
         {
-            //var star
-            //var moveTo = ActionBuilder.MoveTo()
             var wait = ActionBuilder.Wait(characterIndex * 0.3f + 2.0f);
             var rotateIn = ActionBuilder.RotateX(20f, 0.3f);
             var rotateBack = ActionBuilder.RotateX(0f, 0.3f);
@@ -178,14 +146,6 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            /*
-            letters.ForEach(x =>
-            {
-                x.RotationX -= (float)gameTime.ElapsedGameTime.TotalSeconds * 100f;
-                x.RotationY -= (float)gameTime.ElapsedGameTime.TotalSeconds * 235f;
-                x.RotationZ -= (float)gameTime.ElapsedGameTime.TotalSeconds * 143f;
-            });*/
-
             letters.ForEach(x => x.Update(gameTime));
         }
 
