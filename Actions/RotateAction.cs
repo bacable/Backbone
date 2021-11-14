@@ -42,7 +42,18 @@ namespace Backbone.Actions
             if (!hasStarted)
             {
                 hasStarted = true;
-                source = movable.RotationX;
+                switch(coordinate)
+                {
+                    case Coordinate.X:
+                        source = movable.RotationX;
+                        break;
+                    case Coordinate.Y:
+                        source = movable.RotationY;
+                        break;
+                    case Coordinate.Z:
+                        source = movable.RotationZ;
+                        break;
+                }
             }
 
             currentFloat = ActionMath.LerpFloat(elapsedTime, source, target, duration);
@@ -60,7 +71,7 @@ namespace Backbone.Actions
                     break;
             }
 
-            return (elapsedTime > duration);
+            return (elapsedTime >= duration);
         }
 
     }
