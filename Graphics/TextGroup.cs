@@ -36,6 +36,28 @@ namespace Backbone.Graphics
         public Action3D TransitionInAnimation { get; set; } = null;
         public Action3D TransitionOutAnimation { get; set; } = null;
 
+        public TextGroup(TextGroupSettings settings)
+        {
+            this.Id = settings.Id;
+            this.baseScale = settings.Scale;
+            this.Position = settings.Position;
+            this.parent = settings.Parent;
+
+            if(settings.Color != ColorType.None)
+            {
+                SetColor(settings.Color);
+            }
+
+            if(!string.IsNullOrEmpty(settings.Text))
+            {
+                SetText(settings.Text);
+            }
+
+            if (LetterWidths.Count == 0 || Letters.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
+            {
+                throw new Exception("Please set these before using this class or else things will break.");
+            }
+        }
 
         public TextGroup(int id, Movable3D parent, Vector3 position, float scale)
         {

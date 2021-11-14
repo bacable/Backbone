@@ -14,30 +14,29 @@ namespace Backbone.Graphics
 
         #region Instance Properties
         private Rectangle Size { get; set; }
-        private Movable3D Background { get; set; }
+        private Movable3D BackPanel { get; set; }
         private TextGroup Header { get; set; }
         #endregion
 
-        public Window(WindowSettings<T> windowSettings)
+        public Window(WindowSettings<T> settings)
         {
-            Size = windowSettings.Size;
+            Size = settings.Size;
 
             if(BackgroundModel == null)
             {
                 throw new NullReferenceException("Windows Background Model not set");
             }
 
-            Background = new Movable3D(BackgroundModel, windowSettings.Position, 200.0f);
+            BackPanel = new Movable3D(BackgroundModel, settings.Position, settings.BackPanelScale.X);
 
-            var headerPosition = new Vector3(windowSettings.Position.X + 100, windowSettings.Position.Y, windowSettings.Position.Z + 10f);
-            Header = new TextGroup(0, Background, headerPosition, 200f);
-            Header.SetText(windowSettings.HeaderText);
-            Header.SetColor(ColorType.Blue);
+            settings.Header.Parent = BackPanel;
+
+            Header = new TextGroup(settings.Header);
         }
 
         public void Draw(Matrix view, Matrix projection)
         {
-            Background.Draw(view, projection);
+            BackPanel.Draw(view, projection);
             Header.Draw(view, projection);
         }
 
@@ -58,7 +57,7 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            Background.Update(gameTime);
+            BackPanel.Update(gameTime);
             Header.Update(gameTime);
         }
     }
