@@ -111,24 +111,9 @@ namespace Backbone.Graphics
             }
         }
 
-        float InOutQuadBlend(float t)
+        public static Movable3D Empty()
         {
-            if (t <= 0.5f)
-                return 2.0f * t * t;
-            t -= 0.5f;
-            return 2.0f * t * (1.0f - t) + 0.5f;
-        }
-
-
-        float BezierBlend(float t)
-        {
-            return t * t * (3.0f - 2.0f * t);
-        }
-
-        float ParametricBlend(float t)
-        {
-            float sqt = t * t;
-            return sqt / (2.0f * (sqt - t) + 1.0f);
+            return new Movable3D(null, Vector3.Zero, 0f);
         }
     }
 }

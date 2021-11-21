@@ -20,6 +20,8 @@ namespace Backbone.Menus
         public MenuItemType Type { get; set; }
         public bool IsSelected { get; set; }
 
+        public IMenuUI Observer { get; set; }
+
         public void Add(IMenuItem item)
         {
             Items.Add(item);
@@ -60,6 +62,8 @@ namespace Backbone.Menus
                 Items[pastSelected].IsSelected = false;
                 Items[SelectedIndex].IsSelected = true;
             }
+
+            Observer?.UpdateSelected(SelectedItem);
         }
 
         public void Prev()
@@ -77,6 +81,8 @@ namespace Backbone.Menus
                 Items[pastSelected].IsSelected = false;
                 Items[SelectedIndex].IsSelected = true;
             }
+
+            Observer?.UpdateSelected(SelectedItem);
         }
 
 
@@ -84,11 +90,13 @@ namespace Backbone.Menus
         public void NextOption()
         {
             Items[SelectedIndex].Next();
+            Observer?.UpdateSelectedOption();
         }
 
         public void PrevOption()
         {
             Items[SelectedIndex].Prev();
+            Observer?.UpdateSelectedOption();
         }
 
         public bool CanNext

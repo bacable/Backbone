@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Backbone.Menus;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,6 +21,10 @@ namespace Backbone.Graphics
         // When OnClick is set, how big does it detect collisions
         public float OnClickDiameter { get; internal set; }
 
-        public TextGroupSettings Header { get; internal set; }
+        public TextGroupSettings Header { get; internal set; } = null;
+
+        // TODO: Maybe combine menu and menu position, possibly other things, to its own settings object, like with textgroupsettings above
+        public MenuContainer Menu { get; internal set; }
+        public Vector3 MenuPosition { get; internal set; } = Vector3.Zero;
     }
 }

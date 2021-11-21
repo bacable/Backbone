@@ -52,7 +52,7 @@ namespace Backbone.Menus
         private void SetupYesNo()
         {
             WrapAround = true;
-            Options.Add(new MenuOption() { Name = "YES" }); // TODO: Re-localize later
+            Options.Add(new MenuOption() { Name = "YES" }); // TODO: Add localization to Backbone library so this can be localized
             Options.Add(new MenuOption() { Name = "NO" });
         }
 

@@ -1,7 +1,8 @@
 ﻿using Backbone.Actions;
+using Backbone.Input;
+using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Backbone.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,6 +19,9 @@ namespace Backbone.Graphics
         private Rectangle Size { get; set; }
         private Movable3D BackPanel { get; set; }
         private TextGroup Header { get; set; }
+        private MenuContainer Menu { get; set; }
+
+        public bool IsActive { get; set; } = false;
 
         public bool IsAnimating
         {
@@ -30,6 +34,9 @@ namespace Backbone.Graphics
         public Action OnClick;
         private float onClickDiameter;
 
+        // menu stuff
+        private OptionGroup optionGroup;
+
         #endregion
 
         public Window(WindowSettings<T> settings)
@@ -40,14 +47,22 @@ namespace Backbone.Graphics
             {
                 throw new NullReferenceException("Windows Background Model not set");
             }
-
             BackPanel = new Movable3D(BackgroundModel, settings.Position, settings.BackPanelScale.X);
 
-            settings.Header.Parent = BackPanel;
+            if(settings.Header != null)
+            {
+                settings.Header.Parent = BackPanel;
 
-            Header = new TextGroup(settings.Header);
+                Header = new TextGroup(settings.Header);
+            }
 
             onClickDiameter = settings.OnClickDiameter;
+
+            if(settings.Menu != null)
+            {
+                Menu = settings.Menu;
+                optionGroup = new OptionGroup(settings.MenuPosition, settings.Menu, BackPanel);
+            }
         }
 
         public void Run(IAction3D action, bool replaceExisting = false)
@@ -59,6 +74,7 @@ namespace Backbone.Graphics
         {
             BackPanel.Draw(view, projection);
             Header.Draw(view, projection);
+            optionGroup.Draw(view, projection);
         }
 
         public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
@@ -84,8 +100,41 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
+            if(!IsAnimating && IsActive)
+            {
+                UpdateMenuInput();
+            }
+
             BackPanel.Update(gameTime);
             Header.Update(gameTime);
+            optionGroup.Update(gameTime);
+        }
+
+        private void UpdateMenuInput()
+        {
+            if (InputHelper.IsKeyUp(InputAction.Down))
+            {
+                Menu.Next();
+            }
+            else if (InputHelper.IsKeyUp(InputAction.Up))
+            {
+                Menu.Prev();
+            }
+
+            if (InputHelper.IsKeyUp(InputAction.Left))
+            {
+                if (Menu.CanPrev)
+                {
+                    Menu.PrevOption();
+                }
+            }
+            else if (InputHelper.IsKeyUp(InputAction.Right))
+            {
+                if (Menu.CanNext)
+                {
+                    Menu.NextOption();
+                }
+            }
         }
     }
 }

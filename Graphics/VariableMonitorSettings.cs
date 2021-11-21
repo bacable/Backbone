@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     public class VariableMonitorSettings
     {
