@@ -63,6 +63,7 @@ namespace Backbone.Menus
             if(found)
             {
                 DefaultValue = defaultValue;
+                Value = DefaultValue;
             }
             else
             {
