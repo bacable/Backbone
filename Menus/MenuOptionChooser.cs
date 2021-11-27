@@ -5,11 +5,18 @@ namespace Backbone.Menus
 {
     public class MenuOptionChooser : IMenuItem
     {
+        /// <summary>
+        /// Update these values when language is changed for localized yes/no
+        /// </summary>
+        public static string YesOptionName = "YES";
+        public static string NoOptionName = "NO";
+
+        #region Properties
         public int ID { get; set; }
         public int Rank { get; set; }
         public string Name { get; set; }
         public int SelectedIndex { get; set; }
-        public Action OnChange { get; set; } = null;
+        public Action<string> OnChange { get; set; } = null;
         public MenuItemType Type { get; set; } = MenuItemType.OptionChooser;
 
         public bool CanNext
@@ -38,6 +45,7 @@ namespace Backbone.Menus
 
         public List<MenuOption> Options { get; set; } = new List<MenuOption>();
         public bool IsSelected { get; set; } = false;
+        #endregion Properties
 
         public MenuOptionChooser(string name, bool isYesNo = false)
         {
@@ -52,8 +60,8 @@ namespace Backbone.Menus
         private void SetupYesNo()
         {
             WrapAround = true;
-            Options.Add(new MenuOption() { Name = "YES" }); // TODO: Add localization to Backbone library so this can be localized
-            Options.Add(new MenuOption() { Name = "NO" });
+            Options.Add(new MenuOption(YesOptionName, "YES"));
+            Options.Add(new MenuOption(NoOptionName, "NO"));
         }
 
         public void Click()
@@ -71,7 +79,7 @@ namespace Backbone.Menus
             // call the OnChange event and pass in the current option text
             if (SelectedIndex != oldSelectedIndex && OnChange != null)
             {
-                OnChange.Invoke();
+                OnChange.Invoke(Options[SelectedIndex].Value);
             }
         }
         public void Prev()
@@ -88,7 +96,7 @@ namespace Backbone.Menus
             // call the OnChange event and pass in the current option text
             if (SelectedIndex != oldSelectedIndex && OnChange != null)
             {
-                OnChange.Invoke();
+                OnChange.Invoke(Options[SelectedIndex].Value);
             }
         }
     }
