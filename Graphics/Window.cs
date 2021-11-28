@@ -73,7 +73,12 @@ namespace Backbone.Graphics
         public void Draw(Matrix view, Matrix projection)
         {
             BackPanel.Draw(view, projection);
-            Header.Draw(view, projection);
+
+            if(Header != null)
+            {
+                Header.Draw(view, projection);
+            }
+
             optionGroup.Draw(view, projection);
         }
 
@@ -106,7 +111,13 @@ namespace Backbone.Graphics
             }
 
             BackPanel.Update(gameTime);
-            Header.Update(gameTime);
+
+
+            if(Header != null)
+            {
+                Header.Update(gameTime);
+            }
+
             optionGroup.Update(gameTime);
         }
 
