@@ -43,7 +43,7 @@ namespace Backbone.Menus
         }
         public bool WrapAround { get; set; } = false;
 
-        public List<MenuOption> Options { get; set; } = new List<MenuOption>();
+        private List<MenuOption> Options { get; set; } = new List<MenuOption>();
         public bool IsSelected { get; set; } = false;
         #endregion Properties
 
@@ -67,6 +67,24 @@ namespace Backbone.Menus
         public void Click()
         {
 
+        }
+
+        public void Add(MenuOption newOption)
+        {
+            Options.Add(newOption);
+        }
+
+        public void Add(string name, string value)
+        {
+            Add(new MenuOption(name, value));
+        }
+
+        public void Add(List<Tuple<string, string>> options)
+        {
+            options.ForEach(option =>
+            {
+                Add(new MenuOption(option.Item1, option.Item2));
+            });
         }
 
         public void Next()
