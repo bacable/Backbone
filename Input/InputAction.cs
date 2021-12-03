@@ -18,6 +18,6 @@
         Select3,
         Select4,
         Select5,
-        Start
+        Start,
     }
 }

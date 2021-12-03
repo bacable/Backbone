@@ -23,7 +23,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return SelectedIndex < (Options.Count - 1) || WrapAround;
+                return SelectedIndex > 0 || WrapAround;
             }
         }
 
@@ -31,7 +31,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return SelectedIndex > 0 || WrapAround;
+                return SelectedIndex < (Options.Count - 2) || WrapAround;
             }
         }
 
@@ -69,16 +69,21 @@ namespace Backbone.Menus
 
         }
 
+        public void Add(MenuOption newOption)
+        {
+            Options.Add(newOption);
+        }
+
         public void Add(string name, string value)
         {
-            Options.Add(new MenuOption(name, value));
+            Add(new MenuOption(name, value));
         }
 
         public void Add(List<Tuple<string, string>> options)
         {
             options.ForEach(option =>
             {
-                Add(option.Item1, option.Item2);
+                Add(new MenuOption(option.Item1, option.Item2));
             });
         }
 
