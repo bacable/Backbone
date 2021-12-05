@@ -6,7 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Linq;
 
-namespace ProximityND.Backbone.IO
+namespace Backbone.IO
 {
     /// <summary>
     /// Loads a single JSON file into an object of the specified type, or a folder matching the given
