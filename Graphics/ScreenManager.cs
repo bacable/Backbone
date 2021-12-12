@@ -12,6 +12,7 @@ namespace Backbone.Graphics
 
         static IScreen CurrentScreen = null;
 
+        static MouseState LastMouseState;
 
 
         public static void Load(T screenType, IScreen screen)
@@ -30,7 +31,14 @@ namespace Backbone.Graphics
 
             CurrentScreen.Update(command.GameTime);
 
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            var currentMouseState = Mouse.GetState();
+
+            // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
+            var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
+                                (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
+                                MouseEvent.None;
+
+            if (mouseState != MouseEvent.None)
             {
                 Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
@@ -39,11 +47,14 @@ namespace Backbone.Graphics
                     MousePosition = mouseLocation,
                     Projection = command.Projection,
                     View = command.View,
-                    Viewport = command.Viewport
+                    Viewport = command.Viewport,
+                    State = mouseState
                 };
 
                 CurrentScreen.HandleMouse(handleMouseCommand);
             }
+
+            LastMouseState = currentMouseState;
 
             InputHelper.UpdateAfter();
         }

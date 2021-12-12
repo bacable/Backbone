@@ -1,4 +1,5 @@
-﻿using Backbone.Menus;
+﻿using Backbone.Input;
+using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -108,7 +109,7 @@ namespace Backbone.Graphics
             Options.ForEach(x => x.Text.Update(gameTime));
         }
 
-        public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
+        public void HandleMouse(HandleMouseCommand command)
         {
             
         }

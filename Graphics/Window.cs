@@ -82,12 +82,12 @@ namespace Backbone.Graphics
             optionGroup.Draw(view, projection);
         }
 
-        public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
+        public void HandleMouse(HandleMouseCommand command)
         {
             // Handle click of backpanel, if set up to do something
             // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
             // but not good enough for release
-            if(Collision3D.Intersects(mousePosition, BackPanel.Model, BackPanel.World, view, projection, viewport, onClickDiameter))
+            if(Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
             {
                 OnClick?.Invoke();
             }

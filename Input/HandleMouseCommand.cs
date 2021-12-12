@@ -9,5 +9,6 @@ namespace Backbone.Input
         public Matrix View { get; set; }
         public Matrix Projection { get; set; }
         public Viewport Viewport { get; set; }
+        public MouseEvent State { get; set; }
     }
 }

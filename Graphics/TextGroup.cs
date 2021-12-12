@@ -1,4 +1,5 @@
 ﻿using Backbone.Actions;
+using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -142,7 +143,7 @@ namespace Backbone.Graphics
             letters.ForEach(x => x.Draw(view, projection));
         }
 
-        public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
+        public void HandleMouse(HandleMouseCommand command)
         {
         }
 
