@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Backbone.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -76,6 +77,51 @@ namespace Backbone.Graphics
             }
 
             return null;
+        }
+
+        public static bool IntersectsSphere(Vector2 mouseLocation,
+            BoundingSphere sphere, Matrix world,
+            Matrix view, Matrix projection,
+            Viewport viewport)
+        {
+            sphere = sphere.Transform(world);
+            return (IntersectDistance(sphere, mouseLocation, view, projection, viewport) != null);
+        }
+
+        public static bool HasSphereCollision(HandleMouseCommand command, Movable3D obj, float collisionRadius)
+        {
+            return Collision3D.Intersects(command.MousePosition, obj.Model, obj.World, command.View, command.Projection, command.Viewport, collisionRadius);
+        }
+
+        /// <summary>
+        /// Checks a list of models as a group with a larger bounding sphere encapsulating all of them
+        /// (for example, the TextGroup, as a series of letters). This allows us to test the large sphere once to see
+        /// if we're in the right region, and if that intersects, then check each smaller element (letter in the word) to determine
+        /// more accurately if there was a collision
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="smallObjs">list of models to do the smaller test on (i.e.</param>
+        /// <param name="smallCollisionRadius">collision radius for each smaller element</param>
+        /// <param name="groupWorld">world object for the group model (likely a parent node)</param>
+        /// <param name="groupSphere">bounding sphere for everything</param>
+        /// <returns></returns>
+        public static bool HasSphereCollision(HandleMouseCommand command, List<Movable3D> smallObjs, float smallCollisionRadius, Matrix groupWorld, BoundingSphere groupSphere)
+        {
+            // check larger circle, then if that matches, check each individual letter to get more accurate collision
+
+            //TODO: intersectssphere isn't working right now. get it working and then remove the 'true'. letter intersections work fine though
+            if(true || IntersectsSphere(command.MousePosition, groupSphere, groupWorld, command.View, command.Projection, command.Viewport))
+            {
+                for(var i=0; i<smallObjs.Count; i++)
+                {
+                    var obj = smallObjs[i];
+                    if(Intersects(command.MousePosition, obj.Model, obj.World, command.View, command.Projection, command.Viewport, smallCollisionRadius))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

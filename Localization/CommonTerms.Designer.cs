@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ProximityND.Backbone.Localization {
+namespace Backbone.Localization {
     using System;
     
     

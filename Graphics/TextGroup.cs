@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Backbone.Graphics
 {
@@ -18,10 +19,33 @@ namespace Backbone.Graphics
         public static string MeshNameToColor = string.Empty;
 
         // NOTE: set this so each supported character has a Monogame Model object associated with it
-        public static Dictionary<char, Model> Letters { get; set; } = new Dictionary<char, Model>();
+        public static Dictionary<char, Model> LetterModels { get; set; } = new Dictionary<char, Model>();
 
+        public List<Movable3D> Letters { get; private set; } = new List<Movable3D>();
 
-        List<Movable3D> letters = new List<Movable3D>();
+        public Matrix? World { get
+            {
+                return parent.World;
+            } }
+
+        private BoundingSphere groupBoundingSphere = default(BoundingSphere);
+        private bool recalculateBoundingSphere = true;
+        public BoundingSphere GroupBoundingSphere
+        {
+            get
+            {
+                if(recalculateBoundingSphere)
+                {
+                    var distance = Math.Sqrt(Math.Pow((Left + Right), 2));
+                    var radius = (float)(distance / 2f);
+                    var center = new Vector3((Left + Right) / 2f, Position.Y, Position.Z);
+                    groupBoundingSphere = new BoundingSphere(center, radius);
+                    recalculateBoundingSphere = false;
+                }
+                return groupBoundingSphere;
+            }
+        }
+
         float baseScale = 0f;
         Movable3D parent = null;
         ColorType textColor = ColorType.None;
@@ -36,6 +60,14 @@ namespace Backbone.Graphics
 
         public Action3D TransitionInAnimation { get; set; } = null;
         public Action3D TransitionOutAnimation { get; set; } = null;
+
+        public bool IsAnimating
+        {
+            get
+            {
+                return Letters.Any(letter => letter.IsAnimating);
+            }
+        }
 
         public TextGroup(TextGroupSettings settings)
         {
@@ -54,7 +86,7 @@ namespace Backbone.Graphics
                 SetText(settings.Text);
             }
 
-            if (LetterWidths.Count == 0 || Letters.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
+            if (LetterWidths.Count == 0 || LetterModels.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
             {
                 throw new Exception("Please set these before using this class or else things will break.");
             }
@@ -67,7 +99,7 @@ namespace Backbone.Graphics
             this.Position = position;
             this.parent = parent;
 
-            if(LetterWidths.Count == 0 || Letters.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
+            if(LetterWidths.Count == 0 || LetterModels.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
             {
                 throw new Exception("Please set these before using this class or else things will break.");
             }
@@ -75,7 +107,7 @@ namespace Backbone.Graphics
 
         public void SetColor(ColorType color)
         {
-            letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
+            Letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
             textColor = color;
         }
 
@@ -84,7 +116,7 @@ namespace Backbone.Graphics
             // TODO: remove once we have lower case letters
             text = text.ToUpper();
 
-            letters.Clear();
+            Letters.Clear();
 
             var length = GetTotalLength(text);
             var currentPositionX = Position.X - (length / 2f);
@@ -100,7 +132,7 @@ namespace Backbone.Graphics
                     var halfCharWidth = 0.5f * (baseScale * LetterWidths[text[i]]);
                     var currentPlusHalfChar = currentPositionX + halfCharWidth;
 
-                    var model = new Movable3D(Letters[character], new Vector3(currentPlusHalfChar, Position.Y, Position.Z), baseScale);
+                    var model = new Movable3D(LetterModels[character], new Vector3(currentPlusHalfChar, Position.Y, Position.Z), baseScale);
                     model.Parent = parent;
                     model.RotationY = 0f;
                     model.RotationX = 0f;
@@ -110,7 +142,7 @@ namespace Backbone.Graphics
                         model.MeshColors[MeshNameToColor] = textColor;
                     }
 
-                    letters.Add(model);
+                    Letters.Add(model);
 
                     if(i == (text.Length - 1))
                     {
@@ -133,14 +165,14 @@ namespace Backbone.Graphics
             return length;
         }
 
-        public void Run(Action3D action, bool replaceExisting = false)
+        public void Run(IAction3D action, bool replaceExisting = false)
         {
-            letters.ForEach(x => x.Run(action, replaceExisting));
+            Letters.ForEach(x => x.Run(action, replaceExisting));
         }
 
         public void Draw(Matrix view, Matrix projection)
         {
-            letters.ForEach(x => x.Draw(view, projection));
+            Letters.ForEach(x => x.Draw(view, projection));
         }
 
         public void HandleMouse(HandleMouseCommand command)
@@ -169,7 +201,14 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            letters.ForEach(x => x.Update(gameTime));
+            // If the base is moving, we will need to recalculate the bounding sphere for
+            // collision
+            if(parent != null && parent.IsAnimating)
+            {
+                recalculateBoundingSphere = true;
+            }
+
+            Letters.ForEach(x => x.Update(gameTime));
         }
 
         public void UpdateRelativeToParent()
