@@ -50,8 +50,6 @@ namespace Backbone.UI
             // put small collision into textgroup later after we do some calculations
             if (checkInput && (hasClicked || keyPressed))
             {
-                string collisionfound = "BUTTON COLLISION";
-                VariableMonitor.Report(m => collisionfound, 0.1f);
                 hasClicked = false;
                 checkInput = false;
 

@@ -324,6 +324,9 @@
   <data name="RunToTheFinishLine" xml:space="preserve">
     <value>Run To The Finish Line</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="SaveGame" xml:space="preserve">
     <value>Save Game</value>
   </data>
