@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProximityND.GUI3D.Screens;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -93,9 +94,16 @@ namespace Backbone.Events
 
             var eventSubscribers = Subscriptions[eventType];
 
-            Debug.WriteLine("Event fired: " + eventType.ToString());
+            if(eventSubscribers.Count > 0)
+            {
+                Debug.WriteLine("Event fired: " + eventType.ToString());
+                
+                // make a copy so events could possibly adjust the
+                // collection without breaking the enumeration
+                var subscribersCopy = eventSubscribers.ToList();
 
-            eventSubscribers.ForEach(x => x.HandleEvent(eventType, payload));
+                subscribersCopy.ForEach(x => x.HandleEvent(eventType, payload));
+            }
         }
 
         public static void Unsubscribe(T eventType, ISubscriber<T> subscriber)
@@ -103,6 +111,17 @@ namespace Backbone.Events
             if(Subscriptions[eventType].Contains(subscriber))
             {
                 Subscriptions[eventType].Remove(subscriber);
+            }
+        }
+
+        internal static void UnsubscribeAll(ISubscriber<T> subscriber)
+        {
+            foreach(var kvp in Subscriptions)
+            {
+                if(kvp.Value.Contains(subscriber))
+                {
+                    Subscriptions[kvp.Key].Remove(subscriber);
+                }
             }
         }
     }

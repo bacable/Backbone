@@ -57,19 +57,35 @@ namespace Backbone.UI
 
                 Text.Letters.ForEach(x =>
                 {
-                    x.Run(ClickAnimation(x.Position));
+                    x.Run(ClickAnimation(x.Id, x.Position, Text.IsLast(x.Id)));
                 });
             }
 
         }
 
-        private IAction3D ClickAnimation(Vector3 originalPosition)
+        private IAction3D ClickAnimation(int id, Vector3 originalPosition, bool isLast = false)
         {
+            var wait = ActionBuilder.Wait(0.3f * settings.ClickAnimationDuration * id);
+
+            var spin1 = ActionBuilder.RotateY(180f, settings.ClickAnimationDuration);
             var scaleUp = ActionBuilder.MoveBy(settings.ClickAnimationMoveBy, settings.ClickAnimationDuration);
+            var group1 = ActionBuilder.Group(spin1, scaleUp);
+
+
+            var spin2 = ActionBuilder.RotateY(360f, settings.ClickAnimationDuration);
             var scaleDown = ActionBuilder.MoveTo(originalPosition, settings.ClickAnimationDuration);
+            var group2 = ActionBuilder.Group(spin2, scaleDown);
+
             var raiseEvent = ActionBuilder.RaiseEvent<T>(settings.RaisedEventOnClick, null);
-            var sequence = ActionBuilder.Sequence(scaleUp, scaleDown);
-            return sequence;
+
+            if (isLast)
+            {
+                return ActionBuilder.Sequence(wait, group1, group2, raiseEvent);
+            }
+            else
+            {
+                return ActionBuilder.Sequence(wait, group1, group2);
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)

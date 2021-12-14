@@ -111,6 +111,12 @@ namespace Backbone.Graphics
             textColor = color;
         }
 
+        public bool IsLast(int letterId)
+        {
+            return letterId == (Letters.Count - 1);
+        }
+
+
         public void SetText(string text)
         {
             // TODO: remove once we have lower case letters
@@ -136,6 +142,7 @@ namespace Backbone.Graphics
                     model.Parent = parent;
                     model.RotationY = 0f;
                     model.RotationX = 0f;
+                    model.Id = i;
 
                     if(textColor != ColorType.None)
                     {
