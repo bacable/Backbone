@@ -23,7 +23,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return SelectedIndex > 0 || WrapAround;
+                return SelectedIndex < (Options.Count - 1) || WrapAround;
             }
         }
 
@@ -31,7 +31,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return SelectedIndex < (Options.Count - 2) || WrapAround;
+                return SelectedIndex > 0 || WrapAround;
             }
         }
 
