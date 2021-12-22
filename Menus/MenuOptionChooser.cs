@@ -1,16 +1,11 @@
-﻿using System;
+﻿using Backbone.Localization;
+using System;
 using System.Collections.Generic;
 
 namespace Backbone.Menus
 {
     public class MenuOptionChooser : IMenuItem
     {
-        /// <summary>
-        /// Update these values when language is changed for localized yes/no
-        /// </summary>
-        public static string YesOptionName = "YES";
-        public static string NoOptionName = "NO";
-
         #region Properties
         public int ID { get; set; }
         public int Rank { get; set; }
@@ -60,8 +55,8 @@ namespace Backbone.Menus
         private void SetupYesNo()
         {
             WrapAround = true;
-            Options.Add(new MenuOption(YesOptionName, "YES"));
-            Options.Add(new MenuOption(NoOptionName, "NO"));
+            Options.Add(new MenuOption(CommonTerms.Yes, "YES"));
+            Options.Add(new MenuOption(CommonTerms.No, "NO"));
         }
 
         public void Click()

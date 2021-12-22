@@ -14,6 +14,8 @@ namespace Backbone.Input
 
         public static GamePadCapabilities GamePadCapabilities;
 
+        public static bool IsTextTyping = false;
+
         public static Dictionary<InputAction, Keys> KeyMapping = new Dictionary<InputAction, Keys>()
         {
             { InputAction.Accept, Keys.Space },
@@ -46,6 +48,43 @@ namespace Backbone.Input
             LastGamePadState = CurrentGamePadState;
         }
 
+        /// <summary>
+        /// Gets the typed keys from the last update. Based off the code posted here:
+        /// https://www.gamedev.net/forums/topic/457783-net-xna-getting-text-from-keyboard/4038836/?topic_id=457783
+        /// </summary>
+        /// <returns></returns>
+        public static string UpdateTypedString(string currentString)
+        {
+            if (!IsTextTyping) return currentString;
+
+            var pressedKeys = CurrentKeyboardState.GetPressedKeys();
+
+            foreach(Keys key in pressedKeys)
+            {
+                bool isLastStateUnpressed = LastKeyboardState.IsKeyUp(key);
+                if (isLastStateUnpressed)
+                {
+                    if(key == Keys.Back) // consume all of this key, because it's included in isSupported function to keep it from triggering elsewhere, kinda hacky, maybe switch later
+                    {
+                        if (currentString.Length > 0)
+                        {
+                            currentString = currentString.Substring(0, currentString.Length - 1);
+                        }
+                    }
+                    else if(isSupportedTextTypingKey(key)) // TODO: add typing support for spaces
+                    {
+                        // have to strip the "D" from the beginning of the number keys, otherwise just toString
+                        var appendText = (key >= Keys.D0 && key <= Keys.D9) ?
+                                            key.ToString().Substring(1) : key.ToString();
+
+                        currentString += appendText;
+                    }
+                }
+            }
+
+            return currentString;
+        }
+
         public static bool IsKeyUp(InputAction action)
         {
             // Check gamepad first, if doesn't match that, then try
@@ -68,10 +107,20 @@ namespace Backbone.Input
             if (KeyMapping.ContainsKey(action))
             {
                 var key = KeyMapping[action];
+
+                // don't want to trigger these actions if they're currently typing
+                // in a text box
+                if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
+
                 return (LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyUp(key));
             }
 
             return false;
+        }
+
+        private static bool isSupportedTextTypingKey(Keys key)
+        {
+            return (key >= Keys.A && key <= Keys.Z) || (key >= Keys.D0 && key <= Keys.D9) || key == Keys.Back;
         }
 
         private static bool isButtonReleased(InputAction action)
