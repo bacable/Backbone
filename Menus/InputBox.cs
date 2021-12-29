@@ -48,6 +48,7 @@ namespace Backbone.Menus
         }
         public bool IsEditing { get; set; } = false;
         public int MaxCharacters { get; set; }
+        public string DisplayText { get; set; }
         #endregion
 
 
@@ -97,6 +98,16 @@ namespace Backbone.Menus
                 default:
                     break;
             }
+        }
+
+        public void SetValue(object value)
+        {
+            _value = (string)value;
+        }
+
+        public object GetValue()
+        {
+            throw new NotImplementedException();
         }
     }
 }

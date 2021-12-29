@@ -88,13 +88,13 @@ namespace Backbone.Graphics
                 switch (x.Item.Type)
                 {
                     case MenuItemType.Button:
-                        x.Text.SetText(x.Item.Name);
+                        x.Text.SetText(x.Item.DisplayText);
                         break;
                     case MenuItemType.OptionChooser:
-                        x.Text.SetText(x.Item.Name + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
+                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
                         break;
                     case MenuItemType.OptionSlider:
-                        x.Text.SetText(x.Item.Name + ": " + (x.Item as MenuOptionSlider).Value);
+                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionSlider).Value);
                         break;
                     default:
                         break;

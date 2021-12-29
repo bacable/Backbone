@@ -303,6 +303,12 @@
   <data name="Recharge" xml:space="preserve">
     <value>Recargar</value>
   </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Reinicia</value>
+  </data>
+  <data name="RestartGame" xml:space="preserve">
+    <value>Reinicia el Juego</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Continuar</value>
   </data>

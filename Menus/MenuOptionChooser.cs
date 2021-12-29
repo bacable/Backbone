@@ -6,10 +6,14 @@ namespace Backbone.Menus
 {
     public class MenuOptionChooser : IMenuItem
     {
+        const string TRUE_VALUE = "YES";
+        const string FALSE_VALUE = "NO";
+
         #region Properties
         public int ID { get; set; }
         public int Rank { get; set; }
         public string Name { get; set; }
+        public string DisplayText { get; set; }
         public int SelectedIndex { get; set; }
         public Action<string> OnChange { get; set; } = null;
         public MenuItemType Type { get; set; } = MenuItemType.OptionChooser;
@@ -42,9 +46,12 @@ namespace Backbone.Menus
         public bool IsSelected { get; set; } = false;
         #endregion Properties
 
-        public MenuOptionChooser(string name, bool isYesNo = false)
+        private bool isBoolValue = false;
+
+        public MenuOptionChooser(string name, string displayText, bool isYesNo = false)
         {
             Name = name;
+            DisplayText = displayText;
 
             if(isYesNo)
             {
@@ -54,9 +61,10 @@ namespace Backbone.Menus
 
         private void SetupYesNo()
         {
+            isBoolValue = true;
             WrapAround = true;
-            Options.Add(new MenuOption(CommonTerms.Yes, "YES"));
-            Options.Add(new MenuOption(CommonTerms.No, "NO"));
+            Options.Add(new MenuOption(CommonTerms.Yes, TRUE_VALUE));
+            Options.Add(new MenuOption(CommonTerms.No, FALSE_VALUE));
         }
 
         public void Click()
@@ -110,6 +118,45 @@ namespace Backbone.Menus
             if (SelectedIndex != oldSelectedIndex && OnChange != null)
             {
                 OnChange.Invoke(Options[SelectedIndex].Value);
+            }
+        }
+
+        public void SetValue(object value)
+        {
+            if (isBoolValue)
+            {
+                SelectedIndex = ((bool)value == true) ? 0 : 1;
+            }
+            else
+            {
+                string matchString = (string)value;
+
+                int foundIndex = -1;
+                for (var i = 0; i < Options.Count; i++)
+                {
+                    if (Options[i].Value.Equals(matchString))
+                    {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex > -1)
+                {
+                    SelectedIndex = foundIndex;
+                }
+            }
+        }
+
+        public object GetValue()
+        {
+            if(isBoolValue)
+            {
+                return Options[SelectedIndex].Value.Equals(TRUE_VALUE);
+            }
+            else
+            {
+                return Options[SelectedIndex].Value;
             }
         }
     }

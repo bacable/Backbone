@@ -122,6 +122,14 @@ namespace Backbone.Graphics
             // TODO: remove once we have lower case letters
             text = text.ToUpper();
 
+            // TODO: remove these unsupported special characters, but add these letter models so we don't need to do a replace in the future. also eventually find a better solution when it's
+            //       not available
+            text = text.Replace("Í", "I");
+            text = text.Replace("Ú", "U");
+            text = text.Replace("Á", "A");
+            text = text.Replace("Ñ", "N");
+
+
             Letters.Clear();
 
             var length = GetTotalLength(text);

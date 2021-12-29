@@ -20,14 +20,24 @@ namespace Backbone.Menus
         public MenuItemType Type { get; set; }
         public bool IsSelected { get; set; }
 
+
         public IMenuUI Observer { get; set; }
+
+        public void SetValue(string name, object value)
+        {
+            var item = Items.FirstOrDefault(x => x.Name.Equals(name));
+            if(item != null)
+            {
+                item.SetValue(value);
+            }
+        }
 
         public void Add(IMenuItem item)
         {
             Items.Add(item);
 
             // if this is the first item added, mark it as being selected
-            if(Items.Count == 1)
+            if (Items.Count == 1)
             {
                 Items[0].IsSelected = true;
             }
@@ -57,7 +67,7 @@ namespace Backbone.Menus
 
             SelectedIndex = (SelectedIndex < (Items.Count - 1) || WrapAround) ? (SelectedIndex + 1) % Items.Count : SelectedIndex;
 
-            if(pastSelected != SelectedIndex)
+            if (pastSelected != SelectedIndex)
             {
                 Items[pastSelected].IsSelected = false;
                 Items[SelectedIndex].IsSelected = true;
@@ -99,6 +109,33 @@ namespace Backbone.Menus
             Observer?.UpdateSelectedOption();
         }
 
+        public void SetValue(object value)
+        {
+            // not needed for the container, at least not yet
+        }
+
+        // find item in container with the following name and then return its value
+        public object GetValue(string name)
+        {
+            var item = Items.FirstOrDefault(x => x.Name.Equals(name));
+            if(item != null)
+            {
+                return item.GetValue();
+            }
+            else
+            {
+                #if DEBUG
+                    throw new System.Exception("Check the code, shouldn't be an issue");
+                #endif
+            }
+        }
+
+        public object GetValue()
+        {
+            // shouldn't be called
+            return null;
+        }
+
         public bool CanNext
         {
             get
@@ -114,5 +151,7 @@ namespace Backbone.Menus
                 return Items[SelectedIndex].CanPrev;
             }
         }
+
+        public string DisplayText { get; set; }
     }
 }
