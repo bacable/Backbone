@@ -29,6 +29,7 @@ namespace Backbone.Input
             { InputAction.Select3, Keys.NumPad3 },
             { InputAction.Select4, Keys.NumPad4 },
             { InputAction.Select5, Keys.NumPad5 },
+            { InputAction.Start, Keys.Enter },
             { InputAction.SpecialAction1, Keys.Z },
             { InputAction.SpecialAction2, Keys.X },
             { InputAction.SpecialAction3, Keys.C },

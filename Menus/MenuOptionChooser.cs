@@ -69,7 +69,7 @@ namespace Backbone.Menus
 
         public void Click()
         {
-
+            // don't do anything
         }
 
         public void Add(MenuOption newOption)

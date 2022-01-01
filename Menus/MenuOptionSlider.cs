@@ -97,7 +97,7 @@ namespace Backbone.Menus
 
         public void Click()
         {
-            throw new NotImplementedException();
+            // don't do anything
         }
 
         public void SetValue(object value)

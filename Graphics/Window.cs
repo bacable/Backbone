@@ -37,17 +37,21 @@ namespace Backbone.Graphics
         // menu stuff
         private OptionGroup optionGroup;
 
+        private WindowSettings<T> settings;
+
         #endregion
 
         public Window(WindowSettings<T> settings)
         {
+            this.settings = settings;
+
             Size = settings.Size;
 
             if(BackgroundModel == null)
             {
                 throw new NullReferenceException("Windows Background Model not set");
             }
-            BackPanel = new Movable3D(BackgroundModel, settings.Position, settings.BackPanelScale.X);
+            BackPanel = new Movable3D(BackgroundModel, settings.InactivePosition, settings.BackPanelScale.X);
 
             if(settings.Header != null)
             {
@@ -72,25 +76,69 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            BackPanel.Draw(view, projection);
-
-            if(Header != null)
+            if(settings.VisibleWhileInactive || IsActive)
             {
-                Header.Draw(view, projection);
-            }
+                BackPanel.Draw(view, projection);
 
-            optionGroup.Draw(view, projection);
+                if (Header != null)
+                {
+                    Header.Draw(view, projection);
+                }
+
+                optionGroup.Draw(view, projection);
+            }
         }
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            // Handle click of backpanel, if set up to do something
-            // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
-            // but not good enough for release
-            if(Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
+            if(settings.VisibleWhileInactive)
             {
-                OnClick?.Invoke();
+                // Handle click of backpanel, if set up to do something
+                // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
+                // but not good enough for release
+                if (Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
+                {
+                    OnClick?.Invoke();
+                }
             }
+        }
+
+        internal void ClickMenu()
+        {
+            if(IsActive && !IsAnimating)
+            {
+                Menu.Click();
+            }
+        }
+
+        /// <summary>
+        /// If no animation provided, use the standard move in from offscreen and set as active
+        /// </summary>
+        /// <param name="animation">Animation to perform on the backpanel</param>
+        public void Activate(IAction3D animation = null)
+        {
+            IsActive = true;
+            if(animation == null)
+            {
+                animation = MoveAnim(settings.InactivePosition, settings.ActivePosition);
+            }
+            BackPanel.Run(animation);
+        }
+
+        internal void Deactivate(IAction3D animation = null)
+        {
+            IsActive = false;
+            if (animation == null)
+            {
+                animation = MoveAnim(settings.ActivePosition, settings.InactivePosition);
+            }
+            BackPanel.Run(animation, true);
+        }
+
+        private IAction3D MoveAnim(Vector3 from, Vector3 to)
+        {
+            var moveTo = ActionBuilder.MoveTo(to, settings.TransitionDuration);
+            return moveTo;
         }
 
         public void TransitionIn()
@@ -105,20 +153,22 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            if(!IsAnimating && IsActive)
+            if(settings.VisibleWhileInactive || IsActive || IsAnimating)
             {
-                UpdateMenuInput();
+                if (!IsAnimating && IsActive)
+                {
+                    UpdateMenuInput();
+                }
+
+                BackPanel.Update(gameTime);
+
+                if (Header != null)
+                {
+                    Header.Update(gameTime);
+                }
+
+                optionGroup.Update(gameTime);
             }
-
-            BackPanel.Update(gameTime);
-
-
-            if(Header != null)
-            {
-                Header.Update(gameTime);
-            }
-
-            optionGroup.Update(gameTime);
         }
 
         private void UpdateMenuInput()

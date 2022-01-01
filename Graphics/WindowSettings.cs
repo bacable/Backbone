@@ -10,7 +10,15 @@ namespace Backbone.Graphics
     {
         public T Type { get; set; }
         public Rectangle Size { get; set; }
-        public Vector3 Position { get; set; }
+
+        // Where the window is located while it is active
+        public Vector3 ActivePosition { get; set; }
+
+        // Where the window is located while it is inactive (usually an offscreen position)
+        public Vector3 InactivePosition { get; set; }
+
+        // How long it takes the window to move from inactive/active positions. Default is half a second.
+        public float TransitionDuration { get; set; } = 0.5f;
 
         // How much to offset the Z position so the text of the window shows up above the window (matches the window position otherwise)
         public float TextOffsetZ { get; set; }
@@ -25,6 +33,11 @@ namespace Backbone.Graphics
 
         // TODO: Maybe combine menu and menu position, possibly other things, to its own settings object, like with textgroupsettings above
         public MenuContainer Menu { get; internal set; }
+
+        // Some windows want to draw/update even while inactive, but by default we don't want to processing on drawing if not active
+        public bool VisibleWhileInactive { get; internal set; } = false;
+
+        // The position the options menu is located in relation to the backpanel of the window
         public Vector3 MenuPosition { get; internal set; } = Vector3.Zero;
     }
 }
