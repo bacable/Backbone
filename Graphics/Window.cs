@@ -112,6 +112,21 @@ namespace Backbone.Graphics
         }
 
         /// <summary>
+        /// Update header text and possibly color (if passed in)
+        /// </summary>
+        /// <param name="newHeaderText"></param>
+        /// <param name="color"></param>
+        public void UpdateHeader(string newHeaderText, ColorType color = ColorType.None)
+        {
+            if(color != ColorType.None)
+            {
+                Header.SetColor(color);
+            }
+
+            Header.SetText(newHeaderText);
+        }
+
+        /// <summary>
         /// If no animation provided, use the standard move in from offscreen and set as active
         /// </summary>
         /// <param name="animation">Animation to perform on the backpanel</param>

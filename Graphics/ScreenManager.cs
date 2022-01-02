@@ -21,7 +21,13 @@ namespace Backbone.Graphics
         }
         public static void SwitchTo(T screen)
         {
+            if(CurrentScreen != null)
+            {
+                CurrentScreen.Cleanup();
+            }
+
             CurrentScreen = Screens[screen];
+
             CurrentScreen.Initialize();
         }
 
