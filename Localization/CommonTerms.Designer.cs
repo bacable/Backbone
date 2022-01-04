@@ -241,6 +241,105 @@ namespace Backbone.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Black.
+        /// </summary>
+        internal static string ColorBlack {
+            get {
+                return ResourceManager.GetString("ColorBlack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        internal static string ColorBlue {
+            get {
+                return ResourceManager.GetString("ColorBlue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Brown.
+        /// </summary>
+        internal static string ColorBrown {
+            get {
+                return ResourceManager.GetString("ColorBrown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gray.
+        /// </summary>
+        internal static string ColorGray {
+            get {
+                return ResourceManager.GetString("ColorGray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        internal static string ColorGreen {
+            get {
+                return ResourceManager.GetString("ColorGreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orange.
+        /// </summary>
+        internal static string ColorOrange {
+            get {
+                return ResourceManager.GetString("ColorOrange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pink.
+        /// </summary>
+        internal static string ColorPink {
+            get {
+                return ResourceManager.GetString("ColorPink", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purple.
+        /// </summary>
+        internal static string ColorPurple {
+            get {
+                return ResourceManager.GetString("ColorPurple", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        internal static string ColorRed {
+            get {
+                return ResourceManager.GetString("ColorRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to White.
+        /// </summary>
+        internal static string ColorWhite {
+            get {
+                return ResourceManager.GetString("ColorWhite", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yellow.
+        /// </summary>
+        internal static string ColorYellow {
+            get {
+                return ResourceManager.GetString("ColorYellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
         internal static string Continue {
@@ -453,6 +552,78 @@ namespace Backbone.Localization {
         internal static string MatchStart {
             get {
                 return ResourceManager.GetString("MatchStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} Medal.
+        /// </summary>
+        internal static string MedalMetal {
+            get {
+                return ResourceManager.GetString("MedalMetal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bronze.
+        /// </summary>
+        internal static string MetalBronze {
+            get {
+                return ResourceManager.GetString("MetalBronze", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Copper.
+        /// </summary>
+        internal static string MetalCopper {
+            get {
+                return ResourceManager.GetString("MetalCopper", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gold.
+        /// </summary>
+        internal static string MetalGold {
+            get {
+                return ResourceManager.GetString("MetalGold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Iron.
+        /// </summary>
+        internal static string MetalIron {
+            get {
+                return ResourceManager.GetString("MetalIron", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Platinum.
+        /// </summary>
+        internal static string MetalPlatinum {
+            get {
+                return ResourceManager.GetString("MetalPlatinum", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Silver.
+        /// </summary>
+        internal static string MetalSilver {
+            get {
+                return ResourceManager.GetString("MetalSilver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Steel.
+        /// </summary>
+        internal static string MetalSteel {
+            get {
+                return ResourceManager.GetString("MetalSteel", resourceCulture);
             }
         }
         

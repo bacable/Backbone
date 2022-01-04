@@ -1,8 +1,10 @@
 ﻿using Backbone.Actions;
+using Backbone.Events;
 using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -39,6 +41,8 @@ namespace Backbone.Graphics
 
         private WindowSettings<T> settings;
 
+        private MenuButton closeButton;
+
         #endregion
 
         public Window(WindowSettings<T> settings)
@@ -66,6 +70,16 @@ namespace Backbone.Graphics
             {
                 Menu = settings.Menu;
                 optionGroup = new OptionGroup(settings.MenuPosition, settings.Menu, BackPanel);
+            }
+
+            if(settings.ShowCornerCloseButton)
+            {
+                if(settings.CloseButtonAction != null)
+                {
+                    throw new Exception("Close button action cannot be null if enabled");
+                }
+
+                closeButton = new MenuButton("close", settings.CloseButtonAction);
             }
         }
 
@@ -164,6 +178,11 @@ namespace Backbone.Graphics
         public void TransitionOut()
         {
 
+        }
+
+        public void Reposition(Vector3 newPosition)
+        {
+            BackPanel.Position = newPosition;
         }
 
         public void Update(GameTime gameTime)

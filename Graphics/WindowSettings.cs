@@ -39,5 +39,11 @@ namespace Backbone.Graphics
 
         // The position the options menu is located in relation to the backpanel of the window
         public Vector3 MenuPosition { get; internal set; } = Vector3.Zero;
+
+        // Show close button
+        public bool ShowCornerCloseButton { get; internal set; } = false;
+
+        // Event that fires when close button clicked
+        public Action CloseButtonAction { get; internal set; } = null;
     }
 }

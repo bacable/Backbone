@@ -177,6 +177,39 @@
   <data name="CloseMenu" xml:space="preserve">
     <value>Cerrar Menú</value>
   </data>
+  <data name="ColorBlack" xml:space="preserve">
+    <value>Negro</value>
+  </data>
+  <data name="ColorBlue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="ColorBrown" xml:space="preserve">
+    <value>Marrón</value>
+  </data>
+  <data name="ColorGray" xml:space="preserve">
+    <value>Gris</value>
+  </data>
+  <data name="ColorGreen" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="ColorOrange" xml:space="preserve">
+    <value>Naranja</value>
+  </data>
+  <data name="ColorPink" xml:space="preserve">
+    <value>Rosado</value>
+  </data>
+  <data name="ColorPurple" xml:space="preserve">
+    <value>Morado</value>
+  </data>
+  <data name="ColorRed" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="ColorWhite" xml:space="preserve">
+    <value>Blanco</value>
+  </data>
+  <data name="ColorYellow" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
   <data name="Continue" xml:space="preserve">
     <value>Continuar</value>
   </data>
@@ -248,6 +281,30 @@
   </data>
   <data name="MatchStart" xml:space="preserve">
     <value>Adelante</value>
+  </data>
+  <data name="MedalMetal" xml:space="preserve">
+    <value>Medalla de {0}</value>
+  </data>
+  <data name="MetalBronze" xml:space="preserve">
+    <value>Bronce</value>
+  </data>
+  <data name="MetalCopper" xml:space="preserve">
+    <value>Cobre</value>
+  </data>
+  <data name="MetalGold" xml:space="preserve">
+    <value>Oro</value>
+  </data>
+  <data name="MetalIron" xml:space="preserve">
+    <value>Hiero</value>
+  </data>
+  <data name="MetalPlatinum" xml:space="preserve">
+    <value>Platino</value>
+  </data>
+  <data name="MetalSilver" xml:space="preserve">
+    <value>Plata</value>
+  </data>
+  <data name="MetalSteel" xml:space="preserve">
+    <value>Acero</value>
   </data>
   <data name="Minutes" xml:space="preserve">
     <value>Minutos</value>
