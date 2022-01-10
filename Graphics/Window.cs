@@ -88,6 +88,15 @@ namespace Backbone.Graphics
             BackPanel.Run(action, replaceExisting);
         }
 
+        /// <summary>
+        /// Set as parent to given movable so its position will match the window's position
+        /// </summary>
+        /// <param name="movable">Movable to attach.</param>
+        public void Attach(Movable3D movable)
+        {
+            movable.Parent = BackPanel;
+        }
+
         public void Draw(Matrix view, Matrix projection)
         {
             if(settings.VisibleWhileInactive || IsActive)
