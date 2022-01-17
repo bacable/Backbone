@@ -268,46 +268,46 @@
     <value>Ladder</value>
   </data>
   <data name="Level" xml:space="preserve">
-    <value>Level</value>
+    <value>Livello</value>
   </data>
   <data name="Loser" xml:space="preserve">
     <value>Loser</value>
   </data>
   <data name="MainMenu" xml:space="preserve">
-    <value>Main Menu</value>
+    <value>Menu Principale</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>Mappa</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Start</value>
+    <value>Inizio</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
-    <value>{0} Medal</value>
+    <value>Medaglia di {0}</value>
   </data>
   <data name="MetalBronze" xml:space="preserve">
     <value>Bronzo</value>
   </data>
   <data name="MetalCopper" xml:space="preserve">
-    <value>Copper</value>
+    <value>Rame</value>
   </data>
   <data name="MetalGold" xml:space="preserve">
-    <value>Gold</value>
+    <value>Oro</value>
   </data>
   <data name="MetalIron" xml:space="preserve">
-    <value>Iron</value>
+    <value>Ferro</value>
   </data>
   <data name="MetalPlatinum" xml:space="preserve">
-    <value>Platinum</value>
+    <value>Platino</value>
   </data>
   <data name="MetalSilver" xml:space="preserve">
-    <value>Silver</value>
+    <value>Argento</value>
   </data>
   <data name="MetalSteel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Acciaio</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value>Minutes</value>
+    <value>Minuti</value>
   </data>
   <data name="Missions" xml:space="preserve">
     <value>Missions</value>
@@ -388,10 +388,10 @@
     <value>Run To The Finish Line</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Salva</value>
   </data>
   <data name="SaveGame" xml:space="preserve">
-    <value>Save Game</value>
+    <value>Salva il Gioco</value>
   </data>
   <data name="SFXVolume" xml:space="preserve">
     <value>Volume effetti</value>
@@ -415,7 +415,7 @@
     <value>Turn</value>
   </data>
   <data name="TurnForName" xml:space="preserve">
-    <value>{0}'s Turn</value>
+    <value>Il Turno Di {0}</value>
   </data>
   <data name="Tutorial" xml:space="preserve">
     <value>Tutorial</value>
@@ -430,10 +430,10 @@
     <value>Attenzione</value>
   </data>
   <data name="Winner" xml:space="preserve">
-    <value>Winner</value>
+    <value>Vincitrice</value>
   </data>
   <data name="Wow" xml:space="preserve">
-    <value>Wow</value>
+    <value>Stupefacente</value>
   </data>
   <data name="XP" xml:space="preserve">
     <value>XP</value>
@@ -442,12 +442,12 @@
     <value>Sì</value>
   </data>
   <data name="YouLose" xml:space="preserve">
-    <value>You Lose!</value>
+    <value>Hai Perso</value>
   </data>
   <data name="YourTurn" xml:space="preserve">
-    <value>It's Your Turn</value>
+    <value>È il Tuo Turno</value>
   </data>
   <data name="YouWin" xml:space="preserve">
-    <value>You Win!</value>
+    <value>Hai Vinto!</value>
   </data>
 </root>
