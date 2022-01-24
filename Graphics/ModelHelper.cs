@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND;
 using System.Collections.Generic;
 
 namespace Backbone.Graphics
@@ -33,17 +34,35 @@ namespace Backbone.Graphics
 
                     if(mesh.Name == "InnerFront")
                     {
-                        effect.DiffuseColor = ColorType3D.Get(colorFront);
+                        effect.TextureEnabled = true;
+                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.ColoredDots];
+                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+                        //effect.DiffuseColor = ColorType3D.Get(colorFront);
                     }
-                    
+
                     if (mesh.Name == "InnerBack")
                     {
-                        effect.DiffuseColor = ColorType3D.Get(colorBack);
+                        effect.TextureEnabled = true;
+                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.XmasLeaves];
+                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+//                        effect.DiffuseColor = ColorType3D.Get(colorBack);
                     }
                     
                     if (mesh.Name == "BorderMesh")
                     {
-                        effect.DiffuseColor = ColorType3D.Get(colorHex);
+                        
+                        effect.TextureEnabled = true;
+                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Rust];
+                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+
+                        //                        effect.DiffuseColor = ColorType3D.Get(colorHex);
+                    }
+
+                    if (mesh.Name == "NumberFront" || mesh.Name == "NumberBack")
+                    {
+//                        effect.TextureEnabled = true;
+//                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Circles];
+//                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
                     }
 
                     effect.LightingEnabled = true;
