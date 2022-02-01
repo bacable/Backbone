@@ -29,6 +29,8 @@ namespace Backbone.Graphics
 
         public Dictionary<string, ColorType> MeshColors { get; private set; } = new Dictionary<string, ColorType>();
 
+
+
         public Boolean IsAnimating {  
             get
             {
