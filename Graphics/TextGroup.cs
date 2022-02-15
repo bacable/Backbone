@@ -107,7 +107,11 @@ namespace Backbone.Graphics
 
         public void SetColor(ColorType color)
         {
-            Letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
+            //Letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
+            Letters.ForEach(x => x.MeshProperties[MeshNameToColor] = new MeshProperty()
+            {
+                Color = ColorType3D.Get(color)
+            });
             textColor = color;
         }
 
@@ -146,7 +150,11 @@ namespace Backbone.Graphics
 
                     if(textColor != ColorType.None)
                     {
-                        model.MeshColors[MeshNameToColor] = textColor;
+                        //model.MeshColors[MeshNameToColor] = textColor;
+                        model.MeshProperties[MeshNameToColor] = new MeshProperty()
+                        {
+                            Color = ColorType3D.Get(textColor)
+                        };
                     }
 
                     Letters.Add(model);

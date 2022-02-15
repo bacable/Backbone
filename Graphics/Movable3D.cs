@@ -27,7 +27,7 @@ namespace Backbone.Graphics
 
         public Matrix World { get; private set; } = Matrix.Identity;
 
-        public Dictionary<string, ColorType> MeshColors { get; private set; } = new Dictionary<string, ColorType>();
+        public Dictionary<string, MeshProperty> MeshProperties { get; private set; } = new Dictionary<string, MeshProperty>();
 
 
 
@@ -109,7 +109,7 @@ namespace Backbone.Graphics
         {
             if(IsVisible)
             {
-                ModelHelper.DrawHexTile(Model, World, view, projection, Color1, Color2, ColorBkg, MeshColors);
+                ModelHelper.DrawHexTile(Model, World, view, projection, Color1, Color2, ColorBkg, MeshProperties);
             }
         }
 

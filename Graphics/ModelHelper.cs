@@ -7,7 +7,7 @@ namespace Backbone.Graphics
 {
     public class ModelHelper
     {
-        public static void DrawHexTile(Model model, Matrix world, Matrix view, Matrix projection, ColorType colorFront, ColorType colorBack, ColorType colorHex, Dictionary<string, ColorType> MeshColors)
+        public static void DrawHexTile(Model model, Matrix world, Matrix view, Matrix projection, ColorType colorFront, ColorType colorBack, ColorType colorHex, Dictionary<string, MeshProperty> Settings)
         {
             foreach (ModelMesh mesh in model.Meshes)
             {
@@ -18,44 +18,44 @@ namespace Backbone.Graphics
                     effect.View = view;
                     effect.Projection = projection;
 
-                    if(MeshColors.ContainsKey(mesh.Name))
+                    if(Settings.ContainsKey(mesh.Name))
                     {
-                        effect.DiffuseColor = ColorType3D.Get(MeshColors[mesh.Name]);
-                    }
-                    else
-                    {
-                        if(mesh.Name == "char")
+                        var meshSetting = Settings[mesh.Name];
+                        if(meshSetting.Texture != null)
                         {
-                            effect.DiffuseColor = ColorType3D.Get(ColorType.DefaultText);
+                            effect.TextureEnabled = true;
+                            effect.Texture = meshSetting.Texture;
+                        }
+                        else
+                        {
+                            effect.DiffuseColor = meshSetting.Color;
                         }
                     }
 
 
-
                     if(mesh.Name == "InnerFront")
                     {
-                        effect.TextureEnabled = true;
-                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.ColoredDots];
-                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                        //effect.DiffuseColor = ColorType3D.Get(colorFront);
+                        //effect.TextureEnabled = true;
+                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Marble];
+                        //
+                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+                        effect.DiffuseColor = ColorType3D.Get(colorFront);
                     }
 
                     if (mesh.Name == "InnerBack")
                     {
-                        effect.TextureEnabled = true;
-                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.XmasLeaves];
-                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-//                        effect.DiffuseColor = ColorType3D.Get(colorBack);
+                        //effect.TextureEnabled = true;
+                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Grass];
+                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+                        effect.DiffuseColor = ColorType3D.Get(colorBack);
                     }
                     
                     if (mesh.Name == "BorderMesh")
                     {
-                        
-                        effect.TextureEnabled = true;
-                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Rust];
-                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-
-                        //                        effect.DiffuseColor = ColorType3D.Get(colorHex);
+                        //effect.TextureEnabled = true;
+                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.RustedGround];
+                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
+                        effect.DiffuseColor = ColorType3D.Get(colorHex);
                     }
 
                     if (mesh.Name == "NumberFront" || mesh.Name == "NumberBack")
