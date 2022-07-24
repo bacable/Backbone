@@ -39,7 +39,17 @@ namespace Backbone.Graphics
             foreach(var item in menu.Items)
             {
                 var option = new MenuGraphic();
-                option.Text = new TextGroup(index, parent, new Vector3(position.X, position.Y - 90f * index, position.Z), 80f);
+
+                option.Text = new TextGroup(new TextGroupSettings()
+                {
+                    Color = ColorType.DefaultText,
+                    Id = index,
+                    Parent = parent,
+                    Position = new Vector3(position.X, position.Y - 90f * index, position.Z),
+                    Scale = 80f,
+                    Text = string.Empty
+                });
+
                 option.Item = item;
                 index += 1;
                 Options.Add(option);

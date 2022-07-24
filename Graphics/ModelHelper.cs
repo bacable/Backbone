@@ -78,14 +78,6 @@ namespace Backbone.Graphics
                     //effect.DirectionalLight1.Enabled = false;
                     effect.DirectionalLight2.Enabled = false;
 
-                    /*
-                    if (mesh.Name == "NumberFront" || mesh.Name == "NumberBack")
-                    {
-                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                        effect.AmbientLightColor = new Vector3(1.0f, 1.0f, 1.0f);
-                        effect.SpecularColor = new Vector3(1.0f, 1.0f, 1.0f);
-                    }*/
-
                     effect.Alpha = 1.0f;
                 }
 

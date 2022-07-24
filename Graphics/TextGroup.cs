@@ -23,6 +23,8 @@ namespace Backbone.Graphics
 
         public List<Movable3D> Letters { get; private set; } = new List<Movable3D>();
 
+        public string Text { get; private set; } = string.Empty;
+
         public Matrix? World { get
             {
                 return parent.World;
@@ -80,6 +82,10 @@ namespace Backbone.Graphics
             {
                 SetColor(settings.Color);
             }
+            else
+            {
+                SetColor(ColorType.DefaultText);
+            }
 
             if(!string.IsNullOrEmpty(settings.Text))
             {
@@ -92,22 +98,8 @@ namespace Backbone.Graphics
             }
         }
 
-        public TextGroup(int id, Movable3D parent, Vector3 position, float scale)
-        {
-            this.Id = id;
-            this.baseScale = scale;
-            this.Position = position;
-            this.parent = parent;
-
-            if(LetterWidths.Count == 0 || LetterModels.Count == 0 || string.IsNullOrEmpty(MeshNameToColor))
-            {
-                throw new Exception("Please set these before using this class or else things will break.");
-            }
-        }
-
         public void SetColor(ColorType color)
         {
-            //Letters.ForEach(x => x.MeshColors[MeshNameToColor] = color);
             Letters.ForEach(x => x.MeshProperties[MeshNameToColor] = new MeshProperty()
             {
                 Color = ColorType3D.Get(color)
@@ -125,6 +117,8 @@ namespace Backbone.Graphics
         {
             // TODO: remove once we have lower case letters
             text = text.ToUpper();
+
+            Text = text;
 
             Letters.Clear();
 
@@ -150,7 +144,6 @@ namespace Backbone.Graphics
 
                     if(textColor != ColorType.None)
                     {
-                        //model.MeshColors[MeshNameToColor] = textColor;
                         model.MeshProperties[MeshNameToColor] = new MeshProperty()
                         {
                             Color = ColorType3D.Get(textColor)
