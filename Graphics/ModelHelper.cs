@@ -7,7 +7,7 @@ namespace Backbone.Graphics
 {
     public class ModelHelper
     {
-        public static void DrawHexTile(Model model, Matrix world, Matrix view, Matrix projection, ColorType colorFront, ColorType colorBack, ColorType colorHex, Dictionary<string, MeshProperty> Settings)
+        public static void DrawHexTile(Model model, Matrix world, Matrix view, Matrix projection, float alpha, ColorType colorFront, ColorType colorBack, ColorType colorHex, Dictionary<string, MeshProperty> Settings)
         {
             foreach (ModelMesh mesh in model.Meshes)
             {
@@ -31,7 +31,6 @@ namespace Backbone.Graphics
                             effect.DiffuseColor = meshSetting.Color;
                         }
                     }
-
 
                     if(mesh.Name == "InnerFront")
                     {
@@ -58,13 +57,6 @@ namespace Backbone.Graphics
                         effect.DiffuseColor = ColorType3D.Get(colorHex);
                     }
 
-                    if (mesh.Name == "NumberFront" || mesh.Name == "NumberBack")
-                    {
-//                        effect.TextureEnabled = true;
-//                        effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Circles];
-//                        effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                    }
-
                     effect.LightingEnabled = true;
 
                     effect.DirectionalLight0.DiffuseColor = new Vector3(1f, 1f, 1f);
@@ -78,7 +70,7 @@ namespace Backbone.Graphics
                     //effect.DirectionalLight1.Enabled = false;
                     effect.DirectionalLight2.Enabled = false;
 
-                    effect.Alpha = 1.0f;
+                    effect.Alpha = alpha;
                 }
 
                 //mesh.Draw();

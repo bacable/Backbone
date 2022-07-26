@@ -38,6 +38,9 @@ namespace Backbone.Graphics
             }
         }
 
+        /// 0f is fully transparent, 1f is fully opaque
+        public float Alpha { get; set; } = 1f;
+
         private List<IAction3D> queuedActions = new List<IAction3D>();
 
         public ColorType Color1 = ColorType.White;
@@ -107,9 +110,9 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            if(IsVisible)
+            if(IsVisible && Alpha > 0f)
             {
-                ModelHelper.DrawHexTile(Model, World, view, projection, Color1, Color2, ColorBkg, MeshProperties);
+                ModelHelper.DrawHexTile(Model, World, view, projection, Alpha, Color1, Color2, ColorBkg, MeshProperties);
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 
 namespace Backbone.Actions
@@ -10,6 +11,11 @@ namespace Backbone.Actions
         public static IAction3D Scale(Vector3 target, float duration)
         {
             return new ScaleToAction(target, duration);
+        }
+
+        internal static IAction3D FadeTo(float target, float duration)
+        {
+            return new FadeToAction(target, duration);
         }
 
         public static IAction3D RotateX(float target, float duration)
