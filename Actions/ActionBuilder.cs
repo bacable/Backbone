@@ -95,5 +95,9 @@ namespace Backbone.Actions
             return new ChangeScreenAction<T>(switchToScreen);
         }
 
+        public static IAction3D AddVelocity(Vector3 v0, Vector3 p0, float g, float duration)
+        {
+            return new PhysicsParticleAction(v0, p0, g, duration);
+        }
     }
 }
