@@ -14,7 +14,6 @@ namespace Backbone.Graphics
 
         static MouseState LastMouseState;
 
-
         public static void Load(T screenType, IScreen screen)
         {
             Screens[screenType] = screen;

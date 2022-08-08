@@ -3,6 +3,7 @@ using Backbone.Graphics;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Backbone.Actions
@@ -20,7 +21,7 @@ namespace Backbone.Actions
 
         private float g; // how much gravitational force
 
-        private float elapsedTime;
+        private float elapsedTime = 0;
         private float duration;
 
         public PhysicsParticleAction(Vector3 v0, Vector3 p0, float g, float duration)
@@ -29,6 +30,9 @@ namespace Backbone.Actions
             this.p0 = p0;
             this.g = g;
             this.duration = duration;
+
+            vCurrent = v0;
+            pCurrent = p0;
         }
 
         public void Reset()

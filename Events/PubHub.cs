@@ -75,6 +75,14 @@ namespace Backbone.Events
             }
         }
 
+        public static void Sub(T[] events, ISubscriber<T> subscriber)
+        {
+            foreach (var eventType in events)
+            {
+                Sub(eventType, subscriber);
+            }
+        }
+
         public static void Sub(T eventType, ISubscriber<T> subscriber)
         {
             if (!Subscriptions.ContainsKey(eventType))
