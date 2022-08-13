@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Backbone.Graphics
@@ -31,6 +32,13 @@ namespace Backbone.Graphics
             {
                 return BackPanel.IsAnimating;
             }
+        }
+
+        // movables that can be added to the window and interacted with
+        private Dictionary<string, Movable3D> decorations = new Dictionary<string, Movable3D>();
+        public Movable3D GetDecoration(string id)
+        {
+            return decorations[id] ?? null;
         }
 
         public Action OnClick;
@@ -97,6 +105,12 @@ namespace Backbone.Graphics
             movable.Parent = BackPanel;
         }
 
+        public void AddDecoration(string id, Movable3D movable)
+        {
+            movable.Parent = this.BackPanel;
+            decorations.Add(id, movable);
+        }
+
         public void Draw(Matrix view, Matrix projection)
         {
             if(settings.VisibleWhileInactive || IsActive)
@@ -109,6 +123,11 @@ namespace Backbone.Graphics
                 }
 
                 optionGroup.Draw(view, projection);
+
+                foreach(var key in decorations.Keys)
+                {
+                    decorations[key].Draw(view, projection);
+                }
             }
         }
 
@@ -211,6 +230,13 @@ namespace Backbone.Graphics
                 }
 
                 optionGroup.Update(gameTime);
+
+                foreach(var key in decorations.Keys)
+                {
+                    Debug.WriteLine("updating decoration " + key);
+                    var decoration = decorations[key];
+                    decoration.Update(gameTime);
+                }
             }
         }
 
