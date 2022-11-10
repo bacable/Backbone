@@ -18,22 +18,32 @@ namespace Backbone.Input
 
         public static Dictionary<InputAction, Keys> KeyMapping = new Dictionary<InputAction, Keys>()
         {
-            { InputAction.Accept, Keys.Space },
-            { InputAction.Back, Keys.Back },
-            { InputAction.Left, Keys.Left },
-            { InputAction.Right, Keys.Right },
-            { InputAction.Up, Keys.Up },
-            { InputAction.Down, Keys.Down },
-            { InputAction.Select1, Keys.NumPad1 },
-            { InputAction.Select2, Keys.NumPad2 },
-            { InputAction.Select3, Keys.NumPad3 },
-            { InputAction.Select4, Keys.NumPad4 },
-            { InputAction.Select5, Keys.NumPad5 },
-            { InputAction.Start, Keys.Enter },
-            { InputAction.SpecialAction1, Keys.Z },
-            { InputAction.SpecialAction2, Keys.X },
-            { InputAction.SpecialAction3, Keys.C },
-            { InputAction.SpecialAction4, Keys.V }
+            [InputAction.Accept] = Keys.Space,
+            [InputAction.Back] = Keys.Back,
+            [InputAction.Left] = Keys.Left,
+            [InputAction.Right] = Keys.Right,
+            [InputAction.Up] = Keys.Up,
+            [InputAction.Down] = Keys.Down,
+            [InputAction.Select1] = Keys.NumPad1,
+            [InputAction.Select2] = Keys.NumPad2,
+            [InputAction.Select3] = Keys.NumPad3,
+            [InputAction.Select4] = Keys.NumPad4,
+            [InputAction.Select5] = Keys.NumPad5,
+            [InputAction.Start] = Keys.Enter,
+            [InputAction.SpecialAction1] = Keys.Z,
+            [InputAction.SpecialAction2] = Keys.X,
+            [InputAction.SpecialAction3] = Keys.C,
+            [InputAction.SpecialAction4] = Keys.V,
+            [InputAction.N0] = Keys.D0,
+            [InputAction.N1] = Keys.D1,
+            [InputAction.N2] = Keys.D2,
+            [InputAction.N3] = Keys.D3,
+            [InputAction.N4] = Keys.D4,
+            [InputAction.N5] = Keys.D5,
+            [InputAction.N6] = Keys.D6,
+            [InputAction.N7] = Keys.D7,
+            [InputAction.N8] = Keys.D8,
+            [InputAction.N9] = Keys.D9
         };
 
         public static void UpdateBefore()
