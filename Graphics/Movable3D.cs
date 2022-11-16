@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace Backbone.Graphics
 {
-    public class Movable3D
+    public class Movable3D: ICollidable
     {
         public Model Model { get; set; }
         public Vector3 Position { get; set; }
@@ -29,6 +29,7 @@ namespace Backbone.Graphics
 
         public Dictionary<string, MeshProperty> MeshProperties { get; private set; } = new Dictionary<string, MeshProperty>();
 
+        public float? OverrideCollisionRadius = null;
 
 
         public Boolean IsAnimating {  
@@ -119,6 +120,11 @@ namespace Backbone.Graphics
         public static Movable3D Empty()
         {
             return new Movable3D(null, Vector3.Zero, 0f);
+        }
+
+        public bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport)
+        {
+            return Collision3D.Intersects(position, Model, World, view, projection, viewport, OverrideCollisionRadius);
         }
     }
 }
