@@ -21,7 +21,20 @@ namespace Backbone.Graphics
         public Matrix TranslationMatrix { get; private set; } = Matrix.Identity;
 
         public Vector3 Scale = Vector3.Zero;
-        public Movable3D Parent { get; set; }
+
+        private Movable3D _parent;
+        public Movable3D Parent
+        {
+            get
+            {
+                return _parent;
+            }
+            set
+            {
+                _parent = value;
+                UpdateMatrix();
+            }
+        }
 
         public bool IsVisible { get; set; } = true;
 

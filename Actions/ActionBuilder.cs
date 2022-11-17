@@ -8,9 +8,9 @@ namespace Backbone.Actions
     // TODO: Add run local code block (passed as lambda) if possible
     public class ActionBuilder
     {
-        public static IAction3D Scale(Vector3 target, float duration)
+        public static IAction3D Scale(Vector3 source, Vector3 target, float duration)
         {
-            return new ScaleToAction(target, duration);
+            return new ScaleToAction(source, target, duration);
         }
 
         internal static IAction3D FadeTo(float target, float duration)
