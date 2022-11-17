@@ -1,6 +1,8 @@
-﻿using Backbone.Input;
+﻿using Backbone.Actions;
+using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -8,11 +10,15 @@ namespace Backbone.Graphics
 {
     public class IconChooser : IGUI3D
     {
-        private Dictionary<string, ICollidableDrawable> valueToIcons = new Dictionary<string, ICollidableDrawable>();
+        private Dictionary<string, IInteractive> valueToIcons = new Dictionary<string, IInteractive>();
 
         private MenuOptionChooser chooser;
 
-        public ICollidableDrawable Icon { get
+        public float? OverrideCollisionRadius = null;
+
+        public Func<IAction3D> ClickAnimation { get; set; } = null;
+
+        public IInteractive Icon { get
             {
                 return valueToIcons[chooser.SelectedOption.Value] ?? null;
             }
@@ -23,7 +29,7 @@ namespace Backbone.Graphics
             this.chooser = chooser;
         }
 
-        public void AddIcons(List<(string value, ICollidableDrawable icon)> icons)
+        public void AddIcons(List<(string value, IInteractive icon)> icons)
         {
             foreach (var icon in icons)
             {
@@ -33,14 +39,15 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            Debug.WriteLine("Handle Mouse Called");
-            if(Icon != null)
+            if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
             {
-                Debug.WriteLine("Icon not null");
-                if (Icon.Intersects(command.MousePosition, command.View, command.Projection, command.Viewport))
+                if (Icon.Intersects(command.MousePosition, command.View, command.Projection, command.Viewport, OverrideCollisionRadius))
                 {
-                    Debug.WriteLine("It intersects!");
                     this.chooser.Next();
+                    if(ClickAnimation != null)
+                    {
+                        Icon.Run(ClickAnimation());
+                    }
                 }
             }
         }

@@ -31,7 +31,6 @@ namespace Backbone.Graphics
 
         public float? OverrideCollisionRadius = null;
 
-
         public Boolean IsAnimating {  
             get
             {
@@ -122,9 +121,9 @@ namespace Backbone.Graphics
             return new Movable3D(null, Vector3.Zero, 0f);
         }
 
-        public bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport)
+        public bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport, float? overrideCollisionRadius)
         {
-            return Collision3D.Intersects(position, Model, World, view, projection, viewport, OverrideCollisionRadius);
+            return Collision3D.Intersects(position, Model, World, view, projection, viewport, overrideCollisionRadius ?? OverrideCollisionRadius);
         }
     }
 }

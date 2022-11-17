@@ -10,6 +10,6 @@ namespace Backbone.Graphics
 {
     public interface ICollidable
     {
-        bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport);
+        bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport, float? overrideSphereRadius = null);
     }
 }
