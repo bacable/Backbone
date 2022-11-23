@@ -9,6 +9,11 @@ namespace Backbone.Graphics
 {
     /// <summary>
     /// Based on: http://rbwhitaker.wikidot.com/picking
+    /// Note: Having some issues getting this to work consistently between models. It was working for my hex tiles fine,
+    /// but have had issues with it for the text and icons. Not sure if it's the way the models
+    /// are being output (they seem the same, same size, same origin, etc, or what. Anyway, my game is basically 2D anyway,
+    /// so I will circle back to this sometime later to make sure it's working correctly. Just keep in mind it might not be
+    /// without some errors.
     /// </summary>
     public class Collision3D
     {

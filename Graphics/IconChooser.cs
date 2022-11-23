@@ -18,21 +18,25 @@ namespace Backbone.Graphics
 
         public Func<IAction3D> ClickAnimation { get; set; } = null;
 
+        private string _id;
+
         public IInteractive Icon { get
             {
                 return valueToIcons[chooser.SelectedOption.Value] ?? null;
             }
         }
 
-        public IconChooser(MenuOptionChooser chooser)
+        public IconChooser(MenuOptionChooser chooser, string id)
         {
             this.chooser = chooser;
+            _id = id;
         }
 
         public void AddIcons(List<(string value, IInteractive icon)> icons)
         {
             foreach (var icon in icons)
             {
+                chooser.Add(new MenuOption(icon.value, icon.value));
                 valueToIcons[icon.value] = icon.icon;
             }
         }
@@ -41,7 +45,7 @@ namespace Backbone.Graphics
         {
             if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
             {
-                if (Icon.Intersects(command.MousePosition, command.View, command.Projection, command.Viewport, OverrideCollisionRadius))
+                if (Icon.Intersects(command.Viewport, command.MousePosition, Vector2.Zero, OverrideCollisionRadius))
                 {
                     this.chooser.Next();
                     if(ClickAnimation != null)

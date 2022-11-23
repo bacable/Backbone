@@ -3,10 +3,11 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Backbone.Graphics
 {
-    public class Movable3D: ICollidable
+    public class Movable3D : IInteractive
     {
         public Model Model { get; set; }
         public Vector3 Position { get; set; }
@@ -42,7 +43,7 @@ namespace Backbone.Graphics
 
         public Dictionary<string, MeshProperty> MeshProperties { get; private set; } = new Dictionary<string, MeshProperty>();
 
-        public float? OverrideCollisionRadius = null;
+        public float? collisionRadius = null;
 
         public Boolean IsAnimating {  
             get
@@ -53,6 +54,7 @@ namespace Backbone.Graphics
 
         /// 0f is fully transparent, 1f is fully opaque
         public float Alpha { get; set; } = 1f;
+        public bool IsInteractive { get { return !IsAnimating && IsVisible; } }
 
         private List<IAction3D> queuedActions = new List<IAction3D>();
 
@@ -134,9 +136,21 @@ namespace Backbone.Graphics
             return new Movable3D(null, Vector3.Zero, 0f);
         }
 
-        public bool Intersects(Vector2 position, Matrix view, Matrix projection, Viewport viewport, float? overrideCollisionRadius)
+        public bool Intersects(Viewport viewport, Vector2 position, Vector2 zero, float? overrideRadius)
         {
-            return Collision3D.Intersects(position, Model, World, view, projection, viewport, overrideCollisionRadius ?? OverrideCollisionRadius);
+            var mouseToWorldPosX = position.X - viewport.Width / 2f;
+            var mouseToWorldPosY = (position.Y - viewport.Height / 2f) * -1f;
+            var mousePosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
+
+            var xpos = (this.Parent != null) ? Position.X + this.Parent.Position.X : Position.X;
+            var ypos = (this.Parent != null) ? Position.Y + this.Parent.Position.Y : Position.Y;
+
+            return Collision2D.IntersectCircle(mousePosition, new Vector2(xpos, ypos), overrideRadius ?? collisionRadius ?? 0f);
+        }
+
+        public void Run(IAction3D action)
+        {
+            this.Run(action, true);
         }
     }
 }
