@@ -26,6 +26,11 @@ namespace Backbone.Graphics
             }
         }
 
+        public string Value
+        {
+            get { return chooser.SelectedOption.Value; }
+        }
+
         public IconChooser(MenuOptionChooser chooser, string id)
         {
             this.chooser = chooser;
@@ -39,6 +44,11 @@ namespace Backbone.Graphics
                 chooser.Add(new MenuOption(icon.value, icon.value));
                 valueToIcons[icon.value] = icon.icon;
             }
+        }
+
+        public void SetValue(string newValue)
+        {
+            this.chooser.SetValue(newValue);
         }
 
         public void HandleMouse(HandleMouseCommand command)
