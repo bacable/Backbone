@@ -48,6 +48,23 @@ namespace Backbone.Graphics
             }
         }
 
+        private Rectangle boundingBox = default(Rectangle);
+        private bool recalculateBoundingBox = true;
+        public Rectangle BoundingBox
+        {
+            get
+            {
+                if(recalculateBoundingBox)
+                {
+                    var center = new Vector3((Left + Right) / 2f, Position.Y, Position.Z);
+                    var width = Right - Left;
+                    boundingBox = new Rectangle((int)center.X, (int)center.Y, (int)width, 100); //TODO: fix the height
+                    recalculateBoundingBox = false;
+                }
+                return boundingBox;
+            }
+        }
+
         float baseScale = 0f;
         Movable3D parent = null;
         ColorType textColor = ColorType.None;

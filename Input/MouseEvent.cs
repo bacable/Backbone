@@ -9,6 +9,7 @@ namespace Backbone.Input
         None,
         Click,
         Pressed,
-        Release
+        Release,
+        Moved
     }
 }

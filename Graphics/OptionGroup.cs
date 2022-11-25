@@ -3,6 +3,7 @@ using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Graphics
@@ -122,6 +123,31 @@ namespace Backbone.Graphics
         public void HandleMouse(HandleMouseCommand command)
         {
             
+            if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
+            {
+                for(var i = 0; i < Options.Count; i++)
+                {
+                    var option = Options[i];
+                    if (Collision2D.IntersectRect(command.WorldPosition, option.Text.BoundingBox))
+                    {
+                        UpdateSelected(option.Item);
+                        if (command.State == MouseEvent.Release)
+                        {
+                            if (option.Item.Type == MenuItemType.Button)
+                            {
+                                option.Item.Click();
+                            }
+                            else if(option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                            {
+                                option.Item.Next();
+                            }
+                        }
+                        UpdateSelectedOption();
+                        UpdateTexts();
+                        break;
+                    }
+                }
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)

@@ -38,14 +38,22 @@ namespace Backbone.Graphics
 
             var currentMouseState = Mouse.GetState();
 
+            var hasMoved = currentMouseState.Y != LastMouseState.Y || currentMouseState.X != LastMouseState.X;
+
             // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
             var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
                                 (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
+                                hasMoved ? MouseEvent.Moved :
                                 MouseEvent.None;
+
 
             if (mouseState != MouseEvent.None)
             {
                 Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
+
+                var mouseToWorldPosX = mouseLocation.X - command.Viewport.Width / 2f;
+                var mouseToWorldPosY = (mouseLocation.Y - command.Viewport.Height / 2f) * -1f;
+                var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
 
                 var handleMouseCommand = new HandleMouseCommand()
                 {
@@ -53,7 +61,8 @@ namespace Backbone.Graphics
                     Projection = command.Projection,
                     View = command.View,
                     Viewport = command.Viewport,
-                    State = mouseState
+                    State = mouseState,
+                    WorldPosition = worldPosition
                 };
 
                 CurrentScreen.HandleMouse(handleMouseCommand);

@@ -19,16 +19,16 @@ namespace Backbone.Graphics
             BottomLeft
         }
 
-        public static bool IntersectRect(Vector2 point, Vector2 origin, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
+        public static bool IntersectRect(Vector2 point, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
         {
             Vector2 collisionRect;
 
-            collisionRect.X = (int)((anchor == Collision2DAnchor.Center) ? origin.X - boundingBox.Width / 2f :
-                (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.BottomLeft) ? origin.X :
-                origin.X + boundingBox.Width);
-            collisionRect.Y = (int)((anchor == Collision2DAnchor.Center) ? origin.Y - boundingBox.Height / 2f :
-                (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.TopRight) ? origin.Y :
-                origin.Y + boundingBox.Height);
+            collisionRect.X = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.X - boundingBox.Width / 2f :
+                (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.BottomLeft) ? boundingBox.X :
+                boundingBox.X + boundingBox.Width);
+            collisionRect.Y = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.Y - boundingBox.Height / 2f :
+                (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.TopRight) ? boundingBox.Y :
+                boundingBox.Y + boundingBox.Height);
 
             return (point.X > collisionRect.X && point.Y > collisionRect.Y &&
                 point.X < collisionRect.X + boundingBox.Width &&
