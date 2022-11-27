@@ -243,6 +243,9 @@
   <data name="Flying" xml:space="preserve">
     <value>Flying</value>
   </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Full Screen</value>
+  </data>
   <data name="GameOver" xml:space="preserve">
     <value>Game Over</value>
   </data>

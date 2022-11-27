@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ProximityND.Config;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Backbone.Graphics
 {
@@ -15,18 +16,32 @@ namespace Backbone.Graphics
 
         static MouseState LastMouseState;
 
-        public static void SetNewResolution(int newWidth, int newHeight)
+        public static void SetNewResolution(string newResolution)
         {
-            if(ScreenSettings.Graphics != null)
+            if(ScreenSettings.Graphics != null && !string.IsNullOrEmpty(newResolution))
             {
-                ScreenSettings.Graphics.PreferredBackBufferWidth = newWidth;
-                ScreenSettings.Graphics.PreferredBackBufferHeight = newHeight;
-                ScreenSettings.Graphics.ApplyChanges();
-                if(CurrentScreen != null)
+                var resolutionSplit = newResolution.Split('x');
+                int width, height;
+                if (resolutionSplit.Length > 1)
                 {
-                    CurrentScreen.Resize(newWidth, newHeight);
+                    int.TryParse(resolutionSplit[0], out width);
+                    int.TryParse(resolutionSplit[1], out height);
+
+                    ScreenSettings.Graphics.PreferredBackBufferWidth = width;
+                    ScreenSettings.Graphics.PreferredBackBufferHeight = height;
+                    ScreenSettings.Graphics.ApplyChanges();
+                    if (CurrentScreen != null)
+                    {
+                        CurrentScreen.Resize(width, height);
+                    }
                 }
             }
+        }
+
+        public static void SetFullScreen(bool isFullScreen)
+        {
+            ScreenSettings.Graphics.IsFullScreen = isFullScreen;
+            ScreenSettings.Graphics.ApplyChanges();
         }
 
         public static void Load(T screenType, IScreen screen)
@@ -66,9 +81,13 @@ namespace Backbone.Graphics
             {
                 Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-                var mouseToWorldPosX = mouseLocation.X - command.Viewport.Width / 2f;
-                var mouseToWorldPosY = (mouseLocation.Y - command.Viewport.Height / 2f) * -1f;
+                var mouseToWorldPosX = mouseLocation.X - ScreenSettings.Width / 2;
+//                    command.Viewport.Width / 2f;
+                var mouseToWorldPosY = (mouseLocation.Y - ScreenSettings.Height / 2f) * -1f;
                 var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
+
+                //Debug.WriteLine("Mouse X:" + mouseLocation.X, ", Y: " + mouseLocation.Y);
+                //Debug.WriteLine("World X:" + worldPosition.X, ", Y: " + worldPosition.Y);
 
                 var handleMouseCommand = new HandleMouseCommand()
                 {
