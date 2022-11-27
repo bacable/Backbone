@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProximityND.Config;
 using System.Collections.Generic;
 
 namespace Backbone.Graphics
@@ -13,6 +14,20 @@ namespace Backbone.Graphics
         static IScreen CurrentScreen = null;
 
         static MouseState LastMouseState;
+
+        public static void SetNewResolution(int newWidth, int newHeight)
+        {
+            if(ScreenSettings.Graphics != null)
+            {
+                ScreenSettings.Graphics.PreferredBackBufferWidth = newWidth;
+                ScreenSettings.Graphics.PreferredBackBufferHeight = newHeight;
+                ScreenSettings.Graphics.ApplyChanges();
+                if(CurrentScreen != null)
+                {
+                    CurrentScreen.Resize(newWidth, newHeight);
+                }
+            }
+        }
 
         public static void Load(T screenType, IScreen screen)
         {

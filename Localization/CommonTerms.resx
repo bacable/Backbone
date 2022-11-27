@@ -360,6 +360,9 @@
   <data name="Recharge" xml:space="preserve">
     <value>Recharge</value>
   </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolution</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
   </data>

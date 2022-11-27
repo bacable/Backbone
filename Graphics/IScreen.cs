@@ -13,6 +13,8 @@ namespace Backbone.Graphics
         void Draw(Matrix view, Matrix projection);
         void DrawText(SpriteBatch spriteBatch);
         void HandleMouse(HandleMouseCommand command);
+
+        void Resize(int newWidth, int newHeight);
         void Cleanup();
     }
 }
