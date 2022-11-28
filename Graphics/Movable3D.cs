@@ -1,6 +1,7 @@
 ﻿using Backbone.Actions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Config;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -136,16 +137,12 @@ namespace Backbone.Graphics
             return new Movable3D(null, Vector3.Zero, 0f);
         }
 
-        public bool Intersects(Viewport viewport, Vector2 position, Vector2 zero, float? overrideRadius)
+        public bool Intersects(Viewport viewport, Vector2 position, Vector2 zero, Vector2 ratio, float? overrideRadius)
         {
-            var mouseToWorldPosX = position.X - viewport.Width / 2f;
-            var mouseToWorldPosY = (position.Y - viewport.Height / 2f) * -1f;
-            var mousePosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
+            var xpos = ((this.Parent != null) ? Position.X + this.Parent.Position.X : Position.X) * ratio.X;
+            var ypos = ((this.Parent != null) ? Position.Y + this.Parent.Position.Y : Position.Y) * ratio.Y;
 
-            var xpos = (this.Parent != null) ? Position.X + this.Parent.Position.X : Position.X;
-            var ypos = (this.Parent != null) ? Position.Y + this.Parent.Position.Y : Position.Y;
-
-            return Collision2D.IntersectCircle(mousePosition, new Vector2(xpos, ypos), overrideRadius ?? collisionRadius ?? 0f);
+            return Collision2D.IntersectCircle(position, new Vector2(xpos, ypos), overrideRadius ?? collisionRadius ?? 0f);
         }
 
         public void Run(IAction3D action)

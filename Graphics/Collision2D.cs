@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -19,20 +20,29 @@ namespace Backbone.Graphics
             BottomLeft
         }
 
-        public static bool IntersectRect(Vector2 point, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
+        public static bool IntersectRect(Viewport viewport, Vector2 point, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
         {
-            Vector2 collisionRect;
+            Vector2 collisionPos;
 
-            collisionRect.X = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.X - boundingBox.Width / 2f :
+            collisionPos.X = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.X - boundingBox.Width / 2f :
                 (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.BottomLeft) ? boundingBox.X :
                 boundingBox.X + boundingBox.Width);
-            collisionRect.Y = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.Y - boundingBox.Height / 2f :
+            collisionPos.Y = (int)((anchor == Collision2DAnchor.Center) ? boundingBox.Y - boundingBox.Height / 2f :
                 (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.TopRight) ? boundingBox.Y :
                 boundingBox.Y + boundingBox.Height);
 
-            return (point.X > collisionRect.X && point.Y > collisionRect.Y &&
-                point.X < collisionRect.X + boundingBox.Width &&
-                point.Y < collisionRect.Y + boundingBox.Height);
+            Vector2 collisionWorldPos;
+
+            float horizRatio = 1920 / viewport.Width;
+            float vertRatio = 1080 / viewport.Height;
+            collisionWorldPos.X = collisionPos.X * horizRatio;
+            collisionWorldPos.Y = collisionPos.Y * vertRatio;
+
+            Rectangle modifiedBoundingBox = new Rectangle(boundingBox.X, boundingBox.Y, (int)(boundingBox.Width * horizRatio), (int)(boundingBox.Height * vertRatio));
+
+            return (point.X > collisionPos.X && point.Y > collisionPos.Y &&
+                point.X < collisionPos.X + modifiedBoundingBox.Width &&
+                point.Y < collisionPos.Y + modifiedBoundingBox.Height);
         }
 
         /// <summary>

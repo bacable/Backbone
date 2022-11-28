@@ -11,5 +11,6 @@ namespace Backbone.Input
         public Viewport Viewport { get; set; }
         public MouseEvent State { get; set; }
         public Vector2 WorldPosition { get; set; }
+        public Vector2 Ratio { get; set; }
     }
 }

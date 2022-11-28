@@ -55,7 +55,7 @@ namespace Backbone.Graphics
         {
             if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
             {
-                if (Icon.Intersects(command.Viewport, command.MousePosition, Vector2.Zero, OverrideCollisionRadius))
+                if (Icon.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
                 {
                     this.chooser.Next();
                     if(ClickAnimation != null)
