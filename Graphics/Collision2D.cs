@@ -20,7 +20,7 @@ namespace Backbone.Graphics
             BottomLeft
         }
 
-        public static bool IntersectRect(Viewport viewport, Vector2 point, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
+        public static bool IntersectRect(Viewport viewport, Vector2 point, Vector2 ratio, Rectangle boundingBox, Collision2DAnchor anchor = Collision2DAnchor.Center)
         {
             Vector2 collisionPos;
 
@@ -31,18 +31,9 @@ namespace Backbone.Graphics
                 (anchor == Collision2DAnchor.TopLeft || anchor == Collision2DAnchor.TopRight) ? boundingBox.Y :
                 boundingBox.Y + boundingBox.Height);
 
-            Vector2 collisionWorldPos;
-
-            float horizRatio = 1920 / viewport.Width;
-            float vertRatio = 1080 / viewport.Height;
-            collisionWorldPos.X = collisionPos.X * horizRatio;
-            collisionWorldPos.Y = collisionPos.Y * vertRatio;
-
-            Rectangle modifiedBoundingBox = new Rectangle(boundingBox.X, boundingBox.Y, (int)(boundingBox.Width * horizRatio), (int)(boundingBox.Height * vertRatio));
-
             return (point.X > collisionPos.X && point.Y > collisionPos.Y &&
-                point.X < collisionPos.X + modifiedBoundingBox.Width &&
-                point.Y < collisionPos.Y + modifiedBoundingBox.Height);
+                point.X < collisionPos.X + boundingBox.Width &&
+                point.Y < collisionPos.Y + boundingBox.Height);
         }
 
         /// <summary>

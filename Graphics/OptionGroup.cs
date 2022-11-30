@@ -128,7 +128,13 @@ namespace Backbone.Graphics
                 for(var i = 0; i < Options.Count; i++)
                 {
                     var option = Options[i];
-                    if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, option.Text.BoundingBox))
+
+                    Rectangle modifiedBoundingBox = new Rectangle((int)(option.Text.Position.X * command.Ratio.X),
+                        (int)(option.Text.Position.Y * command.Ratio.Y),
+                        (int)(option.Text.BoundingBox.Width * command.Ratio.X),
+                        (int)(option.Text.BoundingBox.Height * command.Ratio.Y));
+
+                    if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
                     {
                         UpdateSelected(option.Item);
                         if (command.State == MouseEvent.Release)

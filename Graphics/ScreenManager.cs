@@ -29,6 +29,10 @@ namespace Backbone.Graphics
 
                     ScreenSettings.Graphics.PreferredBackBufferWidth = width;
                     ScreenSettings.Graphics.PreferredBackBufferHeight = height;
+                    
+                    ScreenSettings.ResolutionWidth = width;
+                    ScreenSettings.ResolutionHeight = height;
+
                     ScreenSettings.Graphics.ApplyChanges();
                     if (CurrentScreen != null)
                     {
@@ -40,7 +44,7 @@ namespace Backbone.Graphics
 
         public static void SetFullScreen(bool isFullScreen)
         {
-            ScreenSettings.Graphics.IsFullScreen = isFullScreen;
+            ScreenSettings.Graphics.IsFullScreen = false;// isFullScreen;
             ScreenSettings.Graphics.ApplyChanges();
         }
 
@@ -81,15 +85,15 @@ namespace Backbone.Graphics
             {
                 Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-                var mouseToWorldPosX = mouseLocation.X - command.Viewport.Width / 2;
-                var mouseToWorldPosY = (mouseLocation.Y - command.Viewport.Height / 2f) * -1f;
+                var mouseToWorldPosX = mouseLocation.X - ScreenSettings.ResolutionWidth / 2;
+                var mouseToWorldPosY = (mouseLocation.Y - ScreenSettings.ResolutionHeight / 2f) * -1f;
                 var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
                 var hRatio = (float)command.Viewport.Width / 1920f;
                 var vRatio = (float)command.Viewport.Height / 1080f;
 
                 //Debug.WriteLine("Mouse X:" + mouseLocation.X, ", Y: " + mouseLocation.Y);
                 //Debug.WriteLine("World X:" + worldPosition.X, ", Y: " + worldPosition.Y);
-                Debug.WriteLine("Viewport W:" + command.Viewport.Width + ", H: " + command.Viewport.Height);
+                Debug.WriteLine("Viewport W:" + ScreenSettings.ResolutionWidth + ", H: " + ScreenSettings.ResolutionHeight);
 
                 var handleMouseCommand = new HandleMouseCommand()
                 {
