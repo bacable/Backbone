@@ -1,14 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 
 namespace Backbone.Actions
 {
+    // TODO: Add run local code block (passed as lambda) if possible
     public class ActionBuilder
     {
-        public static IAction3D Scale(Vector3 target, float duration)
+        public static IAction3D Scale(Vector3 source, Vector3 target, float duration)
         {
-            return new ScaleToAction(target, duration);
+            return new ScaleToAction(source, target, duration);
+        }
+
+        internal static IAction3D FadeTo(float target, float duration)
+        {
+            return new FadeToAction(target, duration);
         }
 
         public static IAction3D RotateX(float target, float duration)
@@ -88,5 +95,9 @@ namespace Backbone.Actions
             return new ChangeScreenAction<T>(switchToScreen);
         }
 
+        public static IAction3D AddVelocity(Vector3 v0, Vector3 p0, float g, float duration)
+        {
+            return new PhysicsParticleAction(v0, p0, g, duration);
+        }
     }
 }

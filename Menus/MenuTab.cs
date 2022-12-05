@@ -14,7 +14,14 @@ namespace Backbone.Menus
 
         public bool CanNext => throw new NotImplementedException();
 
+        public string DisplayText { get; set; }
+
         public void Click()
+        {
+            throw new NotImplementedException();
+        }
+
+        public object GetValue()
         {
             throw new NotImplementedException();
         }
@@ -25,6 +32,11 @@ namespace Backbone.Menus
         }
 
         public void Prev()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SetValue(object value)
         {
             throw new NotImplementedException();
         }

@@ -34,15 +34,27 @@ namespace Backbone.Sound
             sounds[soundEffectType] = soundEffect;
         }
 
+        public static void Play(string effectType)
+        {
+            object soundToPlay;
+            if (Enum.TryParse(typeof(T), (string)effectType, out soundToPlay))
+            {
+                Play((T)soundToPlay);
+            }
+        }
+
         public static void Play(T effectType)
         {
             if (!ShouldPlay) return;
 
-            SoundEffect effect = sounds[effectType];
-
-            if(effect != null)
+            if(sounds.ContainsKey(effectType))
             {
-                effect.Play();
+                SoundEffect effect = sounds[effectType];
+
+                if (effect != null)
+                {
+                    effect.Play();
+                }
             }
         }
     }

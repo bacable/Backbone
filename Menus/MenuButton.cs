@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Backbone.Menus
 {
@@ -30,6 +31,16 @@ namespace Backbone.Menus
             OnClick?.Invoke();
         }
 
+        public void SetValue(object value)
+        {
+            // not needed right now, maybe change text of button later?
+        }
+
+        public object GetValue()
+        {
+            throw new NotImplementedException();
+        }
+
         public bool CanNext
         {
             get
@@ -45,5 +56,8 @@ namespace Backbone.Menus
                 return false;
             }
         }
+
+        // TODO: make them separate
+        public string DisplayText { get { return Name; } set { } }
     }
 }

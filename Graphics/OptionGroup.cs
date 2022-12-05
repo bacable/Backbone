@@ -1,7 +1,9 @@
-﻿using Backbone.Menus;
+﻿using Backbone.Input;
+using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Graphics
@@ -38,7 +40,17 @@ namespace Backbone.Graphics
             foreach(var item in menu.Items)
             {
                 var option = new MenuGraphic();
-                option.Text = new TextGroup(index, parent, new Vector3(position.X, position.Y - 90f * index, position.Z), 80f);
+
+                option.Text = new TextGroup(new TextGroupSettings()
+                {
+                    Color = ColorType.DefaultText,
+                    Id = index,
+                    Parent = parent,
+                    Position = new Vector3(position.X, position.Y - 90f * index, position.Z),
+                    Scale = 80f,
+                    Text = string.Empty
+                });
+
                 option.Item = item;
                 index += 1;
                 Options.Add(option);
@@ -87,13 +99,13 @@ namespace Backbone.Graphics
                 switch (x.Item.Type)
                 {
                     case MenuItemType.Button:
-                        x.Text.SetText(x.Item.Name);
+                        x.Text.SetText(x.Item.DisplayText);
                         break;
                     case MenuItemType.OptionChooser:
-                        x.Text.SetText(x.Item.Name + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
+                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
                         break;
                     case MenuItemType.OptionSlider:
-                        x.Text.SetText(x.Item.Name + ": " + (x.Item as MenuOptionSlider).Value);
+                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionSlider).Value);
                         break;
                     default:
                         break;
@@ -108,9 +120,40 @@ namespace Backbone.Graphics
             Options.ForEach(x => x.Text.Update(gameTime));
         }
 
-        public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
+        public void HandleMouse(HandleMouseCommand command)
         {
             
+            if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
+            {
+                for(var i = 0; i < Options.Count; i++)
+                {
+                    var option = Options[i];
+
+                    Rectangle modifiedBoundingBox = new Rectangle((int)(option.Text.Position.X * command.Ratio.X),
+                        (int)(option.Text.Position.Y * command.Ratio.Y),
+                        (int)(option.Text.BoundingBox.Width * command.Ratio.X),
+                        (int)(option.Text.BoundingBox.Height * command.Ratio.Y));
+
+                    if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
+                    {
+                        UpdateSelected(option.Item);
+                        if (command.State == MouseEvent.Release)
+                        {
+                            if (option.Item.Type == MenuItemType.Button)
+                            {
+                                option.Item.Click();
+                            }
+                            else if(option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                            {
+                                option.Item.Next();
+                            }
+                        }
+                        UpdateSelectedOption();
+                        UpdateTexts();
+                        break;
+                    }
+                }
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)

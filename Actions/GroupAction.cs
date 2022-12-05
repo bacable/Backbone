@@ -11,6 +11,7 @@ namespace Backbone.Actions
     {
         public List<IAction3D> SubActions { get; set; }
 
+        //TODO: Seems to be an issue with nested group actions. Check later
         public GroupAction(params IAction3D[] groupActions)
         {
             SubActions = groupActions.ToList();

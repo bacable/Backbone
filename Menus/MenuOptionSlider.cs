@@ -7,6 +7,7 @@ namespace Backbone.Menus
 
         public int ID { get; set; }
         public string Name { get; set; }
+        public string DisplayText { get; set; }
         public int Minimum { get; set; }
         public int Maximum { get; set; }
         public int StepAmount { get; set; }
@@ -34,9 +35,10 @@ namespace Backbone.Menus
             }
         }
 
-        public MenuOptionSlider(string name, int min, int max, int step)
+        public MenuOptionSlider(string name, string displayText, int min, int max, int step)
         {
             Name = name;
+            DisplayText = displayText;
             Minimum = min;
             Maximum = max;
             StepAmount = step;
@@ -95,7 +97,17 @@ namespace Backbone.Menus
 
         public void Click()
         {
-            throw new NotImplementedException();
+            // don't do anything
+        }
+
+        public void SetValue(object value)
+        {
+            Value = (int)value;
+        }
+
+        public object GetValue()
+        {
+            return Value;
         }
     }
 }
