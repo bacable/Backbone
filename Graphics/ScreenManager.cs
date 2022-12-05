@@ -88,12 +88,6 @@ namespace Backbone.Graphics
                 var mouseToWorldPosX = mouseLocation.X - ScreenSettings.ResolutionWidth / 2;
                 var mouseToWorldPosY = (mouseLocation.Y - ScreenSettings.ResolutionHeight / 2f) * -1f;
                 var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
-                var hRatio = (float)command.Viewport.Width / 1920f;
-                var vRatio = (float)command.Viewport.Height / 1080f;
-
-                //Debug.WriteLine("Mouse X:" + mouseLocation.X, ", Y: " + mouseLocation.Y);
-                //Debug.WriteLine("World X:" + worldPosition.X, ", Y: " + worldPosition.Y);
-                Debug.WriteLine("Viewport W:" + ScreenSettings.ResolutionWidth + ", H: " + ScreenSettings.ResolutionHeight);
 
                 var handleMouseCommand = new HandleMouseCommand()
                 {
@@ -103,7 +97,7 @@ namespace Backbone.Graphics
                     Viewport = command.Viewport,
                     State = mouseState,
                     WorldPosition = worldPosition,
-                    Ratio = new Vector2(hRatio, vRatio),
+                    Ratio = new Vector2(ScreenSettings.HorizontalRatio, ScreenSettings.VerticalRatio),
                 };
 
                 CurrentScreen.HandleMouse(handleMouseCommand);
