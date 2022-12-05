@@ -1,22 +1,28 @@
-﻿using System;
+﻿using Backbone.Localization;
+using System;
 using System.Collections.Generic;
 
 namespace Backbone.Menus
 {
     public class MenuOptionChooser : IMenuItem
     {
+        const string TRUE_VALUE = "YES";
+        const string FALSE_VALUE = "NO";
+
+        #region Properties
         public int ID { get; set; }
         public int Rank { get; set; }
         public string Name { get; set; }
+        public string DisplayText { get; set; }
         public int SelectedIndex { get; set; }
-        public Action OnChange { get; set; } = null;
+        public Action<string> OnChange { get; set; } = null;
         public MenuItemType Type { get; set; } = MenuItemType.OptionChooser;
 
         public bool CanNext
         {
             get
             {
-                return SelectedIndex > 0 || WrapAround;
+                return SelectedIndex < (Options.Count - 1) || WrapAround;
             }
         }
 
@@ -24,7 +30,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return SelectedIndex < (Options.Count - 2) || WrapAround;
+                return SelectedIndex > 0 || WrapAround;
             }
         }
 
@@ -36,12 +42,16 @@ namespace Backbone.Menus
         }
         public bool WrapAround { get; set; } = false;
 
-        public List<MenuOption> Options { get; set; } = new List<MenuOption>();
+        private List<MenuOption> Options { get; set; } = new List<MenuOption>();
         public bool IsSelected { get; set; } = false;
+        #endregion Properties
 
-        public MenuOptionChooser(string name, bool isYesNo = false)
+        private bool isBoolValue = false;
+
+        public MenuOptionChooser(string name, string displayText, bool isYesNo = false)
         {
             Name = name;
+            DisplayText = displayText;
 
             if(isYesNo)
             {
@@ -51,14 +61,33 @@ namespace Backbone.Menus
 
         private void SetupYesNo()
         {
+            isBoolValue = true;
             WrapAround = true;
-            Options.Add(new MenuOption() { Name = "YES" }); // TODO: Re-localize later
-            Options.Add(new MenuOption() { Name = "NO" });
+            Options.Add(new MenuOption(CommonTerms.Yes, TRUE_VALUE));
+            Options.Add(new MenuOption(CommonTerms.No, FALSE_VALUE));
         }
 
         public void Click()
         {
+            // don't do anything
+        }
 
+        public void Add(MenuOption newOption)
+        {
+            Options.Add(newOption);
+        }
+
+        public void Add(string name, string value)
+        {
+            Add(new MenuOption(name, value));
+        }
+
+        public void Add(List<Tuple<string, string>> options)
+        {
+            options.ForEach(option =>
+            {
+                Add(new MenuOption(option.Item1, option.Item2));
+            });
         }
 
         public void Next()
@@ -71,7 +100,7 @@ namespace Backbone.Menus
             // call the OnChange event and pass in the current option text
             if (SelectedIndex != oldSelectedIndex && OnChange != null)
             {
-                OnChange.Invoke();
+                OnChange.Invoke(Options[SelectedIndex].Value);
             }
         }
         public void Prev()
@@ -88,7 +117,46 @@ namespace Backbone.Menus
             // call the OnChange event and pass in the current option text
             if (SelectedIndex != oldSelectedIndex && OnChange != null)
             {
-                OnChange.Invoke();
+                OnChange.Invoke(Options[SelectedIndex].Value);
+            }
+        }
+
+        public void SetValue(object value)
+        {
+            if (isBoolValue)
+            {
+                SelectedIndex = ((bool)value == true) ? 0 : 1;
+            }
+            else
+            {
+                string matchString = (string)value;
+
+                int foundIndex = -1;
+                for (var i = 0; i < Options.Count; i++)
+                {
+                    if (Options[i].Value.Equals(matchString))
+                    {
+                        foundIndex = i;
+                        break;
+                    }
+                }
+
+                if (foundIndex > -1)
+                {
+                    SelectedIndex = foundIndex;
+                }
+            }
+        }
+
+        public object GetValue()
+        {
+            if(isBoolValue)
+            {
+                return Options[SelectedIndex].Value.Equals(TRUE_VALUE);
+            }
+            else
+            {
+                return Options[SelectedIndex].Value;
             }
         }
     }

@@ -8,6 +8,7 @@
         OptionChooser,
         OptionSlider,
         OptionCheckbox,
-        OptionTextbox
+        OptionTextbox,
+        InputBox
     }
 }

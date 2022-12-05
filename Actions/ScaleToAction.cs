@@ -14,8 +14,9 @@ namespace Backbone.Actions
         private Boolean hasStarted = false;
         private float elapsedTime = 0f;
 
-        public ScaleToAction(Vector3 target, float duration)
+        public ScaleToAction(Vector3 source, Vector3 target, float duration)
         {
+            this.source = source;
             this.target = target;
             this.duration = duration;
         }
@@ -26,7 +27,6 @@ namespace Backbone.Actions
         public void Reset()
         {
             hasStarted = false;
-            source = Vector3.Zero;
             elapsedTime = 0f;
 
             if (SubActions != null)
@@ -45,11 +45,12 @@ namespace Backbone.Actions
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             elapsedTime += elapsed;
 
+            /*
             if (!hasStarted)
             {
                 hasStarted = true;
                 source = movable.Scale;
-            }
+            }*/
             currentVector = ActionMath.LerpVector(elapsedTime, source, target, duration);
 
             movable.SetScale(currentVector);

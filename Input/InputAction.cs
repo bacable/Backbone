@@ -18,6 +18,16 @@
         Select3,
         Select4,
         Select5,
-        Start
+        Start,
+        N0, // 0-9 keys on keyboard
+        N1,
+        N2,
+        N3,
+        N4,
+        N5,
+        N6,
+        N7,
+        N8,
+        N9
     }
 }

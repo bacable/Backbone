@@ -1,9 +1,13 @@
 ﻿using Backbone.Actions;
+using Backbone.Events;
+using Backbone.Input;
+using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Backbone.Graphics;
+using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Backbone.Graphics
@@ -18,6 +22,9 @@ namespace Backbone.Graphics
         private Rectangle Size { get; set; }
         private Movable3D BackPanel { get; set; }
         private TextGroup Header { get; set; }
+        private MenuContainer Menu { get; set; }
+
+        public bool IsActive { get; set; } = false;
 
         public bool IsAnimating
         {
@@ -27,27 +34,61 @@ namespace Backbone.Graphics
             }
         }
 
+        // movables that can be added to the window and interacted with
+        private Dictionary<string, Movable3D> decorations = new Dictionary<string, Movable3D>();
+        public Movable3D GetDecoration(string id)
+        {
+            return decorations[id] ?? null;
+        }
+
         public Action OnClick;
         private float onClickDiameter;
+
+        // menu stuff
+        private OptionGroup optionGroup;
+
+        private WindowSettings<T> settings;
+
+        private MenuButton closeButton;
 
         #endregion
 
         public Window(WindowSettings<T> settings)
         {
+            this.settings = settings;
+
             Size = settings.Size;
 
             if(BackgroundModel == null)
             {
                 throw new NullReferenceException("Windows Background Model not set");
             }
+            BackPanel = new Movable3D(BackgroundModel, settings.InactivePosition, settings.BackPanelScale.X);
 
-            BackPanel = new Movable3D(BackgroundModel, settings.Position, settings.BackPanelScale.X);
+            if(settings.Header != null)
+            {
+                settings.Header.Parent = BackPanel;
 
-            settings.Header.Parent = BackPanel;
-
-            Header = new TextGroup(settings.Header);
+                Header = new TextGroup(settings.Header);
+            }
 
             onClickDiameter = settings.OnClickDiameter;
+
+            if(settings.Menu != null)
+            {
+                Menu = settings.Menu;
+                optionGroup = new OptionGroup(settings.MenuPosition, settings.Menu, BackPanel);
+            }
+
+            if(settings.ShowCornerCloseButton)
+            {
+                if(settings.CloseButtonAction != null)
+                {
+                    throw new Exception("Close button action cannot be null if enabled");
+                }
+
+                closeButton = new MenuButton("close", settings.CloseButtonAction);
+            }
         }
 
         public void Run(IAction3D action, bool replaceExisting = false)
@@ -55,21 +96,106 @@ namespace Backbone.Graphics
             BackPanel.Run(action, replaceExisting);
         }
 
-        public void Draw(Matrix view, Matrix projection)
+        /// <summary>
+        /// Set as parent to given movable so its position will match the window's position
+        /// </summary>
+        /// <param name="movable">Movable to attach.</param>
+        public void Attach(Movable3D movable)
         {
-            BackPanel.Draw(view, projection);
-            Header.Draw(view, projection);
+            movable.Parent = BackPanel;
         }
 
-        public void HandleMouse(Vector2 mousePosition, Matrix view, Matrix projection, Viewport viewport)
+        public void AddDecoration(string id, Movable3D movable)
         {
-            // Handle click of backpanel, if set up to do something
-            // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
-            // but not good enough for release
-            if(Collision3D.Intersects(mousePosition, BackPanel.Model, BackPanel.World, view, projection, viewport, onClickDiameter))
+            movable.Parent = this.BackPanel;
+            decorations.Add(id, movable);
+        }
+
+        public void Draw(Matrix view, Matrix projection)
+        {
+            if(settings.VisibleWhileInactive || IsActive)
             {
-                OnClick?.Invoke();
+                BackPanel.Draw(view, projection);
+
+                if (Header != null)
+                {
+                    Header.Draw(view, projection);
+                }
+
+                optionGroup.Draw(view, projection);
+
+                foreach(var key in decorations.Keys)
+                {
+                    decorations[key].Draw(view, projection);
+                }
             }
+        }
+
+        public void HandleMouse(HandleMouseCommand command)
+        {
+            if(settings.VisibleWhileInactive)
+            {
+                // Handle click of backpanel, if set up to do something
+                // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
+                // but not good enough for release
+                if (Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
+                {
+                    OnClick?.Invoke();
+                }
+            }
+        }
+
+        internal void ClickMenu()
+        {
+            if(IsActive && !IsAnimating)
+            {
+                Menu.Click();
+            }
+        }
+
+        /// <summary>
+        /// Update header text and possibly color (if passed in)
+        /// </summary>
+        /// <param name="newHeaderText"></param>
+        /// <param name="color"></param>
+        public void UpdateHeader(string newHeaderText, ColorType color = ColorType.None)
+        {
+            if(color != ColorType.None)
+            {
+                Header.SetColor(color);
+            }
+
+            Header.SetText(newHeaderText);
+        }
+
+        /// <summary>
+        /// If no animation provided, use the standard move in from offscreen and set as active
+        /// </summary>
+        /// <param name="animation">Animation to perform on the backpanel</param>
+        public void Activate(IAction3D animation = null)
+        {
+            IsActive = true;
+            if(animation == null)
+            {
+                animation = MoveAnim(settings.InactivePosition, settings.ActivePosition);
+            }
+            BackPanel.Run(animation);
+        }
+
+        internal void Deactivate(IAction3D animation = null)
+        {
+            IsActive = false;
+            if (animation == null)
+            {
+                animation = MoveAnim(settings.ActivePosition, settings.InactivePosition);
+            }
+            BackPanel.Run(animation, true);
+        }
+
+        private IAction3D MoveAnim(Vector3 from, Vector3 to)
+        {
+            var moveTo = ActionBuilder.MoveTo(to, settings.TransitionDuration);
+            return moveTo;
         }
 
         public void TransitionIn()
@@ -82,10 +208,63 @@ namespace Backbone.Graphics
 
         }
 
+        public void Reposition(Vector3 newPosition)
+        {
+            BackPanel.Position = newPosition;
+        }
+
         public void Update(GameTime gameTime)
         {
-            BackPanel.Update(gameTime);
-            Header.Update(gameTime);
+            if(settings.VisibleWhileInactive || IsActive || IsAnimating)
+            {
+                if (!IsAnimating && IsActive)
+                {
+                    UpdateMenuInput();
+                }
+
+                BackPanel.Update(gameTime);
+
+                if (Header != null)
+                {
+                    Header.Update(gameTime);
+                }
+
+                optionGroup.Update(gameTime);
+
+                foreach(var key in decorations.Keys)
+                {
+                    Debug.WriteLine("updating decoration " + key);
+                    var decoration = decorations[key];
+                    decoration.Update(gameTime);
+                }
+            }
+        }
+
+        private void UpdateMenuInput()
+        {
+            if (InputHelper.IsKeyUp(InputAction.Down))
+            {
+                Menu.Next();
+            }
+            else if (InputHelper.IsKeyUp(InputAction.Up))
+            {
+                Menu.Prev();
+            }
+
+            if (InputHelper.IsKeyUp(InputAction.Left))
+            {
+                if (Menu.CanPrev)
+                {
+                    Menu.PrevOption();
+                }
+            }
+            else if (InputHelper.IsKeyUp(InputAction.Right))
+            {
+                if (Menu.CanNext)
+                {
+                    Menu.NextOption();
+                }
+            }
         }
     }
 }

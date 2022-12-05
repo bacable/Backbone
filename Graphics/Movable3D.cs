@@ -1,12 +1,14 @@
 ﻿using Backbone.Actions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Config;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Backbone.Graphics
 {
-    public class Movable3D
+    public class Movable3D : IInteractive
     {
         public Model Model { get; set; }
         public Vector3 Position { get; set; }
@@ -21,13 +23,28 @@ namespace Backbone.Graphics
         public Matrix TranslationMatrix { get; private set; } = Matrix.Identity;
 
         public Vector3 Scale = Vector3.Zero;
-        public Movable3D Parent { get; set; }
+
+        private Movable3D _parent;
+        public Movable3D Parent
+        {
+            get
+            {
+                return _parent;
+            }
+            set
+            {
+                _parent = value;
+                UpdateMatrix();
+            }
+        }
 
         public bool IsVisible { get; set; } = true;
 
         public Matrix World { get; private set; } = Matrix.Identity;
 
-        public Dictionary<string, ColorType> MeshColors { get; private set; } = new Dictionary<string, ColorType>();
+        public Dictionary<string, MeshProperty> MeshProperties { get; private set; } = new Dictionary<string, MeshProperty>();
+
+        public float? collisionRadius = null;
 
         public Boolean IsAnimating {  
             get
@@ -35,6 +52,10 @@ namespace Backbone.Graphics
                 return (queuedActions != null && queuedActions.Count > 0);
             }
         }
+
+        /// 0f is fully transparent, 1f is fully opaque
+        public float Alpha { get; set; } = 1f;
+        public bool IsInteractive { get { return !IsAnimating && IsVisible; } }
 
         private List<IAction3D> queuedActions = new List<IAction3D>();
 
@@ -105,30 +126,28 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            if(IsVisible)
+            if(IsVisible && Alpha > 0f)
             {
-                ModelHelper.DrawHexTile(Model, World, view, projection, Color1, Color2, ColorBkg, MeshColors);
+                ModelHelper.DrawHexTile(Model, World, view, projection, Alpha, Color1, Color2, ColorBkg, MeshProperties);
             }
         }
 
-        float InOutQuadBlend(float t)
+        public static Movable3D Empty()
         {
-            if (t <= 0.5f)
-                return 2.0f * t * t;
-            t -= 0.5f;
-            return 2.0f * t * (1.0f - t) + 0.5f;
+            return new Movable3D(null, Vector3.Zero, 0f);
         }
 
-
-        float BezierBlend(float t)
+        public bool Intersects(Viewport viewport, Vector2 position, Vector2 zero, Vector2 ratio, float? overrideRadius)
         {
-            return t * t * (3.0f - 2.0f * t);
+            var xpos = ((this.Parent != null) ? Position.X + this.Parent.Position.X : Position.X) * ratio.X;
+            var ypos = ((this.Parent != null) ? Position.Y + this.Parent.Position.Y : Position.Y) * ratio.Y;
+
+            return Collision2D.IntersectCircle(position, new Vector2(xpos, ypos), overrideRadius ?? collisionRadius ?? 0f);
         }
 
-        float ParametricBlend(float t)
+        public void Run(IAction3D action)
         {
-            float sqt = t * t;
-            return sqt / (2.0f * (sqt - t) + 1.0f);
+            this.Run(action, true);
         }
     }
 }

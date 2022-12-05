@@ -1,0 +1,450 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Apply" xml:space="preserve">
+    <value>Aplicar</value>
+  </data>
+  <data name="ArcadeMode" xml:space="preserve">
+    <value>Arcade</value>
+  </data>
+  <data name="Arrows" xml:space="preserve">
+    <value>Flechas</value>
+  </data>
+  <data name="Back" xml:space="preserve">
+    <value>Atrás</value>
+  </data>
+  <data name="Board" xml:space="preserve">
+    <value>Tablero</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancelar</value>
+  </data>
+  <data name="Cards" xml:space="preserve">
+    <value>Cartas</value>
+  </data>
+  <data name="ChangeLanguage" xml:space="preserve">
+    <value>Cambiar idioma</value>
+  </data>
+  <data name="ChessBishop" xml:space="preserve">
+    <value>Obispo</value>
+  </data>
+  <data name="ChessCastling" xml:space="preserve">
+    <value>Enroque</value>
+  </data>
+  <data name="ChessCheck" xml:space="preserve">
+    <value>Chequear</value>
+  </data>
+  <data name="ChessCheckmate" xml:space="preserve">
+    <value>Jaque Mate</value>
+  </data>
+  <data name="ChessKing" xml:space="preserve">
+    <value>Rey</value>
+  </data>
+  <data name="ChessKnight" xml:space="preserve">
+    <value>Caballo</value>
+  </data>
+  <data name="ChessPawn" xml:space="preserve">
+    <value>Peon</value>
+  </data>
+  <data name="ChessPieces" xml:space="preserve">
+    <value>Piezas</value>
+  </data>
+  <data name="ChessQueen" xml:space="preserve">
+    <value>Reina</value>
+  </data>
+  <data name="ChessRook" xml:space="preserve">
+    <value>Torre</value>
+  </data>
+  <data name="ChessStalemate" xml:space="preserve">
+    <value>Estancamiento</value>
+  </data>
+  <data name="CloseMenu" xml:space="preserve">
+    <value>Cerrar Menú</value>
+  </data>
+  <data name="ColorBlack" xml:space="preserve">
+    <value>Negro</value>
+  </data>
+  <data name="ColorBlue" xml:space="preserve">
+    <value>Azul</value>
+  </data>
+  <data name="ColorBrown" xml:space="preserve">
+    <value>Marrón</value>
+  </data>
+  <data name="ColorGray" xml:space="preserve">
+    <value>Gris</value>
+  </data>
+  <data name="ColorGreen" xml:space="preserve">
+    <value>Verde</value>
+  </data>
+  <data name="ColorOrange" xml:space="preserve">
+    <value>Naranja</value>
+  </data>
+  <data name="ColorPink" xml:space="preserve">
+    <value>Rosado</value>
+  </data>
+  <data name="ColorPurple" xml:space="preserve">
+    <value>Morado</value>
+  </data>
+  <data name="ColorRed" xml:space="preserve">
+    <value>Rojo</value>
+  </data>
+  <data name="ColorWhite" xml:space="preserve">
+    <value>Blanco</value>
+  </data>
+  <data name="ColorYellow" xml:space="preserve">
+    <value>Amarillo</value>
+  </data>
+  <data name="Continue" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Controls" xml:space="preserve">
+    <value>Controles</value>
+  </data>
+  <data name="Credits" xml:space="preserve">
+    <value>Créditos</value>
+  </data>
+  <data name="CustomerSupport" xml:space="preserve">
+    <value>Soporte</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Elimar</value>
+  </data>
+  <data name="Dice" xml:space="preserve">
+    <value>Dado</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Descargar</value>
+  </data>
+  <data name="Eliminated" xml:space="preserve">
+    <value>Elminado</value>
+  </data>
+  <data name="ExitGame" xml:space="preserve">
+    <value>Salir</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Se Acabo</value>
+  </data>
+  <data name="Flying" xml:space="preserve">
+    <value>Vuela</value>
+  </data>
+  <data name="GameOver" xml:space="preserve">
+    <value>Game Over</value>
+  </data>
+  <data name="Hide" xml:space="preserve">
+    <value>Esconder</value>
+  </data>
+  <data name="HowToPlay" xml:space="preserve">
+    <value>Como Se Juega</value>
+  </data>
+  <data name="Inventory" xml:space="preserve">
+    <value>Inventario</value>
+  </data>
+  <data name="InXSpaces" xml:space="preserve">
+    <value>A {0} Casillas</value>
+  </data>
+  <data name="Items" xml:space="preserve">
+    <value>Objetos</value>
+  </data>
+  <data name="KeyItems" xml:space="preserve">
+    <value>Objetos Clave</value>
+  </data>
+  <data name="Ladder" xml:space="preserve">
+    <value>Escaleras</value>
+  </data>
+  <data name="Level" xml:space="preserve">
+    <value>Level</value>
+  </data>
+  <data name="Loser" xml:space="preserve">
+    <value>Loser</value>
+  </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>Menü Principal</value>
+  </data>
+  <data name="Map" xml:space="preserve">
+    <value>Mapa</value>
+  </data>
+  <data name="MatchStart" xml:space="preserve">
+    <value>Adelante</value>
+  </data>
+  <data name="MedalMetal" xml:space="preserve">
+    <value>Medalla de {0}</value>
+  </data>
+  <data name="MetalBronze" xml:space="preserve">
+    <value>Bronce</value>
+  </data>
+  <data name="MetalCopper" xml:space="preserve">
+    <value>Cobre</value>
+  </data>
+  <data name="MetalGold" xml:space="preserve">
+    <value>Oro</value>
+  </data>
+  <data name="MetalIron" xml:space="preserve">
+    <value>Hiero</value>
+  </data>
+  <data name="MetalPlatinum" xml:space="preserve">
+    <value>Platino</value>
+  </data>
+  <data name="MetalSilver" xml:space="preserve">
+    <value>Plata</value>
+  </data>
+  <data name="MetalSteel" xml:space="preserve">
+    <value>Acero</value>
+  </data>
+  <data name="Minutes" xml:space="preserve">
+    <value>Minutos</value>
+  </data>
+  <data name="Missions" xml:space="preserve">
+    <value>Misiones</value>
+  </data>
+  <data name="MusicVolume" xml:space="preserve">
+    <value>Volumen De La Música</value>
+  </data>
+  <data name="NewGame" xml:space="preserve">
+    <value>Nueva partida</value>
+  </data>
+  <data name="No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="NotReady" xml:space="preserve">
+    <value>No Esta Listo</value>
+  </data>
+  <data name="Off" xml:space="preserve">
+    <value>Desactivado</value>
+  </data>
+  <data name="Okay" xml:space="preserve">
+    <value>Aceptar</value>
+  </data>
+  <data name="On" xml:space="preserve">
+    <value>Activado</value>
+  </data>
+  <data name="Options" xml:space="preserve">
+    <value>Opciones</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>En pausa</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Jugar</value>
+  </data>
+  <data name="Players" xml:space="preserve">
+    <value>Jugadores</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Puntos</value>
+  </data>
+  <data name="PressButtonToStart" xml:space="preserve">
+    <value>Pulsa {0} para comenzar</value>
+  </data>
+  <data name="Qualified" xml:space="preserve">
+    <value>Clasificado</value>
+  </data>
+  <data name="Rank" xml:space="preserve">
+    <value>Rango</value>
+  </data>
+  <data name="Recharge" xml:space="preserve">
+    <value>Recargar</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Reinicia</value>
+  </data>
+  <data name="RestartGame" xml:space="preserve">
+    <value>Reinicia el Juego</value>
+  </data>
+  <data name="Resume" xml:space="preserve">
+    <value>Continuar</value>
+  </data>
+  <data name="Retrieve" xml:space="preserve">
+    <value>Recuperala</value>
+  </data>
+  <data name="RollDice" xml:space="preserve">
+    <value>Roll Dice</value>
+  </data>
+  <data name="Rookie" xml:space="preserve">
+    <value>Novato</value>
+  </data>
+  <data name="Round" xml:space="preserve">
+    <value>Ronda</value>
+  </data>
+  <data name="RoundFinished" xml:space="preserve">
+    <value>Ronda Terminada</value>
+  </data>
+  <data name="RunToTheFinishLine" xml:space="preserve">
+    <value>Corre Hasta La Meta</value>
+  </data>
+  <data name="SaveGame" xml:space="preserve">
+    <value>Save Game</value>
+  </data>
+  <data name="SFXVolume" xml:space="preserve">
+    <value>Volumen de efectos</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Mostrar</value>
+  </data>
+  <data name="Spectator" xml:space="preserve">
+    <value>Espectador</value>
+  </data>
+  <data name="Stats" xml:space="preserve">
+    <value>Estadísticas</value>
+  </data>
+  <data name="StoryMode" xml:space="preserve">
+    <value>Historia</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Mostrar Resumen</value>
+  </data>
+  <data name="Turn" xml:space="preserve">
+    <value>Turn</value>
+  </data>
+  <data name="TurnForName" xml:space="preserve">
+    <value>Le Toca a {0}</value>
+  </data>
+  <data name="Tutorial" xml:space="preserve">
+    <value>Tutorial</value>
+  </data>
+  <data name="Versus" xml:space="preserve">
+    <value>Contra</value>
+  </data>
+  <data name="WaitingLobby" xml:space="preserve">
+    <value>Sala de Espera</value>
+  </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Aviso</value>
+  </data>
+  <data name="Winner" xml:space="preserve">
+    <value>Gana</value>
+  </data>
+  <data name="Wow" xml:space="preserve">
+    <value>Guau</value>
+  </data>
+  <data name="XP" xml:space="preserve">
+    <value>XP</value>
+  </data>
+  <data name="Yes" xml:space="preserve">
+    <value>Sí</value>
+  </data>
+  <data name="YouLose" xml:space="preserve">
+    <value>You Lose!</value>
+  </data>
+  <data name="YourTurn" xml:space="preserve">
+    <value>It's Your Turn</value>
+  </data>
+  <data name="YouWin" xml:space="preserve">
+    <value>You Win!</value>
+  </data>
+</root>

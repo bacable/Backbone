@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Backbone.Graphics;
+using ProximityND.GUI3D.Screens;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -73,6 +75,14 @@ namespace Backbone.Events
             }
         }
 
+        public static void Sub(T[] events, ISubscriber<T> subscriber)
+        {
+            foreach (var eventType in events)
+            {
+                Sub(eventType, subscriber);
+            }
+        }
+
         public static void Sub(T eventType, ISubscriber<T> subscriber)
         {
             if (!Subscriptions.ContainsKey(eventType))
@@ -93,9 +103,16 @@ namespace Backbone.Events
 
             var eventSubscribers = Subscriptions[eventType];
 
-            Debug.WriteLine("Event fired: " + eventType.ToString());
+            if(eventSubscribers.Count > 0)
+            {
+                Debug.WriteLine("Event fired: " + eventType.ToString());
+                
+                // make a copy so events could possibly adjust the
+                // collection without breaking the enumeration
+                var subscribersCopy = eventSubscribers.ToList();
 
-            eventSubscribers.ForEach(x => x.HandleEvent(eventType, payload));
+                subscribersCopy.ForEach(x => x.HandleEvent(eventType, payload));
+            }
         }
 
         public static void Unsubscribe(T eventType, ISubscriber<T> subscriber)
@@ -103,6 +120,29 @@ namespace Backbone.Events
             if(Subscriptions[eventType].Contains(subscriber))
             {
                 Subscriptions[eventType].Remove(subscriber);
+            }
+        }
+
+        internal static void UnsubscribeGuiElements(List<IGUI3D> elements)
+        {
+            elements.ForEach(element =>
+            {
+                var subscriber = element as ISubscriber<T>;
+                if(subscriber != null)
+                {
+                    UnsubscribeAll(subscriber);
+                }
+            });
+        }
+
+        internal static void UnsubscribeAll(ISubscriber<T> subscriber)
+        {
+            foreach(var kvp in Subscriptions)
+            {
+                if(kvp.Value.Contains(subscriber))
+                {
+                    Subscriptions[kvp.Key].Remove(subscriber);
+                }
             }
         }
     }

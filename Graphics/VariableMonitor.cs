@@ -2,13 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     /// <summary>
     /// Whatever is passed into it is displayed as "variableName: value" in a list at a location on the screen each frame. Each reporting has an expiration associated with it, so it won't stay up there forever.
