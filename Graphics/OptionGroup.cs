@@ -102,7 +102,8 @@ namespace Backbone.Graphics
                         x.Text.SetText(x.Item.DisplayText);
                         break;
                     case MenuItemType.OptionChooser:
-                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
+                        x.Text.SetText((!string.IsNullOrWhiteSpace(x.Item.DisplayText) ? x.Item.DisplayText + ": " :
+                            string.Empty) + (x.Item as MenuOptionChooser).SelectedOption.Name);
                         break;
                     case MenuItemType.OptionSlider:
                         x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionSlider).Value);
