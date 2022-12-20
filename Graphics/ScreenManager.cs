@@ -66,6 +66,11 @@ namespace Backbone.Graphics
 
         public static void Update(ScreenUpdateCommand command)
         {
+            if(CurrentScreen== null)
+            {
+                return;
+            }
+
             InputHelper.UpdateBefore();
 
             CurrentScreen.Update(command.GameTime);
