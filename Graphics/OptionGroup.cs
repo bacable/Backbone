@@ -2,6 +2,8 @@
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Events;
+using ProximityND.Enums;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -43,7 +45,7 @@ namespace Backbone.Graphics
 
                 option.Text = new TextGroup(new TextGroupSettings()
                 {
-                    Color = ColorType.DefaultText,
+                    Color = ProviderHub<ColorType, ThemeElementType>.Request(ThemeElementType.TextColor),
                     Id = index,
                     Parent = parent,
                     Position = new Vector3(position.X, position.Y - 90f * index, position.Z),

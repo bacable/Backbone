@@ -2,6 +2,8 @@
 using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Events;
+using ProximityND.Backbone.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,7 +103,8 @@ namespace Backbone.Graphics
             }
             else
             {
-                SetColor(ColorType.DefaultText);
+                var textColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.TextGroupDefaultTextColor);
+                SetColor(textColor);
             }
 
             if(!string.IsNullOrEmpty(settings.Text))
