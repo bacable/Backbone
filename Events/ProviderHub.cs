@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ProximityND.Backbone.Events
+namespace Backbone.Events
 {
     public class ProviderHub<TReturn,TRequest>
     {

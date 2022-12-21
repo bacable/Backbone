@@ -1,11 +1,9 @@
-﻿using Backbone.Input;
+﻿using Backbone.Events;
+using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Backbone.Events;
 using ProximityND.Enums;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Graphics
