@@ -2,6 +2,7 @@
 using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
+using ProximityND.Backbone.Graphics;
 using ProximityND.Enums;
 using System.Collections.Generic;
 using System.Linq;
@@ -159,16 +160,18 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
+            var selectedColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.OptionGroupSelectedTextColor);
+            var unselectedColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.OptionGroupUnselectedTextColor);
 
             Options.ForEach(x =>
             {
                 if (x.Item.IsSelected)
                 {
-                    x.Text.SetColor(ColorType.LightOrange);
+                    x.Text.SetColor(selectedColor);
                 }
                 else
                 {
-                    x.Text.SetColor(ColorType.DefaultText);
+                    x.Text.SetColor(unselectedColor);
                 }
 
                 x.Text.Draw(view, projection);

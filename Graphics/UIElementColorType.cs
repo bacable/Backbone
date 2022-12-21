@@ -11,6 +11,8 @@ namespace ProximityND.Backbone.Graphics
     /// </summary>
     public enum UIElementColorType
     {
-        TextGroupDefaultTextColor
+        TextGroupDefaultTextColor,
+        OptionGroupSelectedTextColor,
+        OptionGroupUnselectedTextColor
     }
 }

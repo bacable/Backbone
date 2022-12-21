@@ -149,7 +149,8 @@ namespace Backbone.Graphics
 
             for (int i = 0; i < text.Length; i++)
             {
-                var character = text[i];
+                var character = 
+                    text[i];
 
                 if(character != ' ')
                 {
@@ -188,7 +189,8 @@ namespace Backbone.Graphics
             var length = 0f;
             foreach(var digit in digits)
             {
-                length += baseScale * LetterWidths[digit];
+                var digitWidth = LetterWidths.ContainsKey(digit) ? LetterWidths[digit] : LetterWidths[' '];
+                length += baseScale * digitWidth;
             }
             return length;
         }
