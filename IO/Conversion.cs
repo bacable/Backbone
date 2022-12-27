@@ -18,10 +18,12 @@ namespace Backbone.IO
         public static String IntToAlphabeticId(int number)
         {
             String id = "";
-            while (number > 0)
+            bool firstTime = true;
+            while (number > 0 || firstTime)
             {
-                id = (char)('A' + (--number % 26)) + id;
+                id = (char)('A' + (number % 26)) + id;
                 number /= 26;
+                firstTime = false;
             }
             return id;
         }

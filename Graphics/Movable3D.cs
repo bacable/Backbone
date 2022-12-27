@@ -77,7 +77,16 @@ namespace Backbone.Graphics
         public void SetScale(Vector3 newScale)
         {
             Scale = newScale;
-            ScaleMatrix = (Parent != null) ? Matrix.CreateScale(Scale * Parent.Scale) : Matrix.CreateScale(Scale);
+
+            var matrixScale = newScale;
+            var parent = Parent;
+            while(parent != null)
+            {
+                matrixScale = matrixScale * parent.Scale;
+                parent = parent.Parent;
+            }
+
+            ScaleMatrix = Matrix.CreateScale(matrixScale);
         }
 
         public void Update(GameTime gameTime)
@@ -104,9 +113,25 @@ namespace Backbone.Graphics
 
             RotationMatrix = Matrix.CreateRotationY(rotYRadians) * Matrix.CreateRotationX(rotXRadians) * Matrix.CreateRotationZ(rotZRadians);
 
-            TranslationMatrix = (Parent != null) ? Matrix.CreateTranslation(Position + Parent.Position) : Matrix.CreateTranslation(Position);
+            TranslationMatrix = Matrix.CreateTranslation(PositionWithParents);
 
             World = ScaleMatrix * RotationMatrix * TranslationMatrix;
+        }
+
+        // takes into account the parent, and any parents of those parents
+        private Vector3 PositionWithParents
+        {
+            get
+            {
+                var position = Position;
+                var parent = Parent;
+                while (parent != null)
+                {
+                    position = position + parent.Position;
+                    parent = parent.Parent;
+                }
+                return position;
+            }
         }
 
         public float DegToRad(float rotationDegrees)
