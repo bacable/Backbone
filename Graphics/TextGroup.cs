@@ -79,8 +79,10 @@ namespace Backbone.Graphics
         public float Right { get; set; }
         public Vector3 Position { get; set; } = Vector3.Zero;
 
-        public Action3D TransitionInAnimation { get; set; } = null;
-        public Action3D TransitionOutAnimation { get; set; } = null;
+        // first is the int to pass in the index of the letter (matters for some anims),
+        // second param is the resulting animation
+        public Func<int, IAction3D> TransitionOutAnimation = null;
+        public Func<int, IAction3D> TransitionInAnimation = null;
 
         public bool IsAnimating
         {
@@ -195,9 +197,14 @@ namespace Backbone.Graphics
             return length;
         }
 
-        public void Run(IAction3D action, bool replaceExisting = false)
+        public void Run(Func<int, IAction3D> animationFunction, bool replaceExisting = false)
         {
-            Letters.ForEach(x => x.Run(action, replaceExisting));
+            for(int index = 0; index < Letters.Count; index++)
+            {
+                var letter = Letters[index];
+                var anim = animationFunction(index);
+                letter.Run(anim, replaceExisting);
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -250,7 +257,7 @@ namespace Backbone.Graphics
         {
             if(this.TransitionOutAnimation != null)
             {
-                this.Run(this.TransitionOutAnimation);
+                this.Run(this.TransitionOutAnimation, true);
             }
         }
 
@@ -258,7 +265,7 @@ namespace Backbone.Graphics
         {
             if(this.TransitionInAnimation != null)
             {
-                this.Run(TransitionInAnimation);
+                this.Run(TransitionInAnimation, true);
             }
         }
     }
