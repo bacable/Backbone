@@ -99,6 +99,16 @@ namespace Backbone.Graphics
             this.Position = settings.Position;
             this.parent = settings.Parent;
 
+            if(settings.TransitionInAnim!= null)
+            {
+                TransitionInAnimation = settings.TransitionInAnim;
+            }
+
+            if(settings.TransitionOutAnim!= null)
+            {
+                TransitionOutAnimation = settings.TransitionOutAnim;
+            }
+
             if(settings.Color != ColorType.None)
             {
                 SetColor(settings.Color);
