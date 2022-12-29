@@ -32,13 +32,13 @@ namespace Backbone.Graphics
             }
         }
 
-        public OptionGroup(Vector3 position, MenuContainer menu, Movable3D parentMovable = null)
+        public OptionGroup(OptionGroupSettings settings)
         {
             // Determine parent node. Empty if nothing provided
-            parent = (parentMovable != null) ? parentMovable : Movable3D.Empty();
+            parent = (settings.ParentMovable != null) ? settings.ParentMovable : Movable3D.Empty();
 
             var index = 0;
-            foreach(var item in menu.Items)
+            foreach(var item in settings.Menu.Items)
             {
                 var option = new MenuGraphic();
 
@@ -47,9 +47,11 @@ namespace Backbone.Graphics
                     Color = ProviderHub<ColorType, ThemeElementType>.Request(ThemeElementType.TextColor),
                     Id = index,
                     Parent = parent,
-                    Position = new Vector3(position.X, position.Y - 90f * index, position.Z),
+                    Position = new Vector3(settings.Position.X, settings.Position.Y - 90f * index, settings.Position.Z),
                     Scale = 80f,
-                    Text = string.Empty
+                    Text = string.Empty,
+                    TransitionInAnim = settings.TransitionInAnim,
+                    TransitionOutAnim = settings.TransitionOutAnim,
                 });
 
                 option.Item = item;
@@ -57,7 +59,7 @@ namespace Backbone.Graphics
                 Options.Add(option);
             }
 
-            menu.Observer = this;
+            settings.Menu.Observer = this;
 
             UpdateTexts();
         }
@@ -180,10 +182,12 @@ namespace Backbone.Graphics
 
         public void TransitionOut()
         {
+            Options.ForEach(option => option.Text.TransitionIn());
         }
 
         public void TransitionIn()
         {
+            Options.ForEach(option => option.Text.TransitionOut());
         }
     }
 }

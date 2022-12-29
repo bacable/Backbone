@@ -4,6 +4,7 @@ using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Graphics;
 using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,13 @@ namespace Backbone.Graphics
             if(settings.Menu != null)
             {
                 Menu = settings.Menu;
-                optionGroup = new OptionGroup(settings.MenuPosition, settings.Menu, BackPanel);
+                var oGroupSettings = new OptionGroupSettings()
+                {
+                    Menu = settings.Menu,
+                    ParentMovable = BackPanel,
+                    Position = settings.MenuPosition,
+                };
+                optionGroup = new OptionGroup(oGroupSettings);
             }
 
             if(settings.ShowCornerCloseButton)
