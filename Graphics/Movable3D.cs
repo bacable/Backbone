@@ -139,6 +139,22 @@ namespace Backbone.Graphics
             return (float)(rotationDegrees * System.Math.PI) / 180.0f;
         }
 
+        /// <summary>
+        /// Keep the currently running action, but wrap it and the passed in action into a new group action
+        /// and make that the current action instead. Allows for things like letting something keep it's current
+        /// movement animation, but adding a fade out animation to it in the middle of it for a transition.
+        /// </summary>
+        /// <param name="action">The animation to group with the current running animation.</param>
+        public void RunBlendWithExisting(IAction3D action)
+        {
+            if(queuedActions.Count > 0)
+            {
+                var currentAction = queuedActions[0];
+                var groupAction = ActionBuilder.Group(action, currentAction);
+                queuedActions[0] = groupAction;
+            }
+        }
+
         public void Run(IAction3D action, bool replaceExisting = false)
         {
             if(replaceExisting)
