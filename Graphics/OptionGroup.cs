@@ -182,12 +182,12 @@ namespace Backbone.Graphics
 
         public void TransitionOut()
         {
-            Options.ForEach(option => option.Text.TransitionIn());
+            Options.ForEach(option => option.Text.TransitionOut());
         }
 
         public void TransitionIn()
         {
-            Options.ForEach(option => option.Text.TransitionOut());
+            Options.ForEach(option => option.Text.TransitionIn());
         }
     }
 }
