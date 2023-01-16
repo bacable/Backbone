@@ -1,9 +1,11 @@
-﻿using Backbone.Events;
+﻿using Backbone.Actions;
+using Backbone.Events;
 using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using ProximityND.Backbone.Graphics;
 using ProximityND.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -42,6 +44,11 @@ namespace Backbone.Graphics
             {
                 var option = new MenuGraphic();
 
+                var transitionInAnim = settings.TransitionInAnims != null && settings.TransitionInAnims.Count > 0 ?
+                    settings.TransitionInAnims[index % settings.TransitionInAnims.Count] : null;
+                var transitionOutAnim = settings.TransitionOutAnims != null && settings.TransitionOutAnims.Count > 0 ?
+                    settings.TransitionOutAnims[index % settings.TransitionOutAnims.Count] : null;
+
                 option.Text = new TextGroup(new TextGroupSettings()
                 {
                     Color = ProviderHub<ColorType, ThemeElementType>.Request(ThemeElementType.TextColor),
@@ -50,8 +57,8 @@ namespace Backbone.Graphics
                     Position = new Vector3(settings.Position.X, settings.Position.Y - 90f * index, settings.Position.Z),
                     Scale = 80f,
                     Text = string.Empty,
-                    TransitionInAnim = settings.TransitionInAnim,
-                    TransitionOutAnim = settings.TransitionOutAnim,
+                    TransitionInAnim = transitionInAnim,
+                    TransitionOutAnim = transitionOutAnim,
                 });
 
                 option.Item = item;
