@@ -7,6 +7,7 @@ using ProximityND.Backbone.Graphics;
 using ProximityND.Enums;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Graphics
@@ -106,25 +107,25 @@ namespace Backbone.Graphics
         {
             Options.ForEach(x =>
             {
-                switch (x.Item.Type)
-                {
-                    case MenuItemType.Button:
-                        x.Text.SetText(x.Item.DisplayText);
-                        break;
-                    case MenuItemType.OptionChooser:
-                        x.Text.SetText((!string.IsNullOrWhiteSpace(x.Item.DisplayText) ? x.Item.DisplayText + ": " :
-                            string.Empty) + (x.Item as MenuOptionChooser).SelectedOption.Name);
-                        break;
-                    case MenuItemType.OptionSlider:
-                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionSlider).Value);
-                        break;
-                    default:
-                        break;
-                }
+                x.Text.SetText(GetTextForOption(x));
             });
         }
 
-
+        public string GetTextForOption(MenuGraphic option)
+        {
+            switch (option.Item.Type)
+            {
+                case MenuItemType.Button:
+                    return option.Item.DisplayText;
+                case MenuItemType.OptionChooser:
+                    return (!string.IsNullOrWhiteSpace(option.Item.DisplayText) ? option.Item.DisplayText + ": " :
+                        string.Empty) + (option.Item as MenuOptionChooser).SelectedOption.Name;
+                case MenuItemType.OptionSlider:
+                    return option.Item.DisplayText + ": " + (option.Item as MenuOptionSlider).Value;
+                default:
+                    return string.Empty;
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
