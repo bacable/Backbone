@@ -280,7 +280,7 @@
     <value>Main Menu</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>地図</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
     <value>Start</value>
@@ -337,7 +337,7 @@
     <value>On</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>オプション</value>
   </data>
   <data name="Paused" xml:space="preserve">
     <value>Paused</value>
