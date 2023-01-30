@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Backbone.Events
 {
@@ -90,6 +91,14 @@ namespace Backbone.Events
                 Subscriptions.Add(eventType, new List<ISubscriber<T>>());
             }
             Subscriptions[eventType].Add(subscriber);
+        }
+
+        public static async void RaiseAsync(T eventType, object payload)
+        {
+            await Task.Run(() =>
+            {
+                Raise(eventType, payload);
+            });
         }
 
         public static void Raise(T eventType, object payload)
