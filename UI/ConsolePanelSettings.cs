@@ -10,7 +10,7 @@ namespace Backbone.UI
     public class ConsolePanelSettings
     {
         public Rectangle Bounds { get; set; }
-
-
+        public int MaxLines { get; set; }
+        public float TimeBeforeLineExpiration { get; set; }
     }
 }
