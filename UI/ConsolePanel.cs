@@ -9,6 +9,7 @@ using ProximityND.Managers;
 using ProximityND.Models;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace Backbone.UI
@@ -21,58 +22,29 @@ namespace Backbone.UI
 
         Vector2 position;
 
+        Color[] RandomColors = new Color[6] { Color.Red, Color.Pink, Color.Purple, Color.Green, Color.Blue, Color.Yellow };
+
         public ConsolePanel(ConsolePanelSettings settings)
         {
             this.settings = settings;
             position = settings.StartPosition;
 
-            AddExampleLog();
+            PubHub<ConsolePanelEvent>.Sub(new ConsolePanelEvent[]{
+                ConsolePanelEvent.AddLine,
+                ConsolePanelEvent.ClearAll
+            }, this);
         }
 
-        public void AddExampleLog()
+        public ConsoleItem GetRandomLine()
         {
-            Items.Add(new ConsoleItem()
+            var color = RandomColors[RandomNumberGenerator.GetInt32(RandomColors.Length)];
+            return new ConsoleItem()
             {
-                Message = "votes to play at A1",
-                User = "RandomUser1",
+                Message = "votes",
+                User = "RandomUser" + RandomNumberGenerator.GetInt32(100),
                 StartDate = DateTime.Now,
-                UserColor = Color.Blue
-            });
-            Items.Add(new ConsoleItem()
-            {
-                Message = "votes to play at B2",
-                User = "RandomUser88",
-                StartDate = DateTime.Now,
-                UserColor = Color.Purple
-            });
-            Items.Add(new ConsoleItem()
-            {
-                Message = "votes to play at C3",
-                User = "RandomUser3",
-                StartDate = DateTime.Now,
-                UserColor = Color.Navy
-            });
-            Items.Add(new ConsoleItem()
-            {
-                Message = "votes to play at D4",
-                User = "RandomUser3",
-                StartDate = DateTime.Now,
-                UserColor = Color.Navy
-            });
-            Items.Add(new ConsoleItem()
-            {
-                Message = "votes to play at E5",
-                User = "RandomUser3",
-                StartDate = DateTime.Now + TimeSpan.FromSeconds(1f),
-                UserColor = Color.Yellow
-            });
-            Items.Add(new ConsoleItem()
-            {
-                Message = "votes to play at F6",
-                User = "RandomUser3",
-                StartDate = DateTime.Now + TimeSpan.FromSeconds(2f),
-                UserColor = Color.Purple
-            });
+                UserColor = color
+            };
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -85,6 +57,8 @@ namespace Backbone.UI
             {
                 case ConsolePanelEvent.AddLine:
                     Items.Add((ConsoleItem)payload); break;
+                case ConsolePanelEvent.ClearAll:
+                    Items.Clear(); break;
                 default: break;
             }
         }
