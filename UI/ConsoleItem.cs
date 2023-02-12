@@ -13,5 +13,7 @@ namespace Backbone.UI
         public string Message { get; set; }
         public string User { get; set; }
         public Color UserColor { get; set; }
+        public float FadeInAmount { get; set; } = 0f;
+        public float FadeOutAmount { get; set; } = 0f;
     }
 }
