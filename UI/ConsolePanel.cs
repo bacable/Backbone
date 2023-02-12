@@ -72,6 +72,7 @@ namespace Backbone.UI
 
         public void TransitionOut()
         {
+            PubHub<ConsolePanelEvent>.UnsubscribeAll(this);
         }
 
         public void Update(GameTime gameTime)
@@ -89,7 +90,6 @@ namespace Backbone.UI
 
             Items.RemoveAll(item => item.FadeOutAmount >= 1f);
         }
-
 
         public void DrawText(SpriteBatch spriteBatch)
         {
