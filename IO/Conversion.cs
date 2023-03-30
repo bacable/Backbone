@@ -73,5 +73,21 @@ namespace Backbone.IO
             // Create a tuple with the two parts of the string
             return Tuple.Create(part1, part2);
         }
+
+        /// <summary>
+        /// Gets the number of digits in an integer value. For example, 1234 would return 4 for four digits.
+        /// </summary>
+        /// <param name="number">The number.</param>
+        /// <returns>Number of digits.</returns>
+        public static int NumberOfDigits(int number)
+        {
+            int count = 0;
+            while (number > 0)
+            {
+                number /= 10;
+                count++;
+            }
+            return count;
+        }
     }
 }
