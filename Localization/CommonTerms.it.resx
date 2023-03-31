@@ -411,6 +411,9 @@
   <data name="Summary" xml:space="preserve">
     <value>Summary</value>
   </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Squadre</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Tema</value>
   </data>

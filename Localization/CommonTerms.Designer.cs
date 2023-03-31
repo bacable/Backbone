@@ -961,6 +961,15 @@ namespace Backbone.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teams.
+        /// </summary>
+        internal static string Teams {
+            get {
+                return ResourceManager.GetString("Teams", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Theme.
         /// </summary>
         internal static string Theme {

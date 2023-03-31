@@ -270,6 +270,9 @@
   <data name="Stats" xml:space="preserve">
     <value>Statistiques</value>
   </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Équipes</value>
+  </data>
   <data name="Theme" xml:space="preserve">
     <value>Thème</value>
   </data>
