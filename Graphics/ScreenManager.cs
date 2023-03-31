@@ -122,5 +122,11 @@ namespace Backbone.Graphics
         {
             CurrentScreen.DrawText(spriteBatch);
         }
+
+        public static void DrawUnderText(Matrix view, Matrix projection)
+        {
+            CurrentScreen.DrawUnderText(view, projection);
+        }
+
     }
 }

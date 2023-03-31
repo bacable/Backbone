@@ -10,6 +10,11 @@ namespace Backbone.Graphics
     {
         void Update(GameTime gameTime);
         void Draw(Matrix view, Matrix projection);
+        public void DrawUnderText(Matrix view, Matrix projection)
+        {
+            //Empty default implementation
+        }
+
         void HandleMouse(HandleMouseCommand command);
         void TransitionIn();
         void TransitionOut();
