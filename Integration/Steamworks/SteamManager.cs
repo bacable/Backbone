@@ -36,6 +36,7 @@ namespace Backbone.Integration.Steamworks
 
                 // It's important that the next call happens AFTER the call to SteamAPI.Init().
                 InitializeCallbacks();
+                SteamNetworkingWrapper.Initialize(8);
 
                 SteamUtils.SetOverlayNotificationPosition(ENotificationPosition.k_EPositionBottomRight);
                 // Uncomment the next line to adjust the OverlayNotificationPosition.
@@ -61,6 +62,8 @@ namespace Backbone.Integration.Steamworks
                 // Remove unsupported chars like emojis or other stuff our font cannot handle.
                 //untrimmedUserName = ReplaceUnsupportedChars(Font, untrimmedUserName);
                 SteamUserName = untrimmedUserName.Trim();
+
+                SteamNetworkingWrapper.FindLobbies();
             }
         }
 
