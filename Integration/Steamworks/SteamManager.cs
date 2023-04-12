@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Backbone.Networking;
 using Microsoft.Xna.Framework.Graphics;
 using Steamworks;
 
@@ -23,6 +24,8 @@ namespace Backbone.Integration.Steamworks
         public static string LeaderboardData { get; set; } = "";
         public static string NumberOfCurrentPlayers { get; set; } = "";
 
+        public static INetworkingLobby Lobby { get; private set; }
+
         public static uint PlayTimeInSeconds() => SteamUtils.GetSecondsSinceAppActive();
         public static void Initialize(GraphicsDevice graphicsDevice)
         {
@@ -36,7 +39,8 @@ namespace Backbone.Integration.Steamworks
 
                 // It's important that the next call happens AFTER the call to SteamAPI.Init().
                 InitializeCallbacks();
-                SteamNetworkingWrapper.Initialize(8);
+                Lobby = new SteamNetworkingWrapper();
+                Lobby.Initialize(8);
 
                 SteamUtils.SetOverlayNotificationPosition(ENotificationPosition.k_EPositionBottomRight);
                 // Uncomment the next line to adjust the OverlayNotificationPosition.
@@ -63,7 +67,7 @@ namespace Backbone.Integration.Steamworks
                 //untrimmedUserName = ReplaceUnsupportedChars(Font, untrimmedUserName);
                 SteamUserName = untrimmedUserName.Trim();
 
-                SteamNetworkingWrapper.FindLobbies();
+                Lobby.FindLobbies();
             }
         }
 

@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using Backbone.Graphics;
+using Backbone.IO;
+using Backbone.Networking;
+using SharpDX.Direct3D9;
 using Steamworks;
 
 namespace Backbone.Integration.Steamworks
 {
-    public static class SteamNetworkingWrapper
+    public class SteamNetworkingWrapper : INetworkingLobby
     {
-        public static uint LobbyMatchList { get; set; }
-        public static Action<string> OnLobbyChatMessage { get; set; }
+        public uint LobbyMatchList { get; set; }
+        public Action<string> OnLobbyChatMessage { get; set; }
 
-        private static CSteamID CurrentLobbyId;
+        private CSteamID CurrentLobbyId;
 
         private const string HostAddressKey = "HostAddress";
 
-        private static CallResult<LobbyMatchList_t> mCallResultLobbyMatchList;
-        private static Callback<LobbyDataUpdate_t> mCallbackLobbyDataUpdate;
-        private static Callback<LobbyChatMsg_t> mCallbackLobbyChatMsg;
-        private static Callback<LobbyCreated_t> mCallbackLobbyCreated;
-        private static Callback<GameLobbyJoinRequested_t> mCallbackGameLobbyJoinRequested;
-        private static Callback<LobbyEnter_t> mCallbackLobbyEntered;
+        private CallResult<LobbyMatchList_t> mCallResultLobbyMatchList;
+        private Callback<LobbyDataUpdate_t> mCallbackLobbyDataUpdate;
+        private Callback<LobbyChatMsg_t> mCallbackLobbyChatMsg;
+        private Callback<LobbyCreated_t> mCallbackLobbyCreated;
+        private Callback<GameLobbyJoinRequested_t> mCallbackGameLobbyJoinRequested;
+        private Callback<LobbyEnter_t> mCallbackLobbyEntered;
 
-        private static int maxConnections = 4;
+        private int maxConnections = 4;
 
-        public static void Initialize(int maxConnections)
+        public void Initialize(int maxConnections)
         {
-            SteamNetworkingWrapper.maxConnections = maxConnections;
+            this.maxConnections = maxConnections;
             mCallResultLobbyMatchList = CallResult<LobbyMatchList_t>.Create(OnLobbyMatchList);
             mCallbackLobbyDataUpdate = Callback<LobbyDataUpdate_t>.Create(OnLobbyDataUpdate);
             mCallbackLobbyChatMsg = Callback<LobbyChatMsg_t>.Create(OnLobbyChatMsg);
@@ -36,23 +39,28 @@ namespace Backbone.Integration.Steamworks
             mCallbackLobbyEntered = Callback<LobbyEnter_t>.Create(OnLobbyEntered);
         }
 
-        public static void HostLobby()
+        public void HostLobby()
         {
             SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, maxConnections);
         }
 
-        private static void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
+        private void OnGameLobbyJoinRequested(GameLobbyJoinRequested_t callback)
         {
             SteamMatchmaking.JoinLobby(callback.m_steamIDLobby);
         }
 
-        private static void OnLobbyEntered(LobbyEnter_t callback)
+        private void OnLobbyEntered(LobbyEnter_t callback)
         {
             string hostAddress = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), HostAddressKey);
 
         }
 
-        public static void FindLobbies()
+        public void JoinLobby(ulong lobbyId)
+        {
+            SteamMatchmaking.JoinLobby(new CSteamID(lobbyId));
+        }
+
+        public void FindLobbies()
         {
             string message = "FindLobbies called!";
             VariableMonitor.Report(x => message);
@@ -61,7 +69,7 @@ namespace Backbone.Integration.Steamworks
             mCallResultLobbyMatchList.Set(apiCall, OnLobbyMatchList);
         }
 
-        private static void OnLobbyCreated(LobbyCreated_t pCallback)
+        private void OnLobbyCreated(LobbyCreated_t pCallback)
         {
             if(pCallback.m_eResult != EResult.k_EResultOK)
             {
@@ -75,7 +83,7 @@ namespace Backbone.Integration.Steamworks
             );
         }
 
-        private static void OnLobbyMatchList(LobbyMatchList_t pCallback, bool bIoFailure)
+        private void OnLobbyMatchList(LobbyMatchList_t pCallback, bool bIoFailure)
         {
             string message = "OnLobbyMatchList called!";
             VariableMonitor.Report(x => message);
@@ -86,7 +94,7 @@ namespace Backbone.Integration.Steamworks
             LobbyMatchList = pCallback.m_nLobbiesMatching;
         }
 
-        private static void OnLobbyChatMsg(LobbyChatMsg_t pCallback)
+        private void OnLobbyChatMsg(LobbyChatMsg_t pCallback)
         {
             var byteSize = 4096;
             Byte[] pData = new Byte[byteSize];
@@ -100,12 +108,12 @@ namespace Backbone.Integration.Steamworks
             }
         }
 
-        private static void OnLobbyDataUpdate(LobbyDataUpdate_t pCallback)
+        private void OnLobbyDataUpdate(LobbyDataUpdate_t pCallback)
         {
         }
 
 
-        public static bool SendLobbyChatMessage(string message)
+        public bool SendLobbyChatMessage(string message)
         {
             var pvMsgBody = Encoding.ASCII.GetBytes(message);
             var cubMsgBody = pvMsgBody.Length;
@@ -126,7 +134,7 @@ namespace Backbone.Integration.Steamworks
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static bool SetLobbyOwnerData(string key, string value)
+        public bool SetLobbyOwnerData(string key, string value)
         {
             return SteamMatchmaking.SetLobbyData(CurrentLobbyId, key, value);
         }
@@ -136,9 +144,25 @@ namespace Backbone.Integration.Steamworks
         /// </summary>
         /// <param name="key">Name of the metadata key</param>
         /// <param name="value">Value of the metadata for that key</param>
-        public static void SetLobbyMemberData(string key, string value)
+        public void SetLobbyMemberData(string key, string value)
         {
             SteamMatchmaking.SetLobbyMemberData(CurrentLobbyId, key, value);
+        }
+
+
+        /// <summary>
+        /// Refreshes all of the metadata for a lobby that you're not in right now.
+        ///
+        /// You will never do this for lobbies you're a member of, that data will always be up to date.
+        /// You can use this to refresh lobbies that you have obtained from RequestLobbyList or that are available via friends.
+        ///
+        /// Triggers a LobbyDataUpdate_t callback.
+        /// </summary>
+        /// <param name="steamIDLobby">id of the lobby</param>
+        /// <returns>true if the request was successfully sent to the server. false if no connection to Steam could be made, or steamIDLobby is invalid.</returns>
+        public bool RequestLobbyData(ulong lobbyId)
+        {
+            return SteamMatchmaking.RequestLobbyData(new CSteamID(lobbyId));
         }
     }
 }
