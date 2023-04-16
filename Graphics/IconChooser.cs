@@ -18,6 +18,18 @@ namespace Backbone.Graphics
 
         public Func<IAction3D> ClickAnimation { get; set; } = null;
 
+        public Action<string> OnChange
+        {
+            get
+            {
+                return chooser.OnChange;
+            }
+            set
+            {
+                chooser.OnChange = value;
+            }
+        }
+
         private string _id;
 
         public IInteractive Icon { get
