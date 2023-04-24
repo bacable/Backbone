@@ -142,34 +142,34 @@
     <value>Change Language</value>
   </data>
   <data name="ChessBishop" xml:space="preserve">
-    <value>Bishop</value>
+    <value>Bispo</value>
   </data>
   <data name="ChessCastling" xml:space="preserve">
     <value>Castling</value>
   </data>
   <data name="ChessCheck" xml:space="preserve">
-    <value>Check</value>
+    <value>Xeque</value>
   </data>
   <data name="ChessCheckmate" xml:space="preserve">
-    <value>Checkmate</value>
+    <value>Xeque-mate</value>
   </data>
   <data name="ChessKing" xml:space="preserve">
-    <value>King</value>
+    <value>Rei</value>
   </data>
   <data name="ChessKnight" xml:space="preserve">
-    <value>Knight</value>
+    <value>Cavalo</value>
   </data>
   <data name="ChessPawn" xml:space="preserve">
-    <value>Pawn</value>
+    <value>Peão</value>
   </data>
   <data name="ChessPieces" xml:space="preserve">
     <value>Pieces</value>
   </data>
   <data name="ChessQueen" xml:space="preserve">
-    <value>Queen</value>
+    <value>Dama</value>
   </data>
   <data name="ChessRook" xml:space="preserve">
-    <value>Rook</value>
+    <value>Torre</value>
   </data>
   <data name="ChessStalemate" xml:space="preserve">
     <value>Stalemate</value>
@@ -178,37 +178,37 @@
     <value>Close menu</value>
   </data>
   <data name="ColorBlack" xml:space="preserve">
-    <value>Black</value>
+    <value>Preto</value>
   </data>
   <data name="ColorBlue" xml:space="preserve">
-    <value>Blue</value>
+    <value>Azul</value>
   </data>
   <data name="ColorBrown" xml:space="preserve">
-    <value>Brown</value>
+    <value>Marrom</value>
   </data>
   <data name="ColorGray" xml:space="preserve">
-    <value>Gray</value>
+    <value>Cinza</value>
   </data>
   <data name="ColorGreen" xml:space="preserve">
-    <value>Green</value>
+    <value>Verde</value>
   </data>
   <data name="ColorOrange" xml:space="preserve">
-    <value>Orange</value>
+    <value>Laranja</value>
   </data>
   <data name="ColorPink" xml:space="preserve">
-    <value>Pink</value>
+    <value>Rosa</value>
   </data>
   <data name="ColorPurple" xml:space="preserve">
-    <value>Purple</value>
+    <value>Roxo</value>
   </data>
   <data name="ColorRed" xml:space="preserve">
-    <value>Red</value>
+    <value>Vermelho</value>
   </data>
   <data name="ColorWhite" xml:space="preserve">
-    <value>White</value>
+    <value>Branco</value>
   </data>
   <data name="ColorYellow" xml:space="preserve">
-    <value>Yellow</value>
+    <value>Amarelo</value>
   </data>
   <data name="Continue" xml:space="preserve">
     <value>Continuar</value>

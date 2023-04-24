@@ -22,14 +22,14 @@ namespace Backbone.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CommonTerms {
+    internal class CommonTerms___Copy {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CommonTerms() {
+        internal CommonTerms___Copy() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Backbone.Localization {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ProximityND.Backbone.Localization.CommonTerms", typeof(CommonTerms).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ProximityND.Backbone.Localization.CommonTerms - Copy", typeof(CommonTerms___Copy).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -399,15 +399,6 @@ namespace Backbone.Localization {
         internal static string Downloading {
             get {
                 return ResourceManager.GetString("Downloading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Diamond.
-        /// </summary>
-        internal static string ElementDiamond {
-            get {
-                return ResourceManager.GetString("ElementDiamond", resourceCulture);
             }
         }
         

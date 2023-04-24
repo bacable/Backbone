@@ -127,7 +127,7 @@
     <value>Arrows</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>戻る</value>
+    <value>Terug</value>
   </data>
   <data name="Board" xml:space="preserve">
     <value>Board</value>
@@ -142,34 +142,34 @@
     <value>Change Language</value>
   </data>
   <data name="ChessBishop" xml:space="preserve">
-    <value>ビショップ</value>
+    <value>Loper</value>
   </data>
   <data name="ChessCastling" xml:space="preserve">
     <value>Castling</value>
   </data>
   <data name="ChessCheck" xml:space="preserve">
-    <value>王手</value>
+    <value>Schaak</value>
   </data>
   <data name="ChessCheckmate" xml:space="preserve">
-    <value>詰み</value>
+    <value>Mat</value>
   </data>
   <data name="ChessKing" xml:space="preserve">
-    <value>キング</value>
+    <value>Koning</value>
   </data>
   <data name="ChessKnight" xml:space="preserve">
-    <value>ナイト</value>
+    <value>Paard</value>
   </data>
   <data name="ChessPawn" xml:space="preserve">
-    <value>ポーン</value>
+    <value>Pion</value>
   </data>
   <data name="ChessPieces" xml:space="preserve">
     <value>Pieces</value>
   </data>
   <data name="ChessQueen" xml:space="preserve">
-    <value>クイーン</value>
+    <value>Dame</value>
   </data>
   <data name="ChessRook" xml:space="preserve">
-    <value>ルーク</value>
+    <value>Toren</value>
   </data>
   <data name="ChessStalemate" xml:space="preserve">
     <value>Stalemate</value>
@@ -178,43 +178,43 @@
     <value>Close menu</value>
   </data>
   <data name="ColorBlack" xml:space="preserve">
-    <value>黒</value>
+    <value>Zwart</value>
   </data>
   <data name="ColorBlue" xml:space="preserve">
-    <value>青</value>
+    <value>Blauw</value>
   </data>
   <data name="ColorBrown" xml:space="preserve">
-    <value>茶色</value>
+    <value>Bruin</value>
   </data>
   <data name="ColorGray" xml:space="preserve">
-    <value>灰色</value>
+    <value>Grijs</value>
   </data>
   <data name="ColorGreen" xml:space="preserve">
-    <value>緑</value>
+    <value>Groen</value>
   </data>
   <data name="ColorOrange" xml:space="preserve">
-    <value>オレンジ</value>
+    <value>Oranje</value>
   </data>
   <data name="ColorPink" xml:space="preserve">
-    <value>ピンク</value>
+    <value>Roze</value>
   </data>
   <data name="ColorPurple" xml:space="preserve">
-    <value>紫</value>
+    <value>Paars</value>
   </data>
   <data name="ColorRed" xml:space="preserve">
-    <value>赤</value>
+    <value>Rood</value>
   </data>
   <data name="ColorWhite" xml:space="preserve">
-    <value>白</value>
+    <value>Wit</value>
   </data>
   <data name="ColorYellow" xml:space="preserve">
-    <value>黄色</value>
+    <value>Geel</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>続行</value>
+    <value>Continue</value>
   </data>
   <data name="Controls" xml:space="preserve">
-    <value>Controls</value>
+    <value>Besturing</value>
   </data>
   <data name="Credits" xml:space="preserve">
     <value>Credits</value>
@@ -226,19 +226,16 @@
     <value>Delete</value>
   </data>
   <data name="Dice" xml:space="preserve">
-    <value>Dice</value>
+    <value>Dobbelstenen</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading</value>
   </data>
-  <data name="ElementDiamond" xml:space="preserve">
-    <value>ダイヤ</value>
-  </data>
   <data name="Eliminated" xml:space="preserve">
-    <value>Eliminated</value>
+    <value>Geëlimineerd</value>
   </data>
   <data name="ExitGame" xml:space="preserve">
-    <value>Exit Game</value>
+    <value>Spel Verlaten</value>
   </data>
   <data name="Finished" xml:space="preserve">
     <value>Finished</value>
@@ -247,22 +244,22 @@
     <value>Flying</value>
   </data>
   <data name="FullScreen" xml:space="preserve">
-    <value>Full Screen</value>
+    <value>Volledig Scherm</value>
   </data>
   <data name="GameOver" xml:space="preserve">
-    <value>Game Over</value>
+    <value>Spel is Over</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Hide</value>
+    <value>Verbergen</value>
   </data>
   <data name="HowToPlay" xml:space="preserve">
     <value>How To Play</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>Inventory</value>
+    <value>Inventaris</value>
   </data>
   <data name="InXSpaces" xml:space="preserve">
-    <value>In {0} Spaces</value>
+    <value>In {0} Vakjes</value>
   </data>
   <data name="Items" xml:space="preserve">
     <value>Items</value>
@@ -283,49 +280,49 @@
     <value>Main Menu</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>地図</value>
+    <value>Kaart</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
-    <value>{0} Medal</value>
+    <value>{0} Medaille</value>
   </data>
   <data name="MetalBronze" xml:space="preserve">
-    <value>Bronze</value>
+    <value>Bronzen</value>
   </data>
   <data name="MetalCopper" xml:space="preserve">
-    <value>銅</value>
+    <value>Koper</value>
   </data>
   <data name="MetalGold" xml:space="preserve">
-    <value>金</value>
+    <value>Goud</value>
   </data>
   <data name="MetalIron" xml:space="preserve">
-    <value>鉄</value>
+    <value>Ijzer</value>
   </data>
   <data name="MetalPlatinum" xml:space="preserve">
-    <value>白金</value>
+    <value>Platina</value>
   </data>
   <data name="MetalSilver" xml:space="preserve">
-    <value>銀</value>
+    <value>Zilver</value>
   </data>
   <data name="MetalSteel" xml:space="preserve">
-    <value>Steel</value>
+    <value>Staal</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value>Minutes</value>
+    <value>Minuten</value>
   </data>
   <data name="Missions" xml:space="preserve">
-    <value>Missions</value>
+    <value>Missies</value>
   </data>
   <data name="MusicVolume" xml:space="preserve">
-    <value>音楽の音量</value>
+    <value>Muziekvolume</value>
   </data>
   <data name="NewGame" xml:space="preserve">
-    <value>New Game</value>
+    <value>Nieuw Spel</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>いいえ</value>
+    <value>Nee</value>
   </data>
   <data name="NotReady" xml:space="preserve">
     <value>Not Ready</value>
@@ -340,7 +337,7 @@
     <value>On</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>オプション</value>
+    <value>Instellingen</value>
   </data>
   <data name="Paused" xml:space="preserve">
     <value>Paused</value>
@@ -349,25 +346,25 @@
     <value>Play</value>
   </data>
   <data name="Players" xml:space="preserve">
-    <value>Players</value>
+    <value>Spelers</value>
   </data>
   <data name="Points" xml:space="preserve">
-    <value>Points</value>
+    <value>Punten</value>
   </data>
   <data name="PressButtonToStart" xml:space="preserve">
     <value>Press {0} To Start</value>
   </data>
   <data name="Qualified" xml:space="preserve">
-    <value>Qualified</value>
+    <value>Gekwalificeerd</value>
   </data>
   <data name="Rank" xml:space="preserve">
-    <value>Rank</value>
+    <value>Rang</value>
   </data>
   <data name="Recharge" xml:space="preserve">
     <value>Recharge</value>
   </data>
   <data name="Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>Resolutie</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
@@ -376,7 +373,7 @@
     <value>Restart Game</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>Resume</value>
+    <value>Hervat</value>
   </data>
   <data name="Retrieve" xml:space="preserve">
     <value>Retrieve</value>
@@ -403,10 +400,10 @@
     <value>Save Game</value>
   </data>
   <data name="SFXVolume" xml:space="preserve">
-    <value>Sound Volume</value>
+    <value>Geluidsvolume</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Show</value>
+    <value>Tonen</value>
   </data>
   <data name="Spectator" xml:space="preserve">
     <value>Spectator</value>
@@ -421,19 +418,19 @@
     <value>Summary</value>
   </data>
   <data name="Teams" xml:space="preserve">
-    <value>チーム</value>
+    <value>Teams</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>テーマ</value>
+    <value>Thema</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>
   </data>
   <data name="TurnForName" xml:space="preserve">
-    <value>{0}'s Turn</value>
+    <value>{0} aan de beurt</value>
   </data>
   <data name="Tutorial" xml:space="preserve">
-    <value>Tutorial</value>
+    <value>Uitleg</value>
   </data>
   <data name="Versus" xml:space="preserve">
     <value>Versus</value>
@@ -454,7 +451,7 @@
     <value>XP</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>はい</value>
+    <value>Ja</value>
   </data>
   <data name="YouLose" xml:space="preserve">
     <value>You Lose!</value>

@@ -142,34 +142,34 @@
     <value>Change Language</value>
   </data>
   <data name="ChessBishop" xml:space="preserve">
-    <value>Bishop</value>
+    <value>Alfiere</value>
   </data>
   <data name="ChessCastling" xml:space="preserve">
     <value>Castling</value>
   </data>
   <data name="ChessCheck" xml:space="preserve">
-    <value>Check</value>
+    <value>Scacco</value>
   </data>
   <data name="ChessCheckmate" xml:space="preserve">
-    <value>Checkmate</value>
+    <value>Scacco matto</value>
   </data>
   <data name="ChessKing" xml:space="preserve">
-    <value>King</value>
+    <value>Re</value>
   </data>
   <data name="ChessKnight" xml:space="preserve">
-    <value>Knight</value>
+    <value>Cavallo</value>
   </data>
   <data name="ChessPawn" xml:space="preserve">
-    <value>Pawn</value>
+    <value>Pedone</value>
   </data>
   <data name="ChessPieces" xml:space="preserve">
     <value>Pieces</value>
   </data>
   <data name="ChessQueen" xml:space="preserve">
-    <value>Queen</value>
+    <value>Donna</value>
   </data>
   <data name="ChessRook" xml:space="preserve">
-    <value>Rook</value>
+    <value>Torre</value>
   </data>
   <data name="ChessStalemate" xml:space="preserve">
     <value>Stalemate</value>

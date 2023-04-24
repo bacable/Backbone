@@ -147,7 +147,20 @@ namespace Backbone.Graphics
                 // but not good enough for release
                 if (Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
                 {
-                    OnClick?.Invoke();
+                    if(IsActive)
+                    {
+                        optionGroup.HandleMouse(command);
+                    }
+                    else
+                    {
+                        OnClick?.Invoke();
+                    }
+                } else
+                {
+                    if(IsActive)
+                    {
+                        OnClick?.Invoke();
+                    }
                 }
             }
         }
@@ -240,7 +253,6 @@ namespace Backbone.Graphics
 
                 foreach(var key in decorations.Keys)
                 {
-                    Debug.WriteLine("updating decoration " + key);
                     var decoration = decorations[key];
                     decoration.Update(gameTime);
                 }

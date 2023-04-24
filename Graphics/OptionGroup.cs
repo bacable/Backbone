@@ -134,10 +134,12 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            
+
             if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
             {
-                for(var i = 0; i < Options.Count; i++)
+                int newSelection = -1;
+
+                for (var i = 0; i < Options.Count; i++)
                 {
                     var option = Options[i];
 
@@ -149,13 +151,14 @@ namespace Backbone.Graphics
                     if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
                     {
                         UpdateSelected(option.Item);
+                        newSelection = i;
                         if (command.State == MouseEvent.Release)
                         {
                             if (option.Item.Type == MenuItemType.Button)
                             {
                                 option.Item.Click();
                             }
-                            else if(option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                            else if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
                             {
                                 option.Item.Next();
                             }
@@ -163,6 +166,14 @@ namespace Backbone.Graphics
                         UpdateSelectedOption();
                         UpdateTexts();
                         break;
+                    }
+                }
+
+                if (newSelection > -1)
+                {
+                    for (var i = 0; i < Options.Count; i++)
+                    {
+                        Options[i].Item.IsSelected = i == newSelection;
                     }
                 }
             }
