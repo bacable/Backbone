@@ -16,7 +16,7 @@ namespace Backbone.Events
             }
         }
 
-        public static TReturn Request(TRequest infoType)
+        public static TReturn Request(TRequest infoType, int id = 0)
         {
 #if DEBUG
             if (Providers.Count == 0)
@@ -27,7 +27,7 @@ namespace Backbone.Events
             for(var i = 0; i < Providers.Count; i++)
             {
                 var provider = Providers[i];
-                var returnVal = provider.Provide(infoType);
+                var returnVal = provider.Provide(infoType, id);
                 if(!EqualityComparer<TReturn>.Default.Equals(returnVal, default(TReturn))) {
                     return returnVal;
                 }
