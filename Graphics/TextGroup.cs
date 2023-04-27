@@ -7,6 +7,7 @@ using ProximityND.Backbone.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Backbone.UI;
 
 namespace Backbone.Graphics
 {
@@ -24,6 +25,8 @@ namespace Backbone.Graphics
         public static Dictionary<char, Model> LetterModels { get; set; } = new Dictionary<char, Model>();
 
         public List<Movable3D> Letters { get; private set; } = new List<Movable3D>();
+
+        private TextAlign alignment = TextAlign.Center;
 
         public string Text { get; private set; } = string.Empty;
 
@@ -98,6 +101,7 @@ namespace Backbone.Graphics
             this.baseScale = settings.Scale;
             this.Position = settings.Position;
             this.parent = settings.Parent;
+            this.alignment = settings.Alignment;
 
             if(settings.TransitionInAnim!= null)
             {
@@ -155,7 +159,11 @@ namespace Backbone.Graphics
             Letters.Clear();
 
             var length = GetTotalLength(text);
-            var currentPositionX = Position.X - (length / 2f);
+            var currentPositionX = (alignment == TextAlign.Center) ?
+                Position.X - (length / 2f) :
+                (alignment == TextAlign.Left) ?
+                Position.X :
+                Position.X - length;
 
             Left = currentPositionX;
 

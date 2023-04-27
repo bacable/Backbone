@@ -1,4 +1,5 @@
 ﻿using Backbone.Actions;
+using Backbone.UI;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,5 +17,6 @@ namespace Backbone.Graphics
         public string Text { get; internal set; }
         public Func<int, IAction3D> TransitionInAnim { get; set; } = null;
         public Func<int, IAction3D> TransitionOutAnim { get; set; } = null;
+        public TextAlign Alignment { get; internal set; } = TextAlign.Center;
     }
 }
