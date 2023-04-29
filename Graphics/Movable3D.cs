@@ -59,9 +59,9 @@ namespace Backbone.Graphics
 
         private List<IAction3D> queuedActions = new List<IAction3D>();
 
-        public ColorType Color1 = ColorType.White;
-        public ColorType Color2 = ColorType.White;
-        public ColorType ColorBkg = ColorType.Gray;
+        public string Color1 = ColorHex.DefaultColorHexCodes[ColorType.White];
+        public string Color2 = ColorHex.DefaultColorHexCodes[ColorType.White];
+        public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
 
         public Movable3D(Model model, Vector3 startPosition, float scale)
         {
@@ -169,9 +169,9 @@ namespace Backbone.Graphics
         {
             if(IsVisible && Alpha > 0f)
             {
-                MeshProperties["InnerFront"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[Color1]) };
-                MeshProperties["InnerBack"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[Color2]) };
-                MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[ColorBkg]) };
+                MeshProperties["InnerFront"] = new MeshProperty() { Color = ColorHex.Get(Color1) };
+                MeshProperties["InnerBack"] = new MeshProperty() { Color = ColorHex.Get(Color2) };
+                MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorBkg) };
 
                 var settings = new ModelDrawSettings()
                 {

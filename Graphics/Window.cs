@@ -178,9 +178,9 @@ namespace Backbone.Graphics
         /// </summary>
         /// <param name="newHeaderText"></param>
         /// <param name="color"></param>
-        public void UpdateHeader(string newHeaderText, ColorType color = ColorType.None)
+        public void UpdateHeader(string newHeaderText, string color = "")
         {
-            if(color != ColorType.None)
+            if(color != string.Empty)
             {
                 Header.SetColor(color);
             }

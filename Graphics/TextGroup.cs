@@ -72,7 +72,7 @@ namespace Backbone.Graphics
 
         float baseScale = 0f;
         Movable3D parent = null;
-        ColorType textColor = ColorType.None;
+        string textColor = string.Empty;
 
         public int Value { get; private set; } = 0;
 
@@ -113,13 +113,13 @@ namespace Backbone.Graphics
                 TransitionOutAnimation = settings.TransitionOutAnim;
             }
 
-            if(settings.Color != ColorType.None)
+            if(settings.Color != string.Empty)
             {
                 SetColor(settings.Color);
             }
             else
             {
-                var textColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.TextGroupDefaultTextColor);
+                var textColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.TextGroupDefaultTextColor);
                 SetColor(textColor);
             }
 
@@ -134,11 +134,11 @@ namespace Backbone.Graphics
             }
         }
 
-        public void SetColor(ColorType color)
+        public void SetColor(string color)
         {
             Letters.ForEach(x => x.MeshProperties[MeshNameToColor] = new MeshProperty()
             {
-                Color = ColorType3D.Get(color)
+                Color = ColorHex.Get(color)
             });
             textColor = color;
         }
@@ -183,11 +183,11 @@ namespace Backbone.Graphics
                     model.RotationX = 0f;
                     model.Id = i;
 
-                    if(textColor != ColorType.None)
+                    if(textColor != string.Empty)
                     {
                         model.MeshProperties[MeshNameToColor] = new MeshProperty()
                         {
-                            Color = ColorType3D.Get(textColor)
+                            Color = ColorHex.Get(textColor)
                         };
                     }
 

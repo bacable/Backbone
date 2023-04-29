@@ -10,7 +10,7 @@ namespace Backbone.Graphics
     public class TextGroupSettings
     {
         public int Id { get; internal set; } = 0;
-        public ColorType Color { get; internal set; }
+        public string Color { get; internal set; }
         public Movable3D Parent { get; set; }
         public Vector3 Position { get; internal set; }
         public float Scale { get; internal set; }

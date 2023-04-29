@@ -52,7 +52,7 @@ namespace Backbone.Graphics
 
                 option.Text = new TextGroup(new TextGroupSettings()
                 {
-                    Color = ProviderHub<ColorType, ThemeElementType>.Request(ThemeElementType.TextColor),
+                    Color = ProviderHub<string, ThemeElementType>.Request(ThemeElementType.TextColor),
                     Id = index,
                     Parent = parent,
                     Position = new Vector3(settings.Position.X, settings.Position.Y - 90f * index, settings.Position.Z),
@@ -181,8 +181,8 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            var selectedColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.OptionGroupSelectedTextColor);
-            var unselectedColor = ProviderHub<ColorType, UIElementColorType>.Request(UIElementColorType.OptionGroupUnselectedTextColor);
+            var selectedColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.OptionGroupSelectedTextColor);
+            var unselectedColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.OptionGroupUnselectedTextColor);
 
             Options.ForEach(x =>
             {
