@@ -25,6 +25,25 @@ namespace Backbone.Graphics
 
         };
 
+        public static Dictionary<ColorType, string> ColorHexValues = new Dictionary<ColorType, string>()
+        {
+            { ColorType.Red, "#D65539" },
+            { ColorType.Blue, "#5252a8" },
+            { ColorType.Orange, "#ac752c" },
+            { ColorType.Purple, "#774c89" },
+            { ColorType.Yellow,  "#b3b300"},
+            { ColorType.Green, "#40b359" },
+            { ColorType.Gray, "#6e6e6e" },
+            { ColorType.LightGray, "#b3b3b3" },
+            { ColorType.DefaultText, "#bfbfbf" },
+            { ColorType.White, "#e6e6e6" },
+            { ColorType.LightOrange, "#d1b110" },
+            { ColorType.Gold, "#D9CC10" },
+            { ColorType.Black, "#1A1A1A" },
+            { ColorType.Pink, "#C43FC0" },
+            { ColorType.Cyan, "#06C4D3" }
+        };
+
         public static Vector3 Get(ColorType color)
         {
             return Colors[color];

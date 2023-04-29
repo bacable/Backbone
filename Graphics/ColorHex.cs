@@ -1,26 +1,23 @@
-﻿using Backbone.Graphics;
-using System;
+﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     public class ColorHex
     {
-        private static Dictionary<string, Color> Colors = new Dictionary<string, Color>();
+        private static Dictionary<string, Vector3> Colors = new Dictionary<string, Vector3>();
 
-        private static Color Get(string hexCode)
+        public static Vector3 Get(string hexCode)
         {
             if(Colors.ContainsKey(hexCode)) {
                 return Colors[hexCode];
             } else
             {
                 var color = System.Drawing.ColorTranslator.FromHtml(hexCode);
-                Colors[hexCode] = color;
-                return color;
+                var colorVector = new Vector3(color.R / 255f, color.G / 255f, color.B / 255f);
+                Colors[hexCode] = colorVector;
+                return colorVector;
             }
         }
 
