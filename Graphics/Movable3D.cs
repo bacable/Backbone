@@ -169,7 +169,20 @@ namespace Backbone.Graphics
         {
             if(IsVisible && Alpha > 0f)
             {
-                ModelHelper.DrawHexTile(Model, World, view, projection, Alpha, Color1, Color2, ColorBkg, MeshProperties);
+                MeshProperties["InnerFront"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[Color1]) };
+                MeshProperties["InnerBack"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[Color2]) };
+                MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorHex.DefaultColorHexCodes[ColorBkg]) };
+
+                var settings = new ModelDrawSettings()
+                {
+                    Alpha = Alpha,
+                    MeshProperties = MeshProperties,
+                    Model = Model,
+                    Projection = projection,
+                    View = view,
+                    World = World
+                };
+                ModelHelper.Draw(settings);
             }
         }
 
