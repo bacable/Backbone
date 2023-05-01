@@ -115,17 +115,26 @@ namespace Backbone.Graphics
 
         public static void Draw(Matrix view, Matrix projection)
         {
-            CurrentScreen.Draw(view, projection);
+            if (CurrentScreen != null)
+            {
+                CurrentScreen.Draw(view, projection);
+            }
         }
 
         public static void DrawText(SpriteBatch spriteBatch)
         {
-            CurrentScreen.DrawText(spriteBatch);
+            if (CurrentScreen != null)
+            {
+                CurrentScreen.DrawText(spriteBatch);
+            }
         }
 
         public static void DrawUnderText(Matrix view, Matrix projection)
         {
-            CurrentScreen.DrawUnderText(view, projection);
+            if(CurrentScreen != null)
+            {
+                CurrentScreen.DrawUnderText(view, projection);
+            }
         }
 
     }

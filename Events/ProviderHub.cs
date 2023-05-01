@@ -16,6 +16,8 @@ namespace Backbone.Events
             }
         }
 
+        public static bool HasProvider { get { return Providers.Count > 0;} }
+
         public static TReturn Request(TRequest infoType, int id = 0)
         {
 #if DEBUG
