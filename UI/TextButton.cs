@@ -44,6 +44,11 @@ namespace Backbone.UI
             Text.TransitionOut();
         }
 
+        public void SetColor(string hexCode)
+        {
+            Text.SetColor(hexCode);
+        }
+
         public void Update(GameTime gameTime)
         {
             Text.Update(gameTime);
