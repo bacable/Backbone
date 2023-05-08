@@ -11,6 +11,8 @@ namespace Backbone.Actions
     {
         public List<IAction3D> SubActions { get; set; }
         int currentSubAction = 0;
+        public bool repeatForever { get; set; } = false;
+
         public SequenceAction(params IAction3D[] sequence)
         {
             SubActions = sequence.ToList();
@@ -36,7 +38,10 @@ namespace Backbone.Actions
                 currentSubAction += 1;
                 if (currentSubAction >= SubActions.Count)
                 {
-                    isFinished = true;
+                    if(!repeatForever)
+                    {
+                        isFinished = true;
+                    }
                     Reset();
                 }
             }

@@ -231,6 +231,9 @@
   <data name="Downloading" xml:space="preserve">
     <value>Downloading</value>
   </data>
+  <data name="ElementDiamond" xml:space="preserve">
+    <value>Diamond</value>
+  </data>
   <data name="Eliminated" xml:space="preserve">
     <value>Eliminated</value>
   </data>
@@ -416,6 +419,12 @@
   </data>
   <data name="Summary" xml:space="preserve">
     <value>Summary</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Teams</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>

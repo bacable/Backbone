@@ -243,6 +243,9 @@
   <data name="Flying" xml:space="preserve">
     <value>Vuela</value>
   </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>Pantalla Completa</value>
+  </data>
   <data name="GameOver" xml:space="preserve">
     <value>Game Over</value>
   </data>
@@ -360,6 +363,9 @@
   <data name="Recharge" xml:space="preserve">
     <value>Recargar</value>
   </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>Resolución</value>
+  </data>
   <data name="Restart" xml:space="preserve">
     <value>Reinicia</value>
   </data>
@@ -407,6 +413,12 @@
   </data>
   <data name="Summary" xml:space="preserve">
     <value>Mostrar Resumen</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Equipos</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Temática</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>
