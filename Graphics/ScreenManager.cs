@@ -193,6 +193,28 @@ namespace Backbone.Graphics
             }
         }
 
+        public static void Draw(Matrix view, Matrix projection, SpriteBatch spriteBatch)
+        {
+            if (ScreenStack.Count == 0)
+            {
+                return;
+            }
+
+            var screens = ScreenStack.ToArray();
+            for (int i = 0; i < screens.Length; i++)
+            {
+                foreach (DrawLayerType layer in Enum.GetValues(typeof(DrawLayerType)))
+                {
+                    screens[i].Draw(layer, view, projection, spriteBatch);
+                }
+
+                if (i < OverlayInfos.Count)
+                {
+                    DrawFullScreenOverlay(i);
+                }
+            }
+        }
+
         public static void Draw(Matrix view, Matrix projection)
         {
             for (int i = 0; i < ScreenStack.Count; i++)

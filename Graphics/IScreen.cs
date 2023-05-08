@@ -10,6 +10,8 @@ namespace Backbone.Graphics
         List<IGUI3D> GuiElements { get; set; }
         void Initialize();
         void Update(GameTime gameTime);
+        void Draw(DrawLayerType layer, Matrix view, Matrix projection, SpriteBatch spriteBatch);
+
         void Draw(Matrix view, Matrix projection);
         void DrawText(SpriteBatch spriteBatch);
 
