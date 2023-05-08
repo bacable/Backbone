@@ -41,15 +41,16 @@ namespace Backbone.Graphics
             }
         }
 
-        public static Microsoft.Xna.Framework.Color ConvertFromHex(string s)
+        public static Microsoft.Xna.Framework.Color ConvertFromHex(string s, float alpha = 1.0f)
         {
-            if (s.Length != 7)
+            if (s.Length != 7 || !s.StartsWith("#"))
                 return Microsoft.Xna.Framework.Color.Gray;
 
             int r = Convert.ToInt32(s.Substring(1, 2), 16);
             int g = Convert.ToInt32(s.Substring(3, 2), 16);
             int b = Convert.ToInt32(s.Substring(5, 2), 16);
-            return new Microsoft.Xna.Framework.Color(r, g, b);
+            int a = Math.Clamp(Convert.ToInt32(alpha * 255), 0, 255);
+            return new Microsoft.Xna.Framework.Color(r, g, b, a);
         }
 
     }
