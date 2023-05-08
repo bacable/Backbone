@@ -62,6 +62,7 @@ namespace Backbone.Graphics
         public string Color1 = ColorHex.DefaultColorHexCodes[ColorType.White];
         public string Color2 = ColorHex.DefaultColorHexCodes[ColorType.White];
         public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
+        public string ColorText = ColorHex.DefaultColorHexCodes[ColorType.DefaultText];
 
         public Movable3D(Model model, Vector3 startPosition, float scale)
         {
@@ -169,9 +170,12 @@ namespace Backbone.Graphics
         {
             if(IsVisible && Alpha > 0f)
             {
+                //TODO: this shouldn't be getting created every draw call, that's not good
                 MeshProperties["InnerFront"] = new MeshProperty() { Color = ColorHex.Get(Color1) };
                 MeshProperties["InnerBack"] = new MeshProperty() { Color = ColorHex.Get(Color2) };
                 MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorBkg) };
+                MeshProperties["NumberFront"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
+                MeshProperties["NumberBack"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
 
                 var settings = new ModelDrawSettings()
                 {

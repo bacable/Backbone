@@ -110,6 +110,8 @@ namespace Backbone.Graphics
 
         public static void Draw(SpriteBatch spriteBatch)
         {
+#if DEBUG
+
             if(font == null)
             {
                 throw new Exception("Please call Init first and set the SpriteFont");
@@ -123,6 +125,7 @@ namespace Backbone.Graphics
                 spriteBatch.DrawString(font, textLine, currentPosition, color, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
                 currentPosition += new Vector2(0, height);
             }
+#endif
         }
     }
 }
