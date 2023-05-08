@@ -5,16 +5,21 @@ using Microsoft.Xna.Framework.Input;
 using ProximityND.Config;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Backbone.Graphics
 {
     public static class ScreenManager<T>
     {
-        static Dictionary<T, IScreen> Screens = new Dictionary<T, IScreen>();
-
         static IScreen CurrentScreen = null;
 
         static MouseState LastMouseState;
+
+        static Dictionary<T, IScreen> Screens = new Dictionary<T, IScreen>();
+
+        static Stack<IScreen> ScreenStack = new Stack<IScreen>();
+
+        public static SpriteBatch OverlaySpriteBatch { get; set; }
 
         public static void SetNewResolution(string newResolution)
         {
@@ -54,26 +59,57 @@ namespace Backbone.Graphics
         }
         public static void SwitchTo(T screen)
         {
-            if(CurrentScreen != null)
+            if (ScreenStack.Count > 0)
             {
-                CurrentScreen.Cleanup();
+                while (ScreenStack.Count > 0)
+                {
+                    IScreen topScreen = ScreenStack.Pop();
+                    topScreen.Cleanup();
+                }
             }
 
-            CurrentScreen = Screens[screen];
+            IScreen newScreen = Screens[screen];
+            newScreen.Initialize();
+            ScreenStack.Push(newScreen);
+        }
 
-            CurrentScreen.Initialize();
+        public static void PushOverlayScreen(T overlay)
+        {
+            IScreen newOverlay = Screens[overlay];
+            newOverlay.Initialize();
+            ScreenStack.Push(newOverlay);
+        }
+
+        private static void DrawFullScreenOverlay(bool shouldHandleSpriteBatch = false)
+        {
+            Texture2D pixel = new Texture2D(OverlaySpriteBatch.GraphicsDevice, 1, 1);
+            pixel.SetData(new[] { Color.Black });
+            Color overlayColor = new Color(0, 0, 0, 204); // Adjust the alpha value for transparency
+
+            if (shouldHandleSpriteBatch)
+            {
+                OverlaySpriteBatch.Begin();
+            }
+
+            OverlaySpriteBatch.Draw(pixel, new Rectangle(0, 0, ScreenSettings.ResolutionWidth, ScreenSettings.ResolutionHeight), overlayColor);
+            
+            if(shouldHandleSpriteBatch)
+            {
+                OverlaySpriteBatch.End();
+            }
         }
 
         public static void Update(ScreenUpdateCommand command)
         {
-            if(CurrentScreen== null)
+            if (ScreenStack.Count == 0)
             {
                 return;
             }
 
             InputHelper.UpdateBefore();
 
-            CurrentScreen.Update(command.GameTime);
+            IScreen topScreen = ScreenStack.Peek();
+            topScreen.Update(command.GameTime);
 
             var currentMouseState = Mouse.GetState();
 
@@ -105,7 +141,7 @@ namespace Backbone.Graphics
                     Ratio = new Vector2(ScreenSettings.HorizontalRatio, ScreenSettings.VerticalRatio),
                 };
 
-                CurrentScreen.HandleMouse(handleMouseCommand);
+                topScreen.HandleMouse(handleMouseCommand);
             }
 
             LastMouseState = currentMouseState;
@@ -115,25 +151,29 @@ namespace Backbone.Graphics
 
         public static void Draw(Matrix view, Matrix projection)
         {
-            if (CurrentScreen != null)
+            for (int i = 0; i < ScreenStack.Count; i++)
             {
-                CurrentScreen.Draw(view, projection);
+                ScreenStack.ElementAt(i).Draw(view, projection);
+                if (i < ScreenStack.Count - 1)
+                {
+                    DrawFullScreenOverlay(true);
+                }
             }
         }
 
         public static void DrawText(SpriteBatch spriteBatch)
         {
-            if (CurrentScreen != null)
+            for (int i = 0; i < ScreenStack.Count; i++)
             {
-                CurrentScreen.DrawText(spriteBatch);
+                ScreenStack.ElementAt(i).DrawText(spriteBatch);
             }
         }
 
         public static void DrawUnderText(Matrix view, Matrix projection)
         {
-            if(CurrentScreen != null)
+            for (int i = 0; i < ScreenStack.Count; i++)
             {
-                CurrentScreen.DrawUnderText(view, projection);
+                ScreenStack.ElementAt(i).DrawUnderText(view, projection);
             }
         }
 
