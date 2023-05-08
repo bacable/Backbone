@@ -8,6 +8,8 @@ using System.Diagnostics;
 
 namespace Backbone.Graphics
 {
+    // just adding a comment so i can check this in, since there seems to be a synching problem
+
     public class Movable3D : IInteractive
     {
         public Model Model { get; set; }
