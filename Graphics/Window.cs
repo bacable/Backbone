@@ -4,6 +4,7 @@ using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Graphics;
 using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,13 @@ namespace Backbone.Graphics
             if(settings.Menu != null)
             {
                 Menu = settings.Menu;
-                optionGroup = new OptionGroup(settings.MenuPosition, settings.Menu, BackPanel);
+                var oGroupSettings = new OptionGroupSettings()
+                {
+                    Menu = settings.Menu,
+                    ParentMovable = BackPanel,
+                    Position = settings.MenuPosition,
+                };
+                optionGroup = new OptionGroup(oGroupSettings);
             }
 
             if(settings.ShowCornerCloseButton)
@@ -133,14 +140,27 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(settings.VisibleWhileInactive)
+            if(settings.VisibleWhileInactive && command.State == MouseEvent.Release)
             {
                 // Handle click of backpanel, if set up to do something
                 // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
                 // but not good enough for release
                 if (Collision3D.Intersects(command.MousePosition, BackPanel.Model, BackPanel.World, command.View, command.Projection, command.Viewport, onClickDiameter))
                 {
-                    OnClick?.Invoke();
+                    if(IsActive)
+                    {
+                        optionGroup.HandleMouse(command);
+                    }
+                    else
+                    {
+                        OnClick?.Invoke();
+                    }
+                } else
+                {
+                    if(IsActive)
+                    {
+                        OnClick?.Invoke();
+                    }
                 }
             }
         }
@@ -158,9 +178,9 @@ namespace Backbone.Graphics
         /// </summary>
         /// <param name="newHeaderText"></param>
         /// <param name="color"></param>
-        public void UpdateHeader(string newHeaderText, ColorType color = ColorType.None)
+        public void UpdateHeader(string newHeaderText, string color = "")
         {
-            if(color != ColorType.None)
+            if(color != string.Empty)
             {
                 Header.SetColor(color);
             }
@@ -233,7 +253,6 @@ namespace Backbone.Graphics
 
                 foreach(var key in decorations.Keys)
                 {
-                    Debug.WriteLine("updating decoration " + key);
                     var decoration = decorations[key];
                     decoration.Update(gameTime);
                 }

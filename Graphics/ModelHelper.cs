@@ -1,27 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND;
 using System.Collections.Generic;
 
 namespace Backbone.Graphics
 {
     public class ModelHelper
     {
-        public static void DrawHexTile(Model model, Matrix world, Matrix view, Matrix projection, float alpha, ColorType colorFront, ColorType colorBack, ColorType colorHex, Dictionary<string, MeshProperty> Settings)
+        public static void Draw(ModelDrawSettings settings)
         {
-            foreach (ModelMesh mesh in model.Meshes)
+            foreach (ModelMesh mesh in settings.Model.Meshes)
             {
 
                 foreach (BasicEffect effect in mesh.Effects)
                 {
-                    effect.World = world;
-                    effect.View = view;
-                    effect.Projection = projection;
+                    effect.World = settings.World;
+                    effect.View = settings.View;
+                    effect.Projection = settings.Projection;
 
-                    if(Settings.ContainsKey(mesh.Name))
+                    if (settings.MeshProperties.ContainsKey(mesh.Name))
                     {
-                        var meshSetting = Settings[mesh.Name];
-                        if(meshSetting.Texture != null)
+                        var meshSetting = settings.MeshProperties[mesh.Name];
+                        if (meshSetting.Texture != null)
                         {
                             effect.TextureEnabled = true;
                             effect.Texture = meshSetting.Texture;
@@ -30,31 +29,6 @@ namespace Backbone.Graphics
                         {
                             effect.DiffuseColor = meshSetting.Color;
                         }
-                    }
-
-                    if(mesh.Name == "InnerFront")
-                    {
-                        //effect.TextureEnabled = true;
-                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Marble];
-                        //
-                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                        effect.DiffuseColor = ColorType3D.Get(colorFront);
-                    }
-
-                    if (mesh.Name == "InnerBack")
-                    {
-                        //effect.TextureEnabled = true;
-                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.Grass];
-                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                        effect.DiffuseColor = ColorType3D.Get(colorBack);
-                    }
-                    
-                    if (mesh.Name == "BorderMesh")
-                    {
-                        //effect.TextureEnabled = true;
-                        //effect.Texture = ContentStore.Textures[ProximityND.Enums.TextureType.RustedGround];
-                        //effect.DiffuseColor = ColorType3D.Get(ColorType.White);
-                        effect.DiffuseColor = ColorType3D.Get(colorHex);
                     }
 
                     effect.LightingEnabled = true;
@@ -70,14 +44,15 @@ namespace Backbone.Graphics
                     //effect.DirectionalLight1.Enabled = false;
                     effect.DirectionalLight2.Enabled = false;
 
-                    effect.Alpha = alpha;
+                    effect.Alpha = settings.Alpha;
                 }
 
                 //mesh.Draw();
 
             }
 
-            model.Draw(world, view, projection);
+            settings.Model.Draw(settings.World, settings.View, settings.Projection);
+
         }
     }
 }

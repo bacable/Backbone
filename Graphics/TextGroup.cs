@@ -2,9 +2,12 @@
 using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Backbone.Events;
+using ProximityND.Backbone.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Backbone.UI;
 
 namespace Backbone.Graphics
 {
@@ -22,6 +25,8 @@ namespace Backbone.Graphics
         public static Dictionary<char, Model> LetterModels { get; set; } = new Dictionary<char, Model>();
 
         public List<Movable3D> Letters { get; private set; } = new List<Movable3D>();
+
+        private TextAlign alignment = TextAlign.Center;
 
         public string Text { get; private set; } = string.Empty;
 
@@ -67,7 +72,7 @@ namespace Backbone.Graphics
 
         float baseScale = 0f;
         Movable3D parent = null;
-        ColorType textColor = ColorType.None;
+        string textColor = string.Empty;
 
         public int Value { get; private set; } = 0;
 
@@ -77,8 +82,10 @@ namespace Backbone.Graphics
         public float Right { get; set; }
         public Vector3 Position { get; set; } = Vector3.Zero;
 
-        public Action3D TransitionInAnimation { get; set; } = null;
-        public Action3D TransitionOutAnimation { get; set; } = null;
+        // first is the int to pass in the index of the letter (matters for some anims),
+        // second param is the resulting animation
+        public Func<int, IAction3D> TransitionOutAnimation = null;
+        public Func<int, IAction3D> TransitionInAnimation = null;
 
         public bool IsAnimating
         {
@@ -94,14 +101,26 @@ namespace Backbone.Graphics
             this.baseScale = settings.Scale;
             this.Position = settings.Position;
             this.parent = settings.Parent;
+            this.alignment = settings.Alignment;
 
-            if(settings.Color != ColorType.None)
+            if(settings.TransitionInAnim!= null)
+            {
+                TransitionInAnimation = settings.TransitionInAnim;
+            }
+
+            if(settings.TransitionOutAnim!= null)
+            {
+                TransitionOutAnimation = settings.TransitionOutAnim;
+            }
+
+            if(settings.Color != string.Empty)
             {
                 SetColor(settings.Color);
             }
             else
             {
-                SetColor(ColorType.DefaultText);
+                var textColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.TextGroupDefaultTextColor);
+                SetColor(textColor);
             }
 
             if(!string.IsNullOrEmpty(settings.Text))
@@ -115,11 +134,11 @@ namespace Backbone.Graphics
             }
         }
 
-        public void SetColor(ColorType color)
+        public void SetColor(string color)
         {
             Letters.ForEach(x => x.MeshProperties[MeshNameToColor] = new MeshProperty()
             {
-                Color = ColorType3D.Get(color)
+                Color = ColorHex.Get(color)
             });
             textColor = color;
         }
@@ -140,13 +159,18 @@ namespace Backbone.Graphics
             Letters.Clear();
 
             var length = GetTotalLength(text);
-            var currentPositionX = Position.X - (length / 2f);
+            var currentPositionX = (alignment == TextAlign.Center) ?
+                Position.X - (length / 2f) :
+                (alignment == TextAlign.Left) ?
+                Position.X :
+                Position.X - length;
 
             Left = currentPositionX;
 
             for (int i = 0; i < text.Length; i++)
             {
-                var character = text[i];
+                var character = 
+                    text[i];
 
                 if(character != ' ')
                 {
@@ -159,11 +183,11 @@ namespace Backbone.Graphics
                     model.RotationX = 0f;
                     model.Id = i;
 
-                    if(textColor != ColorType.None)
+                    if(textColor != string.Empty)
                     {
                         model.MeshProperties[MeshNameToColor] = new MeshProperty()
                         {
-                            Color = ColorType3D.Get(textColor)
+                            Color = ColorHex.Get(textColor)
                         };
                     }
 
@@ -185,14 +209,20 @@ namespace Backbone.Graphics
             var length = 0f;
             foreach(var digit in digits)
             {
-                length += baseScale * LetterWidths[digit];
+                var digitWidth = LetterWidths.ContainsKey(digit) ? LetterWidths[digit] : LetterWidths[' '];
+                length += baseScale * digitWidth;
             }
             return length;
         }
 
-        public void Run(IAction3D action, bool replaceExisting = false)
+        public void Run(Func<int, IAction3D> animationFunction, bool replaceExisting = false)
         {
-            Letters.ForEach(x => x.Run(action, replaceExisting));
+            for(int index = 0; index < Letters.Count; index++)
+            {
+                var letter = Letters[index];
+                var anim = animationFunction(index);
+                letter.Run(anim, replaceExisting);
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -245,7 +275,7 @@ namespace Backbone.Graphics
         {
             if(this.TransitionOutAnimation != null)
             {
-                this.Run(this.TransitionOutAnimation);
+                this.Run(this.TransitionOutAnimation, true);
             }
         }
 
@@ -253,7 +283,7 @@ namespace Backbone.Graphics
         {
             if(this.TransitionInAnimation != null)
             {
-                this.Run(TransitionInAnimation);
+                this.Run(TransitionInAnimation, true);
             }
         }
     }

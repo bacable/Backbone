@@ -2,6 +2,7 @@
 using Backbone.Graphics;
 using Backbone.Input;
 using Microsoft.Xna.Framework;
+using System;
 
 namespace Backbone.UI
 {
@@ -13,6 +14,7 @@ namespace Backbone.UI
 
         bool hasClicked = false;
         bool checkInput = true;
+
 
         public TextButton(TextButtonSettings<T> settings)
         {
@@ -34,10 +36,17 @@ namespace Backbone.UI
 
         public void TransitionIn()
         {
+            Text.TransitionIn();
         }
 
         public void TransitionOut()
         {
+            Text.TransitionOut();
+        }
+
+        public void SetColor(string hexCode)
+        {
+            Text.SetColor(hexCode);
         }
 
         public void Update(GameTime gameTime)

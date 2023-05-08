@@ -132,6 +132,39 @@
   <data name="ChangeLanguage" xml:space="preserve">
     <value>Changer de langue</value>
   </data>
+  <data name="ChessBishop" xml:space="preserve">
+    <value>Fou</value>
+  </data>
+  <data name="ChessCastling" xml:space="preserve">
+    <value>Castling</value>
+  </data>
+  <data name="ChessCheck" xml:space="preserve">
+    <value>Échec</value>
+  </data>
+  <data name="ChessCheckmate" xml:space="preserve">
+    <value>Échec et mat</value>
+  </data>
+  <data name="ChessKing" xml:space="preserve">
+    <value>Roi</value>
+  </data>
+  <data name="ChessKnight" xml:space="preserve">
+    <value>Cavalier</value>
+  </data>
+  <data name="ChessPawn" xml:space="preserve">
+    <value>Pion</value>
+  </data>
+  <data name="ChessPieces" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
+  <data name="ChessQueen" xml:space="preserve">
+    <value>Dame</value>
+  </data>
+  <data name="ChessRook" xml:space="preserve">
+    <value>Tour</value>
+  </data>
+  <data name="ChessStalemate" xml:space="preserve">
+    <value>Stalemate</value>
+  </data>
   <data name="CloseMenu" xml:space="preserve">
     <value>Fermer le menu</value>
   </data>
@@ -269,6 +302,12 @@
   </data>
   <data name="Stats" xml:space="preserve">
     <value>Statistiques</value>
+  </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Équipes</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thème</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>

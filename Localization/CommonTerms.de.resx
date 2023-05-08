@@ -294,6 +294,12 @@
   <data name="Stats" xml:space="preserve">
     <value>Statistiken</value>
   </data>
+  <data name="Teams" xml:space="preserve">
+    <value>Teams</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Thema</value>
+  </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>
   </data>

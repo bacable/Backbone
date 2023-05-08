@@ -1,7 +1,11 @@
-﻿using Backbone.Input;
+﻿using Backbone.Actions;
+using Backbone.Events;
+using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Graphics;
+using ProximityND.Enums;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -31,24 +35,31 @@ namespace Backbone.Graphics
             }
         }
 
-        public OptionGroup(Vector3 position, MenuContainer menu, Movable3D parentMovable = null)
+        public OptionGroup(OptionGroupSettings settings)
         {
             // Determine parent node. Empty if nothing provided
-            parent = (parentMovable != null) ? parentMovable : Movable3D.Empty();
+            parent = (settings.ParentMovable != null) ? settings.ParentMovable : Movable3D.Empty();
 
             var index = 0;
-            foreach(var item in menu.Items)
+            foreach(var item in settings.Menu.Items)
             {
                 var option = new MenuGraphic();
 
+                var transitionInAnim = settings.TransitionInAnims != null && settings.TransitionInAnims.Count > 0 ?
+                    settings.TransitionInAnims[index % settings.TransitionInAnims.Count] : null;
+                var transitionOutAnim = settings.TransitionOutAnims != null && settings.TransitionOutAnims.Count > 0 ?
+                    settings.TransitionOutAnims[index % settings.TransitionOutAnims.Count] : null;
+
                 option.Text = new TextGroup(new TextGroupSettings()
                 {
-                    Color = ColorType.DefaultText,
+                    Color = ProviderHub<string, ThemeElementType>.Request(ThemeElementType.TextColor),
                     Id = index,
                     Parent = parent,
-                    Position = new Vector3(position.X, position.Y - 90f * index, position.Z),
+                    Position = new Vector3(settings.Position.X, settings.Position.Y - 90f * index, settings.Position.Z),
                     Scale = 80f,
-                    Text = string.Empty
+                    Text = string.Empty,
+                    TransitionInAnim = transitionInAnim,
+                    TransitionOutAnim = transitionOutAnim,
                 });
 
                 option.Item = item;
@@ -56,7 +67,7 @@ namespace Backbone.Graphics
                 Options.Add(option);
             }
 
-            menu.Observer = this;
+            settings.Menu.Observer = this;
 
             UpdateTexts();
         }
@@ -96,24 +107,25 @@ namespace Backbone.Graphics
         {
             Options.ForEach(x =>
             {
-                switch (x.Item.Type)
-                {
-                    case MenuItemType.Button:
-                        x.Text.SetText(x.Item.DisplayText);
-                        break;
-                    case MenuItemType.OptionChooser:
-                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionChooser).SelectedOption.Name);
-                        break;
-                    case MenuItemType.OptionSlider:
-                        x.Text.SetText(x.Item.DisplayText + ": " + (x.Item as MenuOptionSlider).Value);
-                        break;
-                    default:
-                        break;
-                }
+                x.Text.SetText(GetTextForOption(x));
             });
         }
 
-
+        public string GetTextForOption(MenuGraphic option)
+        {
+            switch (option.Item.Type)
+            {
+                case MenuItemType.Button:
+                    return option.Item.DisplayText;
+                case MenuItemType.OptionChooser:
+                    return (!string.IsNullOrWhiteSpace(option.Item.DisplayText) ? option.Item.DisplayText + ": " :
+                        string.Empty) + (option.Item as MenuOptionChooser).SelectedOption.Name;
+                case MenuItemType.OptionSlider:
+                    return option.Item.DisplayText + ": " + (option.Item as MenuOptionSlider).Value;
+                default:
+                    return string.Empty;
+            }
+        }
 
         public void Update(GameTime gameTime)
         {
@@ -122,10 +134,12 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            
+
             if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
             {
-                for(var i = 0; i < Options.Count; i++)
+                int newSelection = -1;
+
+                for (var i = 0; i < Options.Count; i++)
                 {
                     var option = Options[i];
 
@@ -137,13 +151,14 @@ namespace Backbone.Graphics
                     if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
                     {
                         UpdateSelected(option.Item);
+                        newSelection = i;
                         if (command.State == MouseEvent.Release)
                         {
                             if (option.Item.Type == MenuItemType.Button)
                             {
                                 option.Item.Click();
                             }
-                            else if(option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                            else if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
                             {
                                 option.Item.Next();
                             }
@@ -153,21 +168,31 @@ namespace Backbone.Graphics
                         break;
                     }
                 }
+
+                if (newSelection > -1)
+                {
+                    for (var i = 0; i < Options.Count; i++)
+                    {
+                        Options[i].Item.IsSelected = i == newSelection;
+                    }
+                }
             }
         }
 
         public void Draw(Matrix view, Matrix projection)
         {
+            var selectedColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.OptionGroupSelectedTextColor);
+            var unselectedColor = ProviderHub<string, UIElementColorType>.Request(UIElementColorType.OptionGroupUnselectedTextColor);
 
             Options.ForEach(x =>
             {
                 if (x.Item.IsSelected)
                 {
-                    x.Text.SetColor(ColorType.LightOrange);
+                    x.Text.SetColor(selectedColor);
                 }
                 else
                 {
-                    x.Text.SetColor(ColorType.DefaultText);
+                    x.Text.SetColor(unselectedColor);
                 }
 
                 x.Text.Draw(view, projection);
@@ -176,10 +201,12 @@ namespace Backbone.Graphics
 
         public void TransitionOut()
         {
+            Options.ForEach(option => option.Text.TransitionOut());
         }
 
         public void TransitionIn()
         {
+            Options.ForEach(option => option.Text.TransitionIn());
         }
     }
 }
