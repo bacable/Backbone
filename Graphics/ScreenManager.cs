@@ -2,10 +2,13 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using ProximityND.Backbone.Graphics;
 using ProximityND.Config;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace Backbone.Graphics
 {
@@ -18,6 +21,8 @@ namespace Backbone.Graphics
         static Dictionary<T, IScreen> Screens = new Dictionary<T, IScreen>();
 
         static Stack<IScreen> ScreenStack = new Stack<IScreen>();
+
+        private static List<OverlayInfo> OverlayInfos = new List<OverlayInfo>();
 
         public static SpriteBatch OverlaySpriteBatch { get; set; }
 
@@ -78,13 +83,28 @@ namespace Backbone.Graphics
             IScreen newOverlay = Screens[overlay];
             newOverlay.Initialize();
             ScreenStack.Push(newOverlay);
+            OverlayInfos.Add(new OverlayInfo { CurrentAlpha = 0, TargetAlpha = 204, IsFading = true });
         }
 
-        private static void DrawFullScreenOverlay(bool shouldHandleSpriteBatch = false)
+        public static void PopOverlay()
+        {
+            if (ScreenStack.Count > 0)
+            {
+                int lastIndex = OverlayInfos.Count - 1;
+                if (lastIndex >= 0)
+                {
+                    OverlayInfos[lastIndex].TargetAlpha = 0;
+                    OverlayInfos[lastIndex].IsFading = true;
+                }
+            }
+        }
+
+        private static void DrawFullScreenOverlay(int index, bool shouldHandleSpriteBatch = false)
         {
             Texture2D pixel = new Texture2D(OverlaySpriteBatch.GraphicsDevice, 1, 1);
             pixel.SetData(new[] { Color.Black });
-            Color overlayColor = new Color(0, 0, 0, 204); // Adjust the alpha value for transparency
+
+            Color overlayColor = new Color(0, 0, 0, (int)OverlayInfos[index].CurrentAlpha);
 
             if (shouldHandleSpriteBatch)
             {
@@ -92,8 +112,8 @@ namespace Backbone.Graphics
             }
 
             OverlaySpriteBatch.Draw(pixel, new Rectangle(0, 0, ScreenSettings.ResolutionWidth, ScreenSettings.ResolutionHeight), overlayColor);
-            
-            if(shouldHandleSpriteBatch)
+
+            if (shouldHandleSpriteBatch)
             {
                 OverlaySpriteBatch.End();
             }
@@ -147,6 +167,30 @@ namespace Backbone.Graphics
             LastMouseState = currentMouseState;
 
             InputHelper.UpdateAfter();
+
+            for (int i = 0; i < OverlayInfos.Count; i++)
+            {
+                OverlayInfo info = OverlayInfos[i];
+                if (info.IsFading)
+                {
+                    float alphaDifference = info.TargetAlpha - info.CurrentAlpha;
+                    float alphaChange = alphaDifference * (float)command.GameTime.ElapsedGameTime.TotalSeconds * 6.0f;
+                    info.CurrentAlpha += alphaChange;
+
+                    if (Math.Abs(info.CurrentAlpha - info.TargetAlpha) < 1)
+                    {
+                        info.CurrentAlpha = info.TargetAlpha;
+                        info.IsFading = false;
+
+                        if (info.TargetAlpha == 0)
+                        {
+                            IScreen topScreen2 = ScreenStack.Pop();
+                            topScreen2.Cleanup();
+                            OverlayInfos.RemoveAt(i);
+                        }
+                    }
+                }
+            }
         }
 
         public static void Draw(Matrix view, Matrix projection)
@@ -156,7 +200,7 @@ namespace Backbone.Graphics
                 ScreenStack.ElementAt(i).Draw(view, projection);
                 if (i < ScreenStack.Count - 1)
                 {
-                    DrawFullScreenOverlay(true);
+                    DrawFullScreenOverlay(i, true);
                 }
             }
         }
