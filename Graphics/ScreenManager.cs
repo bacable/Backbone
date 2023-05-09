@@ -192,6 +192,8 @@ namespace Backbone.Graphics
             }
 
             var screens = ScreenStack.Reverse().ToArray();
+            float zOffset = 0f;
+            float zOffsetStep = 30f; //TODO: make this configurable later
 
             for (int i = 0; i < screens.Length; i++)
             {
@@ -201,20 +203,26 @@ namespace Backbone.Graphics
                     {
                         spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
                     }
+
                     ScreenSettings.Graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
                     ScreenSettings.Graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
-                    screens[i].Draw(layer, view, projection, spriteBatch);
+                    Matrix offsetView = view * Matrix.CreateTranslation(0, 0, zOffset);
+                    screens[i].Draw(layer, offsetView, projection, spriteBatch);
+
                     if(layer == DrawLayerType.DrawText)
                     {
                         spriteBatch.End();
                     }
+
                 }
 
                 if (i < OverlayInfos.Count)
                 {
                     DrawFullScreenOverlay(i);
                 }
+
+                zOffset += zOffsetStep;
             }
         }
     }
