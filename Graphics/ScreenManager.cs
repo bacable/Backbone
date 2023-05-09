@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Backbone.Graphics
 {
@@ -99,24 +98,16 @@ namespace Backbone.Graphics
             }
         }
 
-        private static void DrawFullScreenOverlay(int index, bool shouldHandleSpriteBatch = false)
+        private static void DrawFullScreenOverlay(int index)
         {
             Texture2D pixel = new Texture2D(OverlaySpriteBatch.GraphicsDevice, 1, 1);
             pixel.SetData(new[] { Color.Black });
 
             Color overlayColor = new Color(0, 0, 0, (int)OverlayInfos[index].CurrentAlpha);
 
-            if (shouldHandleSpriteBatch)
-            {
-                OverlaySpriteBatch.Begin();
-            }
-
+            OverlaySpriteBatch.Begin();
             OverlaySpriteBatch.Draw(pixel, new Rectangle(0, 0, ScreenSettings.ResolutionWidth, ScreenSettings.ResolutionHeight), overlayColor);
-
-            if (shouldHandleSpriteBatch)
-            {
-                OverlaySpriteBatch.End();
-            }
+            OverlaySpriteBatch.End();
         }
 
         public static void Update(ScreenUpdateCommand command)
@@ -200,12 +191,24 @@ namespace Backbone.Graphics
                 return;
             }
 
-            var screens = ScreenStack.ToArray();
+            var screens = ScreenStack.Reverse().ToArray();
+
             for (int i = 0; i < screens.Length; i++)
             {
                 foreach (DrawLayerType layer in Enum.GetValues(typeof(DrawLayerType)))
                 {
+                    if(layer == DrawLayerType.DrawText)
+                    {
+                        spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.AlphaBlend);
+                    }
+                    ScreenSettings.Graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+                    ScreenSettings.Graphics.GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+
                     screens[i].Draw(layer, view, projection, spriteBatch);
+                    if(layer == DrawLayerType.DrawText)
+                    {
+                        spriteBatch.End();
+                    }
                 }
 
                 if (i < OverlayInfos.Count)
@@ -214,34 +217,5 @@ namespace Backbone.Graphics
                 }
             }
         }
-
-        public static void Draw(Matrix view, Matrix projection)
-        {
-            for (int i = 0; i < ScreenStack.Count; i++)
-            {
-                ScreenStack.ElementAt(i).Draw(view, projection);
-                if (i < ScreenStack.Count - 1)
-                {
-                    DrawFullScreenOverlay(i, true);
-                }
-            }
-        }
-
-        public static void DrawText(SpriteBatch spriteBatch)
-        {
-            for (int i = 0; i < ScreenStack.Count; i++)
-            {
-                ScreenStack.ElementAt(i).DrawText(spriteBatch);
-            }
-        }
-
-        public static void DrawUnderText(Matrix view, Matrix projection)
-        {
-            for (int i = 0; i < ScreenStack.Count; i++)
-            {
-                ScreenStack.ElementAt(i).DrawUnderText(view, projection);
-            }
-        }
-
     }
 }
