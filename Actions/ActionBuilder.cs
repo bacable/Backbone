@@ -99,5 +99,10 @@ namespace Backbone.Actions
         {
             return new PhysicsParticleAction(v0, p0, g, duration);
         }
+
+        public static IAction3D Rumble(PlayerIndex playerIndex, float leftMotor, float rightMotor, float duration)
+        {
+            return new RumbleAction(playerIndex, leftMotor, rightMotor, duration);
+        }
     }
 }
