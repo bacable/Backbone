@@ -9,7 +9,14 @@ using System.Threading.Tasks;
 
 namespace ProximityND.Backbone.Graphics
 {
-    public class Graph3D
+    public class GraphLineWidths
+    {
+        public float Outer { get; set; }
+        public float Inner { get; set; }
+        public float Values { get; set; }
+    }
+
+    public class Graph3DSettings
     {
         public Vector3 Origin { get; set; }
         public float Width { get; set; }
@@ -17,31 +24,48 @@ namespace ProximityND.Backbone.Graphics
         public float Depth { get; set; }
         public int XAxisSegments { get; set; }
         public int YAxisSegments { get; set; }
+        public GraphLineWidths LineWidths { get; set; }
+        public GraphicsDevice GraphicsDevice { get; set; }
+    }
+
+
+    public class Graph3D
+    {
+        public Vector3 Origin { get; private set; }
+        public float Width { get; private set; }
+        public float Height { get; private set; }
+        public float Depth { get; private set; }
+        public int XAxisSegments { get; private set; }
+        public int YAxisSegments { get; private set; }
         public Vector2[] XAxisValues { get; private set; }
         public Vector2[] YAxisValues { get; private set; }
+        public GraphLineWidths LineWidths { get; private set; }
+        public GraphicsDevice GraphicsDevice { get; set; }
 
-        public Graph3D(Vector3 origin, float width, float height, float depth, int xAxisSegments, int yAxisSegments)
+        public Graph3D(Graph3DSettings settings)
         {
-            Origin = origin;
-            Width = width;
-            Height = height;
-            Depth = depth;
-            XAxisSegments = xAxisSegments;
-            YAxisSegments = yAxisSegments;
-            XAxisValues = new Vector2[xAxisSegments];
-            YAxisValues = new Vector2[yAxisSegments];
+            Origin = settings.Origin;
+            Width = settings.Width;
+            Height = settings.Height;
+            Depth = settings.Depth;
+            XAxisSegments = settings.XAxisSegments;
+            YAxisSegments = settings.YAxisSegments;
+            XAxisValues = new Vector2[settings.XAxisSegments];
+            YAxisValues = new Vector2[settings.YAxisSegments];
+            LineWidths = settings.LineWidths;
+            GraphicsDevice = settings.GraphicsDevice;
         }
 
-        public void Draw(BasicEffect effect, GraphicsDevice graphicsDevice, Color[] teamColors, float[][] teamData, float outerGridLineWidth, float innerGridLineWidth, float teamLineWidth)
+        public void Draw(BasicEffect effect, Color[] teamColors, float[][] teamData)
         {
             // Draw grid background
-            DrawGrid(effect, graphicsDevice, outerGridLineWidth, innerGridLineWidth);
+            DrawGrid(effect);
 
             // Draw team data
-            DrawTeamData(effect, graphicsDevice, teamColors, teamData, teamLineWidth);
+            DrawTeamData(effect, teamColors, teamData);
         }
 
-        private void DrawGrid(BasicEffect effect, GraphicsDevice graphicsDevice, float outerGridLineWidth, float innerGridLineWidth)
+        private void DrawGrid(BasicEffect effect)
         {
             Color gridColor = Color.LightGray;
 
@@ -63,7 +87,7 @@ namespace ProximityND.Backbone.Graphics
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
-                    DrawThinRectangle(graphicsDevice, effect, startPoint, endPoint, (i == 0 || i == XAxisSegments - 1) ? outerGridLineWidth : innerGridLineWidth, gridColor);
+                    DrawThinRectangle(GraphicsDevice, effect, startPoint, endPoint, (i == 0 || i == XAxisSegments - 1) ? LineWidths.Outer : LineWidths.Inner, gridColor);
                 }
             }
 
@@ -79,12 +103,12 @@ namespace ProximityND.Backbone.Graphics
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
                     pass.Apply();
-                    DrawThinRectangle(graphicsDevice, effect, startPoint, endPoint, (i == 0 || i == YAxisSegments - 1) ? outerGridLineWidth : innerGridLineWidth, gridColor);
+                    DrawThinRectangle(GraphicsDevice, effect, startPoint, endPoint, (i == 0 || i == YAxisSegments - 1) ? LineWidths.Outer : LineWidths.Inner, gridColor);
                 }
             }
         }
 
-        private void DrawTeamData(BasicEffect effect, GraphicsDevice graphicsDevice, Color[] teamColors, float[][] teamData, float teamLineWidth)
+        private void DrawTeamData(BasicEffect effect, Color[] teamColors, float[][] teamData)
         {
             int numTeams = teamColors.Length;
             float teamDepth = Depth / (numTeams * 2); // Change depth difference between team lines
@@ -114,7 +138,7 @@ namespace ProximityND.Backbone.Graphics
                         foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                         {
                             pass.Apply();
-                            DrawThinRectangle(graphicsDevice, effect, previousPoint, currentPoint, teamLineWidth, teamColors[i]);
+                            DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, teamColors[i]);
                         }
                     }
 
@@ -129,27 +153,15 @@ namespace ProximityND.Backbone.Graphics
             Vector3 sideOffset = Vector3.Normalize(new Vector3(-delta.Y, delta.X, 0)) * lineWidth / 2;
 
             VertexPositionColor[] vertices = new VertexPositionColor[]
-{
-    new VertexPositionColor(startPoint - sideOffset, color),
-    new VertexPositionColor(startPoint + sideOffset, color),
-    new VertexPositionColor(endPoint - sideOffset, color),
-
-    new VertexPositionColor(endPoint - sideOffset, color),
-    new VertexPositionColor(startPoint + sideOffset, color),
-    new VertexPositionColor(endPoint + sideOffset, color)
-};
-
-            /*
-            VertexPositionColor[] vertices = new VertexPositionColor[]
             {
-            new VertexPositionColor(startPoint + sideOffset, color),
-            new VertexPositionColor(startPoint - sideOffset, color),
-            new VertexPositionColor(endPoint + sideOffset, color),
+                new VertexPositionColor(startPoint - sideOffset, color),
+                new VertexPositionColor(startPoint + sideOffset, color),
+                new VertexPositionColor(endPoint - sideOffset, color),
 
-            new VertexPositionColor(endPoint + sideOffset, color),
-            new VertexPositionColor(startPoint - sideOffset, color),
-            new VertexPositionColor(endPoint - sideOffset, color)
-            };*/
+                new VertexPositionColor(endPoint - sideOffset, color),
+                new VertexPositionColor(startPoint + sideOffset, color),
+                new VertexPositionColor(endPoint + sideOffset, color)
+            };
 
             foreach (EffectPass pass in effect.CurrentTechnique.Passes)
             {
