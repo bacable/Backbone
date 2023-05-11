@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Backbone.Input;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
+    public class GraphData
+    {
+        public Color Color { get; set; } = Color.White;
+        public float[] Values { get; set; }
+    }
+
     public class GraphLineWidths
     {
         public float Outer { get; set; }
@@ -29,18 +32,25 @@ namespace ProximityND.Backbone.Graphics
     }
 
 
-    public class Graph3D
+    public class Graph3D : IGUI3D
     {
-        public Vector3 Origin { get; private set; }
-        public float Width { get; private set; }
-        public float Height { get; private set; }
-        public float Depth { get; private set; }
-        public int XAxisSegments { get; private set; }
-        public int YAxisSegments { get; private set; }
-        public Vector2[] XAxisValues { get; private set; }
-        public Vector2[] YAxisValues { get; private set; }
-        public GraphLineWidths LineWidths { get; private set; }
-        public GraphicsDevice GraphicsDevice { get; set; }
+        /// <summary>
+        /// Dictionary of the Color of the line, and the values for that line
+        /// </summary>
+        public List<GraphData> GraphData { get; set; } = new List<GraphData>();
+
+        private Vector3 Origin { get; set; }
+        private float Width { get; set; }
+        private float Height { get; set; }
+        private float Depth { get; set; }
+        private int XAxisSegments { get; set; }
+        private int YAxisSegments { get; set; }
+        private Vector2[] XAxisValues { get; set; }
+        private Vector2[] YAxisValues { get; set; }
+        private GraphLineWidths LineWidths { get; set; }
+        private GraphicsDevice GraphicsDevice { get; set; }
+        
+        private BasicEffect basicEffect;
 
         public Graph3D(Graph3DSettings settings)
         {
@@ -54,15 +64,23 @@ namespace ProximityND.Backbone.Graphics
             YAxisValues = new Vector2[settings.YAxisSegments];
             LineWidths = settings.LineWidths;
             GraphicsDevice = settings.GraphicsDevice;
+
+            basicEffect = new BasicEffect(settings.GraphicsDevice);
+            basicEffect.VertexColorEnabled = true;
+
         }
 
-        public void Draw(BasicEffect effect, Color[] teamColors, float[][] teamData)
+        public void Draw(Matrix view, Matrix projection)
         {
+            basicEffect.View = view;
+            basicEffect.Projection = projection;
+            basicEffect.World = Matrix.Identity;
+
             // Draw grid background
-            DrawGrid(effect);
+            DrawGrid(basicEffect);
 
             // Draw team data
-            DrawTeamData(effect, teamColors, teamData);
+            DrawLineData(basicEffect);
         }
 
         private void DrawGrid(BasicEffect effect)
@@ -108,37 +126,39 @@ namespace ProximityND.Backbone.Graphics
             }
         }
 
-        private void DrawTeamData(BasicEffect effect, Color[] teamColors, float[][] teamData)
+        private void DrawLineData(BasicEffect effect)
         {
-            int numTeams = teamColors.Length;
-            float teamDepth = Depth / (numTeams * 2); // Change depth difference between team lines
+            int numLines = GraphData.Count;
+            float teamDepth = Depth / (numLines * 2); // Change depth difference between team lines
 
-            for (int i = 0; i < numTeams; i++)
+            for (int i = 0; i < numLines; i++)
             {
+                var data = GraphData[i];
+
                 float z = Origin.Z + i * 2;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
-                Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * teamData[i][0], z);
+                Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * data.Values[0], z);
 
-                int segmentsPerXAxis = Math.Max(teamData[i].Length / (XAxisSegments - 1), 1);
+                int segmentsPerXAxis = Math.Max(data.Values.Length / (XAxisSegments - 1), 1);
 
-                for (int j = 1; j < teamData[i].Length; j++)
+                for (int j = 1; j < data.Values.Length; j++)
                 {
-                    float x = Origin.X + Width * j / (teamData[i].Length - 1);
+                    float x = Origin.X + Width * j / (data.Values.Length - 1);
                     //float y = Origin.Y + Height * teamData[i][j] + (i * 5);
-                    float y = Origin.Y + Height * teamData[i][j];
+                    float y = Origin.Y + Height * data.Values[j];
                     Vector3 currentPoint = new Vector3(x, y, z);
 
                     if (j % segmentsPerXAxis == 0)
                     {
                         VertexPositionColor[] vertices = new VertexPositionColor[]
                         {
-                    new VertexPositionColor(previousPoint, teamColors[i]),
-                    new VertexPositionColor(currentPoint, teamColors[i])
+                    new VertexPositionColor(previousPoint, data.Color),
+                    new VertexPositionColor(currentPoint, data.Color)
                         };
 
                         foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                         {
                             pass.Apply();
-                            DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, teamColors[i]);
+                            DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, data.Color);
                         }
                     }
 
@@ -168,6 +188,22 @@ namespace ProximityND.Backbone.Graphics
                 pass.Apply();
                 graphicsDevice.DrawUserPrimitives(Microsoft.Xna.Framework.Graphics.PrimitiveType.TriangleList, vertices, 0, 2);
             }
+        }
+
+        public void Update(GameTime gameTime)
+        {
+        }
+
+        public void HandleMouse(HandleMouseCommand command)
+        {
+        }
+
+        public void TransitionIn()
+        {
+        }
+
+        public void TransitionOut()
+        {
         }
     }
 }
