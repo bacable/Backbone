@@ -1,8 +1,10 @@
 ﻿using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Backbone.Graphics
 {
@@ -36,8 +38,13 @@ namespace Backbone.Graphics
     {
         /// <summary>
         /// Dictionary of the Color of the line, and the values for that line
-        /// </summary>
-        public List<GraphData> GraphData { get; set; } = new List<GraphData>();
+        /// </summary>        
+        private List<GraphData> GraphData { get; set; } = new List<GraphData>();
+
+        public float MinValue { get; set; } = 0f;
+        public float MaxValue { get; set; } = 0f;
+
+        public int MaxCount { get; set; } = 0;
 
         private Vector3 Origin { get; set; }
         private float Width { get; set; }
@@ -68,6 +75,14 @@ namespace Backbone.Graphics
             basicEffect = new BasicEffect(settings.GraphicsDevice);
             basicEffect.VertexColorEnabled = true;
 
+        }
+
+        public void SetGraphData(List<GraphData> graphData)
+        {
+            GraphData = graphData;
+            MaxValue = graphData.Max(data => data.Values.Max());
+            MinValue = graphData.Min(data => data.Values.Min());
+            MaxCount = graphData.Max(data => data.Values.Count());
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -131,20 +146,25 @@ namespace Backbone.Graphics
             int numLines = GraphData.Count;
             float teamDepth = Depth / (numLines * 2); // Change depth difference between team lines
 
+            float xDistance = Width / MaxCount;
+
             for (int i = 0; i < numLines; i++)
             {
                 var data = GraphData[i];
 
-                float z = Origin.Z + i * 2;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
-                Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * data.Values[0], z);
+                float z = Origin.Z - i * 2 * teamDepth;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
+                var height = (data.Values[0] == 0) ? 0: data.Values[0] / MaxValue;
+                Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * height, z);
 
                 int segmentsPerXAxis = Math.Max(data.Values.Length / (XAxisSegments - 1), 1);
 
+
                 for (int j = 1; j < data.Values.Length; j++)
                 {
-                    float x = Origin.X + Width * j / (data.Values.Length - 1);
+                    float x = Origin.X + xDistance * j;
                     //float y = Origin.Y + Height * teamData[i][j] + (i * 5);
-                    float y = Origin.Y + Height * data.Values[j];
+                    var height2 = (data.Values[j] == 0) ? 0 : data.Values[j] / MaxValue;
+                    float y = Origin.Y + Height * height2;
                     Vector3 currentPoint = new Vector3(x, y, z);
 
                     if (j % segmentsPerXAxis == 0)
