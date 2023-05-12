@@ -57,6 +57,11 @@ namespace Backbone.Menus
             }
         }
 
+        public IMenuItem GetByName(string name)
+        {
+            return (this.Name == name) ? this : null;
+        }
+
         // TODO: make them separate
         public string DisplayText { get { return Name; } set { } }
     }

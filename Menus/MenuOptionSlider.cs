@@ -109,5 +109,10 @@ namespace Backbone.Menus
         {
             return Value;
         }
+
+        public IMenuItem GetByName(string name)
+        {
+            return (this.Name == name) ? this : null;
+        }
     }
 }

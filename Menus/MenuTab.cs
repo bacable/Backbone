@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Backbone.Menus
 {
@@ -20,6 +21,11 @@ namespace Backbone.Menus
         {
         }
 
+        public IMenuItem GetByName(string name)
+        {
+            return Container.GetByName(name);
+        }
+
         public object GetValue()
         {
             return Container.GetValue();
@@ -36,6 +42,11 @@ namespace Backbone.Menus
         public void SetValue(object value)
         {
             throw new NotImplementedException();
+        }
+
+        internal List<IMenuItem> getItems()
+        {
+            return Container.Items;
         }
     }
 }

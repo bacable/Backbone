@@ -104,6 +104,10 @@ namespace Backbone.Menus
         {
             _value = (string)value;
         }
+        public IMenuItem GetByName(string name)
+        {
+            return (this.Name == name) ? this : null;
+        }
 
         public object GetValue()
         {

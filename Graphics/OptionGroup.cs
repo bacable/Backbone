@@ -19,6 +19,8 @@ namespace Backbone.Graphics
         // Kind of hacky, but we'll update this item without drawing it so the options have a parent to animate off of
         Movable3D parent;
 
+        private OptionGroupSettings settings;
+
         public MenuGraphic SelectedOption
         {
             get
@@ -40,8 +42,21 @@ namespace Backbone.Graphics
             // Determine parent node. Empty if nothing provided
             parent = (settings.ParentMovable != null) ? settings.ParentMovable : Movable3D.Empty();
 
+            settings.Menu.Observer = this;
+
+            this.settings = settings;
+
+            UpdateOptions();
+            UpdateTexts();
+        }
+
+        private void UpdateOptions()
+        {
+            var menuTab = (settings.Menu.SelectedItem as MenuTab);
+            var optionsToDisplay = menuTab != null ? menuTab.getItems() : settings.Menu.Items;
+
             var index = 0;
-            foreach(var item in settings.Menu.Items)
+            foreach (var item in optionsToDisplay)
             {
                 var option = new MenuGraphic();
 
@@ -66,10 +81,6 @@ namespace Backbone.Graphics
                 index += 1;
                 Options.Add(option);
             }
-
-            settings.Menu.Observer = this;
-
-            UpdateTexts();
         }
 
 
