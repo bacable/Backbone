@@ -34,6 +34,8 @@ namespace Backbone.Input
             [InputAction.SpecialAction2] = Keys.X,
             [InputAction.SpecialAction3] = Keys.C,
             [InputAction.SpecialAction4] = Keys.V,
+            [InputAction.LeftShoulder] = Keys.Q,
+            [InputAction.RightShoulder] = Keys.E,
             [InputAction.N0] = Keys.D0,
             [InputAction.N1] = Keys.D1,
             [InputAction.N2] = Keys.D2,
@@ -158,6 +160,10 @@ namespace Backbone.Input
                     return isButtonReleased(Buttons.LeftTrigger);
                 case InputAction.SpecialAction4:
                     return isButtonReleased(Buttons.RightTrigger);
+                case InputAction.LeftShoulder:
+                    return isButtonReleased(Buttons.LeftShoulder);
+                case InputAction.RightShoulder:
+                    return isButtonReleased(Buttons.RightShoulder);
                 case InputAction.Start:
                     return isButtonReleased(Buttons.Start);
                 default:
