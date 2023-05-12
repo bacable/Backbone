@@ -10,30 +10,27 @@ namespace Backbone.Menus
         public MenuItemType Type { get; set; } = MenuItemType.Tab;
         public bool IsSelected { get; set; }
 
-        public bool CanPrev => throw new NotImplementedException();
+        public bool CanPrev => true;
 
-        public bool CanNext => throw new NotImplementedException();
+        public bool CanNext => true;
 
-        public string DisplayText { get; set; }
+        public string DisplayText { get; set; } = string.Empty;
 
         public void Click()
         {
-            throw new NotImplementedException();
         }
 
         public object GetValue()
         {
-            throw new NotImplementedException();
+            return Container.GetValue();
         }
 
         public void Next()
         {
-            throw new NotImplementedException();
         }
 
         public void Prev()
         {
-            throw new NotImplementedException();
         }
 
         public void SetValue(object value)
