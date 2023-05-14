@@ -157,8 +157,6 @@ namespace Backbone.Graphics
 
             LastMouseState = currentMouseState;
 
-            InputHelper.UpdateAfter();
-
             for (int i = 0; i < OverlayInfos.Count; i++)
             {
                 OverlayInfo info = OverlayInfos[i];
@@ -182,6 +180,9 @@ namespace Backbone.Graphics
                     }
                 }
             }
+
+            InputHelper.UpdateAfter();
+
         }
 
         public static void Draw(Matrix view, Matrix projection, SpriteBatch spriteBatch)

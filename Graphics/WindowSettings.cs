@@ -45,5 +45,8 @@ namespace Backbone.Graphics
 
         // Event that fires when close button clicked
         public Action CloseButtonAction { get; internal set; } = null;
+
+        public string SelectedColor { get; internal set; } = "#FFFFFF";
+        public string UnselectedColor { get; internal set; } = "#AAAAAA";
     }
 }

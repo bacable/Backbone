@@ -83,6 +83,8 @@ namespace Backbone.Graphics
                     Menu = settings.Menu,
                     ParentMovable = BackPanel,
                     Position = settings.MenuPosition,
+                    SelectedColor = settings.SelectedColor,
+                    UnselectedColor = settings.UnselectedColor,
                 };
                 optionGroup = new OptionGroup(oGroupSettings);
             }
