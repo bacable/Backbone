@@ -68,14 +68,17 @@ namespace Backbone.Graphics
                 RightArrowButton = settings.RightArrowButton;
             }
 
-            UpdateColors(settings.SelectedColor, settings.UnselectedColor);
-
             UpdateOptions();
             UpdateTexts();
+
+            UpdateColors(settings.SelectedColor, settings.UnselectedColor, settings.TabHeaderColor);
+
         }
 
         private void UpdateOptions()
         {
+            Options.Clear();
+
             var menuTab = (settings.Menu.SelectedItem as MenuTab);
             var optionsToDisplay = menuTab != null ? menuTab.getItems() : settings.Menu.Items;
 
@@ -108,6 +111,7 @@ namespace Backbone.Graphics
                 });
 
                 option.Item = item;
+                option.Item.IsSelected = index == 0;
                 index += 1;
                 Options.Add(option);
             }
@@ -142,6 +146,26 @@ namespace Backbone.Graphics
             {
                 option.Item.IsSelected = (option.Item == item);
             });
+        }
+
+        public void NextTab()
+        {
+            if(hasTabs)
+            {
+                settings.Menu.Next();
+                UpdateOptions();
+                UpdateTexts();
+            }
+        }
+
+        public void PrevTab()
+        {
+            if(hasTabs)
+            {
+                settings.Menu.Prev();
+                UpdateOptions();
+                UpdateTexts();
+            }
         }
 
         private void UpdateTexts()
@@ -179,10 +203,14 @@ namespace Backbone.Graphics
             }
         }
 
-        public void UpdateColors (string selected, string unselected)
+        public void UpdateColors (string selected, string unselected, string tabHeader)
         {
             selectedColor = selected;
             unselectedColor = unselected;
+            if(hasTabs)
+            {
+                tabNameText.SetColor(tabHeader);
+            }
         }
 
         public void HandleMouse(HandleMouseCommand command)

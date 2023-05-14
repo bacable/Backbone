@@ -15,5 +15,6 @@ namespace Backbone.UI
         public float LetterCollisionRadius { get; internal set; }
         public Vector3 ClickAnimationMoveBy { get; internal set; }
         public float ClickAnimationDuration { get; internal set; }
+        public bool CanClickMultipleTimes { get; internal set; } = false;
     }
 }

@@ -33,10 +33,22 @@ namespace Backbone.Menus
 
         public void Next()
         {
+            Container.Next();
         }
 
         public void Prev()
         {
+            Container.Prev();
+        }
+
+        public void NextOption()
+        {
+            Container.NextOption();
+        }
+
+        public void PrevOption()
+        {
+            Container.PrevOption();
         }
 
         public void SetValue(object value)

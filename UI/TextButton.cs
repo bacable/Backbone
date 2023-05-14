@@ -59,7 +59,11 @@ namespace Backbone.UI
             if (checkInput && (hasClicked || keyPressed))
             {
                 hasClicked = false;
-                checkInput = false;
+
+                if(!settings.CanClickMultipleTimes)
+                {
+                    checkInput = false;
+                }
 
                 Text.Letters.ForEach(x =>
                 {

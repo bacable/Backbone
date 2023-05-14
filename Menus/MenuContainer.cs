@@ -95,13 +95,29 @@ namespace Backbone.Menus
 
         public void NextOption()
         {
-            Items[SelectedIndex].Next();
+            var tab = Items[SelectedIndex] as MenuTab;
+            if(tab != null)
+            {
+                tab.NextOption();
+            }
+            else
+            {
+                Items[SelectedIndex].Next();
+            }
             Observer?.UpdateSelectedOption();
         }
 
         public void PrevOption()
         {
-            Items[SelectedIndex].Prev();
+            var tab = Items[SelectedIndex] as MenuTab;
+            if (tab != null)
+            {
+                tab.PrevOption();
+            }
+            else
+            {
+                Items[SelectedIndex].Prev();
+            }
             Observer?.UpdateSelectedOption();
         }
 
