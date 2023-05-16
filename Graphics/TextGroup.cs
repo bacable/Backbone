@@ -80,6 +80,8 @@ namespace Backbone.Graphics
 
         public float Left { get; set; }
         public float Right { get; set; }
+
+        public string Color { get; set; }
         public Vector3 Position { get; set; } = Vector3.Zero;
 
         // first is the int to pass in the index of the letter (matters for some anims),

@@ -20,7 +20,5 @@ namespace Backbone.Graphics
 
         public string SelectedColor { get; set; } = "#FFFFFF";
         public string UnselectedColor { get; set; } = "#AAAAAA";
-
-        public string TabHeaderColor { get; set; } = "#FFFFFF";
     }
 }

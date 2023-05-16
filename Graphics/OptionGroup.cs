@@ -11,8 +11,6 @@ namespace Backbone.Graphics
     {
         List<MenuGraphic> Options { get; set; } = new List<MenuGraphic>();
 
-        private IGUI3D LeftArrowButton = null;
-        private IGUI3D RightArrowButton = null;
 
         string selectedColor = "#FFFFFF";
         string unselectedColor = "#AAAAAA";
@@ -20,11 +18,7 @@ namespace Backbone.Graphics
         // Kind of hacky, but we'll update this item without drawing it so the options have a parent to animate off of
         Movable3D parent;
 
-        private TextGroup tabNameText = null;
-
         private OptionGroupSettings settings;
-
-        private bool hasTabs = false;
 
         public MenuGraphic SelectedOption
         {
@@ -51,27 +45,10 @@ namespace Backbone.Graphics
 
             this.settings = settings;
 
-            hasTabs = (settings.Menu.SelectedItem as MenuTab) != null;
-            if (hasTabs)
-            {
-                // Initialize tabNameText
-                tabNameText = new TextGroup(new TextGroupSettings()
-                {
-                    Color = settings.TabHeaderColor,
-                    Parent = parent,
-                    Position = new Vector3(settings.Position.X, settings.Position.Y + 100f, settings.Position.Z), // Position it above other options
-                    Scale = 80f,
-                    Text = string.Empty,
-                });
-
-                LeftArrowButton = settings.LeftArrowButton;
-                RightArrowButton = settings.RightArrowButton;
-            }
-
             UpdateOptions();
             UpdateTexts();
 
-            UpdateColors(settings.SelectedColor, settings.UnselectedColor, settings.TabHeaderColor);
+            UpdateColors(settings.SelectedColor, settings.UnselectedColor);
 
         }
 
@@ -81,12 +58,6 @@ namespace Backbone.Graphics
 
             var menuTab = (settings.Menu.SelectedItem as MenuTab);
             var optionsToDisplay = menuTab != null ? menuTab.getItems() : settings.Menu.Items;
-
-            // Update tab name
-            if (menuTab != null)
-            {
-                tabNameText.SetText(menuTab.DisplayText);
-            }
 
             var index = 0;
             foreach (var item in optionsToDisplay)
@@ -100,7 +71,7 @@ namespace Backbone.Graphics
 
                 option.Text = new TextGroup(new TextGroupSettings()
                 {
-                    Color = settings.TabHeaderColor,
+                    Color = settings.UnselectedColor,
                     Id = index,
                     Parent = parent,
                     Position = new Vector3(settings.Position.X, settings.Position.Y - 90f * index, settings.Position.Z),
@@ -150,7 +121,9 @@ namespace Backbone.Graphics
 
         public void NextTab()
         {
-            if(hasTabs)
+            var menuTab = (settings.Menu.SelectedItem as MenuTab);
+
+            if (menuTab != null)
             {
                 settings.Menu.Next();
                 UpdateOptions();
@@ -160,7 +133,9 @@ namespace Backbone.Graphics
 
         public void PrevTab()
         {
-            if(hasTabs)
+            var menuTab = (settings.Menu.SelectedItem as MenuTab);
+
+            if (menuTab != null)
             {
                 settings.Menu.Prev();
                 UpdateOptions();
@@ -195,22 +170,12 @@ namespace Backbone.Graphics
         public void Update(GameTime gameTime)
         {
             Options.ForEach(x => x.Text.Update(gameTime));
-            if(hasTabs)
-            {
-                LeftArrowButton.Update(gameTime);
-                RightArrowButton.Update(gameTime);
-                tabNameText.Update(gameTime);
-            }
         }
 
-        public void UpdateColors (string selected, string unselected, string tabHeader)
+        public void UpdateColors (string selected, string unselected)
         {
             selectedColor = selected;
             unselectedColor = unselected;
-            if(hasTabs)
-            {
-                tabNameText.SetColor(tabHeader);
-            }
         }
 
         public void HandleMouse(HandleMouseCommand command)
@@ -219,12 +184,6 @@ namespace Backbone.Graphics
             if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
             {
                 int newSelection = -1;
-
-                if(hasTabs)
-                {
-                    LeftArrowButton.HandleMouse(command);
-                    RightArrowButton.HandleMouse(command);
-                }
 
                 for (var i = 0; i < Options.Count; i++)
                 {
@@ -283,13 +242,6 @@ namespace Backbone.Graphics
 
                 x.Text.Draw(view, projection);
             });
-
-            if(hasTabs)
-            {
-                tabNameText.Draw(view, projection);
-                LeftArrowButton.Draw(view, projection);
-                RightArrowButton.Draw(view, projection);
-            }
         }
 
         public void TransitionOut()
