@@ -80,9 +80,9 @@ namespace Backbone.Graphics
         public void SetGraphData(List<GraphData> graphData)
         {
             GraphData = graphData;
-            MaxValue = graphData.Max(data => data.Values.Max());
-            MinValue = graphData.Min(data => data.Values.Min());
-            MaxCount = graphData.Max(data => data.Values.Count());
+            MaxValue = graphData.Max(data => data.Values.Length > 0 ? data.Values.Max() : 0);
+            MinValue = graphData.Min(data => data.Values.Length > 0 ? data.Values.Min() : 0);
+            MaxCount = graphData.Max(data => data.Values.Length > 0 ? data.Values.Count() : 0);
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -153,7 +153,7 @@ namespace Backbone.Graphics
                 var data = GraphData[i];
 
                 float z = Origin.Z - i * 2 * teamDepth;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
-                var height = (data.Values[0] == 0) ? 0: data.Values[0] / MaxValue;
+                var height = (data.Values.Length == 0 || data.Values[0] == 0) ? 0: data.Values[0] / MaxValue; // prevent no data and divide by zero error
                 Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * height, z);
 
                 int segmentsPerXAxis = Math.Max(data.Values.Length / (XAxisSegments - 1), 1);
