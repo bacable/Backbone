@@ -363,6 +363,30 @@
   <data name="Rank" xml:space="preserve">
     <value>Rank</value>
   </data>
+  <data name="RankShort1" xml:space="preserve">
+    <value>1位</value>
+  </data>
+  <data name="RankShort2" xml:space="preserve">
+    <value>2位</value>
+  </data>
+  <data name="RankShort3" xml:space="preserve">
+    <value>3位</value>
+  </data>
+  <data name="RankShort4" xml:space="preserve">
+    <value>4位</value>
+  </data>
+  <data name="RankShort5" xml:space="preserve">
+    <value>5位</value>
+  </data>
+  <data name="RankShort6" xml:space="preserve">
+    <value>6位</value>
+  </data>
+  <data name="RankShort7" xml:space="preserve">
+    <value>7位</value>
+  </data>
+  <data name="RankShort8" xml:space="preserve">
+    <value>8位</value>
+  </data>
   <data name="Recharge" xml:space="preserve">
     <value>Recharge</value>
   </data>

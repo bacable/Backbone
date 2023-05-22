@@ -282,6 +282,30 @@
   <data name="Rank" xml:space="preserve">
     <value>Rang</value>
   </data>
+  <data name="RankShort1" xml:space="preserve">
+    <value>1er</value>
+  </data>
+  <data name="RankShort2" xml:space="preserve">
+    <value>2éme</value>
+  </data>
+  <data name="RankShort3" xml:space="preserve">
+    <value>3éme</value>
+  </data>
+  <data name="RankShort4" xml:space="preserve">
+    <value>4éme</value>
+  </data>
+  <data name="RankShort5" xml:space="preserve">
+    <value>5éme</value>
+  </data>
+  <data name="RankShort6" xml:space="preserve">
+    <value>6éme</value>
+  </data>
+  <data name="RankShort7" xml:space="preserve">
+    <value>7éme</value>
+  </data>
+  <data name="RankShort8" xml:space="preserve">
+    <value>8éme</value>
+  </data>
   <data name="Resume" xml:space="preserve">
     <value>Reprendre</value>
   </data>
@@ -302,6 +326,9 @@
   </data>
   <data name="Stats" xml:space="preserve">
     <value>Statistiques</value>
+  </data>
+  <data name="String1" xml:space="preserve">
+    <value />
   </data>
   <data name="Teams" xml:space="preserve">
     <value>Équipes</value>

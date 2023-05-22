@@ -799,6 +799,78 @@ namespace Backbone.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1st.
+        /// </summary>
+        internal static string RankShort1 {
+            get {
+                return ResourceManager.GetString("RankShort1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 2nd.
+        /// </summary>
+        internal static string RankShort2 {
+            get {
+                return ResourceManager.GetString("RankShort2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 3rd.
+        /// </summary>
+        internal static string RankShort3 {
+            get {
+                return ResourceManager.GetString("RankShort3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 4th.
+        /// </summary>
+        internal static string RankShort4 {
+            get {
+                return ResourceManager.GetString("RankShort4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5th.
+        /// </summary>
+        internal static string RankShort5 {
+            get {
+                return ResourceManager.GetString("RankShort5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 6th.
+        /// </summary>
+        internal static string RankShort6 {
+            get {
+                return ResourceManager.GetString("RankShort6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 7th.
+        /// </summary>
+        internal static string RankShort7 {
+            get {
+                return ResourceManager.GetString("RankShort7", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 8th.
+        /// </summary>
+        internal static string RankShort8 {
+            get {
+                return ResourceManager.GetString("RankShort8", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recharge.
         /// </summary>
         internal static string Recharge {
