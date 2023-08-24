@@ -17,6 +17,8 @@ namespace Backbone.Graphics
 
         static MouseState LastMouseState;
 
+        static int PreviousMouseScroll;
+
         static Dictionary<T, IScreen> Screens = new Dictionary<T, IScreen>();
 
         static Stack<IScreen> ScreenStack = new Stack<IScreen>();
@@ -132,6 +134,9 @@ namespace Backbone.Graphics
                                 hasMoved ? MouseEvent.Moved :
                                 MouseEvent.None;
 
+            var mouseScroll = (PreviousMouseScroll - currentMouseState.ScrollWheelValue) / 12.0f;
+
+            PreviousMouseScroll = currentMouseState.ScrollWheelValue;
 
             if (mouseState != MouseEvent.None)
             {
@@ -144,6 +149,7 @@ namespace Backbone.Graphics
                 var handleMouseCommand = new HandleMouseCommand()
                 {
                     MousePosition = mouseLocation,
+                    MouseScroll = mouseScroll,
                     Projection = command.Projection,
                     View = command.View,
                     Viewport = command.Viewport,
