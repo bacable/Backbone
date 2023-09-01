@@ -41,6 +41,12 @@ namespace Backbone.Graphics
             }
         }
 
+        public static string ConvertFromColor(Microsoft.Xna.Framework.Color color)
+        {
+            var systemDrawingColor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+            return System.Drawing.ColorTranslator.ToHtml(systemDrawingColor);
+        }
+
         public static Microsoft.Xna.Framework.Color ConvertFromHex(string s, float alpha = 1.0f)
         {
             if (s.Length != 7 || !s.StartsWith("#"))

@@ -44,7 +44,7 @@ namespace Backbone.Graphics
 
         public Matrix World { get; private set; } = Matrix.Identity;
 
-        public Dictionary<string, MeshProperty> MeshProperties { get; private set; } = new Dictionary<string, MeshProperty>();
+        public Dictionary<string, MeshProperty> MeshProperties { get; set; } = new Dictionary<string, MeshProperty>();
 
         public float? collisionRadius = null;
 
@@ -63,7 +63,7 @@ namespace Backbone.Graphics
 
         public string Color1 = ColorHex.DefaultColorHexCodes[ColorType.White];
         public string Color2 = ColorHex.DefaultColorHexCodes[ColorType.White];
-        public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
+        //public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
         public string ColorText = ColorHex.DefaultColorHexCodes[ColorType.DefaultText];
 
         public Movable3D(Model model, Vector3 startPosition, float scale)
@@ -73,6 +73,11 @@ namespace Backbone.Graphics
             SetScale(scale);
             UpdateMatrix();
         }
+
+        public Movable3D()
+        {
+        }
+
         public void SetScale(float scale)
         {
             SetScale(new Vector3(scale, scale, scale));
@@ -175,7 +180,7 @@ namespace Backbone.Graphics
                 //TODO: this shouldn't be getting created every draw call, that's not good
                 MeshProperties["InnerFront"] = new MeshProperty() { Color = ColorHex.Get(Color1) };
                 MeshProperties["InnerBack"] = new MeshProperty() { Color = ColorHex.Get(Color2) };
-                MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorBkg) };
+                //MeshProperties["BorderMesh"] = new MeshProperty() { Color = ColorHex.Get(ColorBkg) };
                 MeshProperties["NumberFront"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
                 MeshProperties["NumberBack"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
 
@@ -208,6 +213,25 @@ namespace Backbone.Graphics
         public void Run(IAction3D action)
         {
             this.Run(action, true);
+        }
+
+        public void UpdatePosition(Vector3 newPosition)
+        {
+            Position = newPosition;
+        }
+
+        public void UpdateColor(string meshName, string newColor)
+        {
+            var vectorColor = ColorHex.Get(newColor);
+            MeshProperties[meshName] = new MeshProperty { Color = vectorColor };
+        }
+
+        internal void AddMeshProperties(Dictionary<string, MeshProperty> newMeshProperties)
+        {
+            foreach(var kvp in newMeshProperties)
+            {
+                MeshProperties[kvp.Key] = kvp.Value;
+            }
         }
     }
 }
