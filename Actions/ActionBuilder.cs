@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Actions;
 using System;
 using System.Linq;
 
@@ -103,6 +104,11 @@ namespace Backbone.Actions
         public static IAction3D Rumble(PlayerIndex playerIndex, float leftMotor, float rightMotor, float duration)
         {
             return new RumbleAction(playerIndex, leftMotor, rightMotor, duration);
+        }
+
+        internal static IAction3D ChangeColor(Color startColor, Color endColor, float duration)
+        {
+            return new ColorAction(startColor, endColor, duration);
         }
     }
 }
