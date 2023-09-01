@@ -2,15 +2,31 @@
 using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
+using ProximityND.Backbone.UI;
+using ProximityND.Config;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace Backbone.Graphics
 {
-    public class OptionGroup : IGUI3D, IMenuUI
+    public class OptionGroup : IGUI3D, IMenuUI, ITooltipProvider
     {
         List<MenuGraphic> Options { get; set; } = new List<MenuGraphic>();
 
+        public int Count
+        {
+            get { return Options.Count; }
+        }
+
+        public MenuGraphic this[int index]
+        {
+            // get and set accessors
+            get
+            {
+                return Options[index];
+            }
+        }
 
         string selectedColor = "#FFFFFF";
         string unselectedColor = "#AAAAAA";
@@ -178,6 +194,46 @@ namespace Backbone.Graphics
             unselectedColor = unselected;
         }
 
+        /// <summary>
+        /// Mouse Handler for a single option.
+        /// </summary>
+        /// <param name="command"></param>
+        /// <param name="option"></param>
+        /// <returns>Returns true if collision occurred, otherwise no</returns>
+        public bool HandleMouseForOption(HandleMouseCommand command, MenuGraphic option)
+        {
+            Rectangle modifiedBoundingBox = new Rectangle((int)(option.Text.Position.X * command.Ratio.X),
+                        (int)(option.Text.Position.Y * command.Ratio.Y),
+                        (int)(option.Text.BoundingBox.Width * command.Ratio.X),
+                        (int)(option.Text.BoundingBox.Height * command.Ratio.Y));
+
+            if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
+            {
+                UpdateSelected(option.Item);
+                if (command.State == MouseEvent.Release)
+                {
+                    if (option.Item.Type == MenuItemType.Button)
+                    {
+                        option.Item.Click();
+                    }
+                    else if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                    {
+                        option.Item.Next();
+                    }
+                }
+                UpdateSelectedOption();
+                UpdateTexts();
+
+                for (var i = 0; i < Options.Count; i++)
+                {
+                    Options[i].Item.IsSelected = (Options[i] == option);
+                }
+
+                return true;
+            }
+            return false;
+        }
+
         public void HandleMouse(HandleMouseCommand command)
         {
 
@@ -188,59 +244,34 @@ namespace Backbone.Graphics
                 for (var i = 0; i < Options.Count; i++)
                 {
                     var option = Options[i];
-
-                    Rectangle modifiedBoundingBox = new Rectangle((int)(option.Text.Position.X * command.Ratio.X),
-                        (int)(option.Text.Position.Y * command.Ratio.Y),
-                        (int)(option.Text.BoundingBox.Width * command.Ratio.X),
-                        (int)(option.Text.BoundingBox.Height * command.Ratio.Y));
-
-                    if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
+                    var collision = HandleMouseForOption(command, option);
+                    if(collision)
                     {
-                        UpdateSelected(option.Item);
-                        newSelection = i;
-                        if (command.State == MouseEvent.Release)
-                        {
-                            if (option.Item.Type == MenuItemType.Button)
-                            {
-                                option.Item.Click();
-                            }
-                            else if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
-                            {
-                                option.Item.Next();
-                            }
-                        }
-                        UpdateSelectedOption();
-                        UpdateTexts();
                         break;
-                    }
-                }
-
-                if (newSelection > -1)
-                {
-                    for (var i = 0; i < Options.Count; i++)
-                    {
-                        Options[i].Item.IsSelected = i == newSelection;
                     }
                 }
             }
         }
 
+        public void DrawOption(MenuGraphic option, Matrix view, Matrix projection)
+        {
+            if (option.Item.IsSelected)
+            {
+                option.Text.SetColor(selectedColor);
+            }
+            else
+            {
+                option.Text.SetColor(unselectedColor);
+            }
 
+            option.Text.Draw(view, projection);
+        }
 
         public void Draw(Matrix view, Matrix projection)
         {
             Options.ForEach(x =>
             {
-                if (x.Item.IsSelected)
-                {
-                    x.Text.SetColor(selectedColor);
-                }
-                else
-                {
-                    x.Text.SetColor(unselectedColor);
-                }
-
-                x.Text.Draw(view, projection);
+                DrawOption(x, view, projection);
             });
         }
 
@@ -252,6 +283,16 @@ namespace Backbone.Graphics
         public void TransitionIn()
         {
             Options.ForEach(option => option.Text.TransitionIn());
+        }
+
+        public string GetTooltipText(Vector2 position)
+        {
+            if(SelectedOption != null)
+            {
+                return SelectedOption.Text.Text;
+            }
+
+            return string.Empty;
         }
     }
 }

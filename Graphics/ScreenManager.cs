@@ -134,6 +134,7 @@ namespace Backbone.Graphics
                                 hasMoved ? MouseEvent.Moved :
                                 MouseEvent.None;
 
+            // Positive number = scroll down, negative number = scroll up.
             var mouseScroll = (PreviousMouseScroll - currentMouseState.ScrollWheelValue) / 12.0f;
 
             PreviousMouseScroll = currentMouseState.ScrollWheelValue;
