@@ -142,6 +142,8 @@ namespace Backbone.Graphics
             }
         }
 
+        public string Name { get; set; }
+
         public float DegToRad(float rotationDegrees)
         {
             return (float)(rotationDegrees * System.Math.PI) / 180.0f;

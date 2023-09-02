@@ -31,6 +31,8 @@ namespace ProximityND.Backbone.Graphics
 
         public Func<IAction3D> ClickAnimation { get; set; } = null;
 
+        public Action<string> OnChange { get; set; } = null;
+
         private string id;
         private float gapSize = 0.0f;
         private float iconSize = 0.0f;
@@ -67,7 +69,11 @@ namespace ProximityND.Backbone.Graphics
 
         public void SetValue(IInteractive newValue)
         {
-            selectedIcon = newValue;
+            if(newValue != selectedIcon)
+            {
+                selectedIcon = newValue;
+                OnChange.Invoke(newValue.Name);
+            }
         }
 
         public void HandleMouse(HandleMouseCommand command)
