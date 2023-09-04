@@ -15,6 +15,8 @@ namespace Backbone.UI
         bool hasClicked = false;
         bool checkInput = true;
 
+        float resetHasClickedSeconds = 0.0f;
+
 
         public TextButton(TextButtonSettings<T> settings)
         {
@@ -30,6 +32,7 @@ namespace Backbone.UI
                 if (Collision3D.HasSphereCollision(command, Text.Letters, settings.LetterCollisionRadius, Text.World.Value, Text.GroupBoundingSphere))
                 {
                     hasClicked = true;
+                    resetHasClickedSeconds = settings.ClickAnimationDuration;
                 }
             }
         }
@@ -54,6 +57,15 @@ namespace Backbone.UI
             Text.Update(gameTime);
 
             var keyPressed = InputHelper.IsKeyUp(settings.AssignedInput);
+
+            if(hasClicked)
+            {
+                resetHasClickedSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                if(resetHasClickedSeconds < 0.0f)
+                {
+                    hasClicked = false;
+                }
+            }
 
             // put small collision into textgroup later after we do some calculations
             if (checkInput && (hasClicked || keyPressed))
