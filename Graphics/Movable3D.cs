@@ -220,6 +220,7 @@ namespace Backbone.Graphics
         public void UpdatePosition(Vector3 newPosition)
         {
             Position = newPosition;
+            UpdateMatrix();
         }
 
         public void UpdateColor(string meshName, string newColor)
@@ -234,6 +235,11 @@ namespace Backbone.Graphics
             {
                 MeshProperties[kvp.Key] = kvp.Value;
             }
+        }
+
+        public Vector3 GetPosition()
+        {
+            return Position;
         }
     }
 }

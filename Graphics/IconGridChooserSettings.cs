@@ -1,5 +1,8 @@
-﻿using System.Numerics;
+﻿using System.Collections.Generic;
+using System.Numerics;
+using Backbone.Graphics;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ProximityND.Backbone.Graphics
 {
@@ -23,8 +26,22 @@ namespace ProximityND.Backbone.Graphics
         public float IconSize;
 
         /// <summary>
+        /// Size of the cursor
+        /// </summary>
+        public float CursorScale;
+
+        /// <summary>
+        /// Model for the cursor
+        /// </summary>
+        public Model CursorModel;
+
+        /// <summary>
         /// Position of top left portion of the grid
         /// </summary>
         public Microsoft.Xna.Framework.Vector3 Position;
+
+        public Dictionary<string, MeshProperty> CursorProperties;
+
+        public float OverrideCollisionRadius;
     }
 }

@@ -20,6 +20,8 @@ namespace ProximityND.Backbone.Graphics
 
         private Dictionary<InputAction, IInteractive> inputToIcons = new Dictionary<InputAction, IInteractive>();
 
+        private Movable3D cursor = null;
+
         private IInteractive selectedIcon;
         public IInteractive SelectedIcon
         {
@@ -46,6 +48,9 @@ namespace ProximityND.Backbone.Graphics
             gapSize = settings.GapSize;
             iconSize = settings.IconSize;
             basePosition = settings.Position;
+            cursor = new Movable3D(settings.CursorModel, new Vector3(600f, 0f, 25f), settings.CursorScale);
+            cursor.AddMeshProperties(settings.CursorProperties);
+            OverrideCollisionRadius = settings.OverrideCollisionRadius;
         }
 
         public void AddIcons(List<(string value, IInteractive icon, InputAction action)> icons)
@@ -65,6 +70,11 @@ namespace ProximityND.Backbone.Graphics
                     basePosition.Y - row * (iconSize + gapSize),
                     0f));
             }
+
+            if(icons.Count > 0)
+            {
+                cursor.UpdatePosition(icons[0].icon.GetPosition());
+            }
         }
 
         public void SetValue(IInteractive newValue)
@@ -72,6 +82,7 @@ namespace ProximityND.Backbone.Graphics
             if(newValue != selectedIcon)
             {
                 selectedIcon = newValue;
+                cursor.UpdatePosition(selectedIcon.GetPosition());
                 OnChange.Invoke(newValue.Name);
             }
         }
@@ -84,7 +95,6 @@ namespace ProximityND.Backbone.Graphics
                 {
                     if(icon.Value.IsInteractive && icon.Value.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
                     {
-                        Debug.WriteLine($"Update icon choice: {icon.Key}");
                         SetValue(icon.Value);
                     }
                 }
@@ -105,6 +115,8 @@ namespace ProximityND.Backbone.Graphics
             {
                 icon.Value.Draw(view, projection);
             }
+
+            cursor.Draw(view, projection);
         }
 
         public void Update(GameTime gameTime)
