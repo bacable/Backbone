@@ -8,6 +8,7 @@ namespace ProximityND.Backbone.AI
 {
     public interface IGameState
     {
-        IGameState ApplyMove(IMoveState move);
+        float Score { get; set; }
+        void ApplyMove(IMoveState move);
     }
 }

@@ -9,7 +9,7 @@ namespace ProximityND.Backbone.AI
     public interface IMoveState
     {
         IGameState GameState { get; set; }
-        string Move { get; set; }
+        object data { get; set; }
         float Score { get; set; }
     }
 }
