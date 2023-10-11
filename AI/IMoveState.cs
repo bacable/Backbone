@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ProximityND.Backbone.AI
 {
-    public interface IMoveState
+    public interface IMoveState<T>
     {
-        IGameState GameState { get; set; }
-        object data { get; set; }
+        T data { get; set; }
         float Score { get; set; }
     }
 }
