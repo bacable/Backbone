@@ -13,6 +13,7 @@ namespace Backbone.Integration.Steamworks
     public static class SteamManager
     {
         public static bool IsSteamRunning { get; private set; } = false;
+        public static bool IsSteamRunningOnSteamDeck {  get; private set; } = false;
         public static string SteamUserName { get; set; } = "";
         public static string CurrentLanguage { get; set; } = "";
         public static string AvailableLanguages { get; set; } = "";
@@ -41,6 +42,8 @@ namespace Backbone.Integration.Steamworks
                 InitializeCallbacks();
                 Lobby = new SteamNetworkingWrapper();
                 Lobby.Initialize(8);
+
+                IsSteamRunningOnSteamDeck = SteamUtils.IsSteamRunningOnSteamDeck();
 
                 SteamUtils.SetOverlayNotificationPosition(ENotificationPosition.k_EPositionBottomRight);
                 // Uncomment the next line to adjust the OverlayNotificationPosition.
