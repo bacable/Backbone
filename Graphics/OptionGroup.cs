@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using ProximityND.Backbone.UI;
 using ProximityND.Config;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -35,6 +36,8 @@ namespace Backbone.Graphics
         Movable3D parent;
 
         private OptionGroupSettings settings;
+
+        private bool shouldStopUpdating = false;
 
         public MenuGraphic SelectedOption
         {
@@ -210,14 +213,16 @@ namespace Backbone.Graphics
             if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
             {
                 UpdateSelected(option.Item);
-                if (command.State == MouseEvent.Release)
+                if (command.State == settings.ClickType)
                 {
                     if (option.Item.Type == MenuItemType.Button)
                     {
+                        shouldStopUpdating = !settings.UpdateAfterClick;
                         option.Item.Click();
                     }
                     else if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
                     {
+                        shouldStopUpdating = !settings.UpdateAfterClick;
                         option.Item.Next();
                     }
                 }
@@ -236,8 +241,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-
-            if (command.State == MouseEvent.Moved || command.State == MouseEvent.Release)
+            if (!shouldStopUpdating && (command.HasMoved && command.State == MouseEvent.None || command.State == settings.ClickType))
             {
                 int newSelection = -1;
 

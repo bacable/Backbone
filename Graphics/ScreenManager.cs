@@ -131,7 +131,6 @@ namespace Backbone.Graphics
             // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
             var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
                                 (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
-                                hasMoved ? MouseEvent.Moved :
                                 MouseEvent.None;
 
             // Positive number = scroll down, negative number = scroll up.
@@ -139,7 +138,7 @@ namespace Backbone.Graphics
 
             PreviousMouseScroll = currentMouseState.ScrollWheelValue;
 
-            if (mouseState != MouseEvent.None)
+            if (mouseState != MouseEvent.None || hasMoved)
             {
                 Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
@@ -155,6 +154,7 @@ namespace Backbone.Graphics
                     View = command.View,
                     Viewport = command.Viewport,
                     State = mouseState,
+                    HasMoved = hasMoved,
                     WorldPosition = worldPosition,
                     Ratio = new Vector2(ScreenSettings.HorizontalRatio, ScreenSettings.VerticalRatio),
                 };

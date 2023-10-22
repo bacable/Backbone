@@ -74,7 +74,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
+            if(command.State == MouseEvent.Pressed && Icon != null && Icon.IsInteractive)
             {
                 if (Icon.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
                 {

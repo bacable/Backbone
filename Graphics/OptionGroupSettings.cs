@@ -1,5 +1,6 @@
 ﻿using Backbone.Actions;
 using Backbone.Graphics;
+using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using System;
@@ -20,5 +21,7 @@ namespace Backbone.Graphics
 
         public string SelectedColor { get; set; } = "#FFFFFF";
         public string UnselectedColor { get; set; } = "#AAAAAA";
+        public bool UpdateAfterClick { get; set; } = true;
+        public MouseEvent ClickType { get; set; } = MouseEvent.Release;
     }
 }

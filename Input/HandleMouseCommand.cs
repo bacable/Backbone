@@ -13,5 +13,6 @@ namespace Backbone.Input
         public MouseEvent State { get; set; }
         public Vector2 WorldPosition { get; set; }
         public Vector2 Ratio { get; set; }
+        public bool HasMoved { get; set; }
     }
 }

@@ -89,7 +89,7 @@ namespace ProximityND.Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if (command.State == MouseEvent.Release)
+            if (command.State == MouseEvent.Pressed)
             {
                 foreach(var icon in valueToIcons)
                 {
