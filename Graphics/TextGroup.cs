@@ -156,6 +156,8 @@ namespace Backbone.Graphics
             // TODO: remove once we have lower case letters
             text = text.ToUpper();
 
+            if (Text.Equals(text)) return; // don't do any updates if the text hasn't changed, especially since this can destroy existing animations
+
             Text = text;
 
             Letters.Clear();
@@ -286,6 +288,15 @@ namespace Backbone.Graphics
             if(this.TransitionInAnimation != null)
             {
                 this.Run(TransitionInAnimation, true);
+            }
+        }
+
+        public void AddPositionToText(Vector3 add)
+        {
+            for(var i=0; i<Letters.Count; i++)
+            {
+                var letter = Letters[i];
+                letter.UpdatePosition(new Vector3(letter.Position.X + add.X, letter.Position.Y + add.Y, letter.Position.Z + add.Z));
             }
         }
     }
