@@ -110,5 +110,16 @@ namespace Backbone.Actions
         {
             return new ColorAction(startColor, endColor, duration);
         }
+
+        /// <summary>
+        /// Reposition an object immediately, no lerping or updates or duration. Had too many issues with 
+        /// the normal move action with a tiny duration to work like this, figured it's best just to add this and make it simple
+        /// </summary>
+        /// <param name="position">The new position to update the movable to.</param>
+        /// <returns>The reposition action.</returns>
+        internal static IAction3D Reposition(Vector3 position)
+        {
+            return new RepositionAction(position);
+        }
     }
 }

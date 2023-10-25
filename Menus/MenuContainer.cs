@@ -140,6 +140,7 @@ namespace Backbone.Menus
                     throw new System.Exception("Check the code, shouldn't be an issue");
                 #endif
             }
+            return null;
         }
 
         public object GetValue()
