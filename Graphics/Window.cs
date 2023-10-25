@@ -26,6 +26,9 @@ namespace Backbone.Graphics
         private MenuContainer Menu { get; set; }
 
         public bool IsActive { get; set; } = false;
+        public Vector3 InactivePosition { get; set; }
+        public Vector3 ActivePosition { get; set; }
+        public float TransitionDuraton { get; set; }
 
         public bool IsAnimating
         {
@@ -57,6 +60,10 @@ namespace Backbone.Graphics
         public Window(WindowSettings<T> settings)
         {
             this.settings = settings;
+
+            InactivePosition = settings.InactivePosition;
+            ActivePosition = settings.ActivePosition;
+            TransitionDuraton = settings.TransitionDuration;
 
             Size = settings.Size;
 
@@ -122,7 +129,7 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            if(settings.VisibleWhileInactive || IsActive)
+            if(settings.VisibleWhileInactive || IsActive || IsAnimating)
             {
                 BackPanel.Draw(view, projection);
 
