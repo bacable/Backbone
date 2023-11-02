@@ -98,6 +98,74 @@ namespace Backbone.Input
             return currentString;
         }
 
+        public static bool IsKeyPressing(InputAction action)
+        {
+            // Check gamepad first, if doesn't match that, then try
+            // keyboard input
+            if (GamePadCapabilities.GamePadType == GamePadType.GamePad)
+            {
+                // Check for thumbstick direction matching the action requested first, and return true
+                // if they are pressed, otherwise check the buttons
+                if (isThumbstickPressed(action))
+                {
+                    return true;
+                }
+
+                if (isButtonReleased(action))
+                {
+                    return true;
+                }
+            }
+
+            if (KeyMapping.ContainsKey(action))
+            {
+                var key = KeyMapping[action];
+
+                // don't want to trigger these actions if they're currently typing
+                // in a text box
+                if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
+
+                return CurrentKeyboardState.IsKeyDown(key);
+            }
+
+            return false;
+
+        }
+
+        public static  bool IsKeyPressed(InputAction action)
+        {
+            // Check gamepad first, if doesn't match that, then try
+            // keyboard input
+            if (GamePadCapabilities.GamePadType == GamePadType.GamePad)
+            {
+                // Check for thumbstick direction matching the action requested first, and return true
+                // if they are pressed, otherwise check the buttons
+                if (isThumbstickPressed(action))
+                {
+                    return true;
+                }
+
+                if (isButtonReleased(action))
+                {
+                    return true;
+                }
+            }
+
+            if (KeyMapping.ContainsKey(action))
+            {
+                var key = KeyMapping[action];
+
+                // don't want to trigger these actions if they're currently typing
+                // in a text box
+                if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
+
+                return (!LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyDown(key));
+            }
+
+            return false;
+
+        }
+
         public static bool IsKeyUp(InputAction action)
         {
             // Check gamepad first, if doesn't match that, then try
