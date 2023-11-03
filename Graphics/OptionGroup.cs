@@ -166,7 +166,10 @@ namespace Backbone.Graphics
         {
             Options.ForEach(x =>
             {
-                x.Text.SetText(GetTextForOption(x));
+                if(!x.Text.Text.Equals(GetTextForOption(x)))
+                {
+                    x.Text.SetText(GetTextForOption(x));
+                }
             });
         }
 
@@ -188,6 +191,7 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
+            UpdateTexts();
             Options.ForEach(x => x.Text.Update(gameTime));
         }
 
