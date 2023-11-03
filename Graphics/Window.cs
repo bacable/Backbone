@@ -23,7 +23,7 @@ namespace Backbone.Graphics
         private Rectangle Size { get; set; }
         private Movable3D BackPanel { get; set; }
         private TextGroup Header { get; set; }
-        private MenuContainer Menu { get; set; }
+        public MenuContainer Menu { get; set; }
 
         public bool IsActive { get; set; } = false;
         public Vector3 InactivePosition { get; set; }
