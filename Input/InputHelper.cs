@@ -110,7 +110,6 @@ namespace Backbone.Input
                 // if they are pressed, otherwise check the buttons
                 if (isThumbstickPressing(action))
                 {
-                    Debug.WriteLine("ThumbstickPressed: " + isThumbstickPressing(action).ToString());
                     return true;
                 }
 
