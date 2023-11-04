@@ -177,7 +177,7 @@ namespace Backbone.Input
             {
                 // Check for thumbstick direction matching the action requested first, and return true
                 // if they are pressed, otherwise check the buttons
-                if (isThumbstickPressed(action))
+                if (isThumbstickReleased(action))
                 {
                     return true;
                 }
@@ -258,63 +258,93 @@ namespace Backbone.Input
             }
         }
 
-        private static bool isThumbstickPressing(InputAction action)
+        private static bool isLeft(GamePadState state)
         {
-            if (GamePadCapabilities.HasLeftXThumbStick)
+            return GamePadCapabilities.HasLeftXThumbStick && state.ThumbSticks.Left.X < -0.5f;
+        }
+
+        private static bool isRight(GamePadState state)
+        {
+            return GamePadCapabilities.HasLeftXThumbStick && state.ThumbSticks.Left.X > 0.5f;
+        }
+
+        private static bool isUp(GamePadState state)
+        {
+            return GamePadCapabilities.HasLeftYThumbStick && state.ThumbSticks.Left.Y > 0.5f;
+        }
+
+        private static bool isDown(GamePadState state)
+        {
+            return GamePadCapabilities.HasLeftYThumbStick && state.ThumbSticks.Left.Y < -0.5f;
+        }
+
+        private static bool isThumbstickReleased(InputAction action)
+        {
+            if (action == InputAction.Left)
             {
-                if (action == InputAction.Left)
-                {
-                    return CurrentGamePadState.ThumbSticks.Left.X < -0.5f;
-                }
-                else if (action == InputAction.Right)
-                {
-                    return CurrentGamePadState.ThumbSticks.Left.X > 0.5f;
-                }
+                return !isLeft(CurrentGamePadState) && isLeft(LastGamePadState);
+            }
+            else if (action == InputAction.Right)
+            {
+                return !isRight(CurrentGamePadState) && isRight(LastGamePadState);
             }
 
-            if (GamePadCapabilities.HasLeftYThumbStick)
+            if (action == InputAction.Up)
             {
-                if (action == InputAction.Up)
-                {
-                    return CurrentGamePadState.ThumbSticks.Left.Y > 0.5f;
-                }
-                else if (action == InputAction.Down)
-                {
-                    return CurrentGamePadState.ThumbSticks.Left.Y < -0.5f;
-                }
+                return !isUp(CurrentGamePadState) && isUp(LastGamePadState);
+            }
+            else if (action == InputAction.Down)
+            {
+                return !isDown(CurrentGamePadState) && isDown(LastGamePadState);
             }
 
             return false;
         }
 
-        // TODO: Keep track of how long time pressed, and periodically treat is as a triggered direction while being held (long for the first one, then shorter for those after so it cycles fairly quick)
         private static bool isThumbstickPressed(InputAction action)
         {
-            if(GamePadCapabilities.HasLeftXThumbStick)
+            if (action == InputAction.Left)
             {
-                if (action == InputAction.Left)
-                {
-                    return !(CurrentGamePadState.ThumbSticks.Left.X < -0.5f) && (LastGamePadState.ThumbSticks.Left.X < -0.5f);
-                }
-                else if(action == InputAction.Right)
-                {
-                    return !(CurrentGamePadState.ThumbSticks.Left.X > 0.5f) && (LastGamePadState.ThumbSticks.Left.X > 0.5f);
-                }
+                return isLeft(CurrentGamePadState) && !isLeft(LastGamePadState);
+            }
+            else if(action == InputAction.Right)
+            {
+                return isRight(CurrentGamePadState) && !isRight(LastGamePadState);
             }
 
-            if (GamePadCapabilities.HasLeftYThumbStick)
+            if (action == InputAction.Up)
             {
-                if (action == InputAction.Up)
-                {
-                    return !(CurrentGamePadState.ThumbSticks.Left.Y > 0.5f) && (LastGamePadState.ThumbSticks.Left.Y > 0.5f);
-                }
-                else if (action == InputAction.Down)
-                {
-                    return !(CurrentGamePadState.ThumbSticks.Left.Y < -0.5f) && (LastGamePadState.ThumbSticks.Left.Y < -0.5f);
-                }
+                return isUp(CurrentGamePadState) && !isUp(LastGamePadState);
+            }
+            else if (action == InputAction.Down)
+            {
+                return isDown(CurrentGamePadState) && !isDown(LastGamePadState);
             }
 
             return false;
         }
-   }
+
+        private static bool isThumbstickPressing(InputAction action)
+        {
+            if (action == InputAction.Left)
+            {
+                return isLeft(CurrentGamePadState);
+            }
+            else if (action == InputAction.Right)
+            {
+                return isRight(CurrentGamePadState);
+            }
+
+            if (action == InputAction.Up)
+            {
+                return isUp(CurrentGamePadState);
+            }
+            else if (action == InputAction.Down)
+            {
+                return isDown(CurrentGamePadState);
+            }
+
+            return false;
+        }
+    }
 }
