@@ -30,6 +30,12 @@ namespace Backbone.Graphics
         public Vector3 ActivePosition { get; set; }
         public float TransitionDuraton { get; set; }
 
+        public Movable3D AttachTo {  get
+            {
+                return BackPanel;
+            }
+        }
+
         public bool IsAnimating
         {
             get
