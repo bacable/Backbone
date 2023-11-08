@@ -68,7 +68,7 @@ namespace ProximityND.Backbone.Graphics
                 icon.icon.UpdatePosition(new Vector3(
                     basePosition.X + column * (iconSize + gapSize),
                     basePosition.Y - row * (iconSize + gapSize),
-                    0f));
+                    basePosition.Z));
             }
 
             if(icons.Count > 0)
