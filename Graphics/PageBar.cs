@@ -1,4 +1,5 @@
-﻿using Backbone.Events;
+﻿using Backbone.Actions;
+using Backbone.Events;
 using Backbone.Graphics;
 using Backbone.Input;
 using Backbone.UI;
@@ -17,7 +18,8 @@ namespace ProximityND.Backbone.Graphics
         public float Scale { get; set; } = 1f;
         public Func<string> GetHeaderColor { get; set; } = null;
         public Func<string> GetHeaderText { get; set; } = null;
-
+        public Func<int, IAction3D> TransitionInAnim { get; set; } = null;
+        public Func<int, IAction3D> TransitionOutAnim { get; set; } = null;
     }
 
     public class PageBar<T> : IGUI3D
@@ -42,10 +44,12 @@ namespace ProximityND.Backbone.Graphics
                 Position = settings.Position,
                 Scale = settings.Scale,
                 Text = initialHeaderText,
+                TransitionInAnim = settings.TransitionInAnim,
+                TransitionOutAnim = settings.TransitionOutAnim,
             });
 
-            LeftArrowButton = CreateArrowButton("<", settings.LeftArrowEvent, InputAction.LeftShoulder, new Vector3(settings.Position.X - 300f, settings.Position.Y, settings.Position.Z));
-            RightArrowButton = CreateArrowButton(">", settings.RightArrowEvent, InputAction.RightShoulder, new Vector3(settings.Position.X + 300f, settings.Position.Y, settings.Position.Z));
+            LeftArrowButton = CreateArrowButton("<", settings.LeftArrowEvent, InputAction.LeftShoulder, new Vector3(settings.Position.X - 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
+            RightArrowButton = CreateArrowButton(">", settings.RightArrowEvent, InputAction.RightShoulder, new Vector3(settings.Position.X + 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
 
             getHeaderColor = settings.GetHeaderColor;
             getHeaderText = settings.GetHeaderText;
@@ -70,6 +74,9 @@ namespace ProximityND.Backbone.Graphics
 
         public void TransitionOut()
         {
+            tabNameText.TransitionOut();
+            LeftArrowButton.TransitionOut();
+            RightArrowButton.TransitionOut();
         }
 
         public void Update(GameTime gameTime)
@@ -97,7 +104,7 @@ namespace ProximityND.Backbone.Graphics
             RightArrowButton.Update(gameTime);
         }
 
-        private TextButton<T> CreateArrowButton(string text, T clickEvent, InputAction assignedInput, Vector3 position)
+        private TextButton<T> CreateArrowButton(string text, T clickEvent, InputAction assignedInput, Vector3 position, Func<int, IAction3D> transitionInAnim, Func<int, IAction3D> transitionOutAnim)
         {
             return new TextButton<T>(new TextButtonSettings<T>()
             {
@@ -115,6 +122,8 @@ namespace ProximityND.Backbone.Graphics
                     Position = position,
                     Scale = 100f,
                     Text = text,
+                    TransitionInAnim = transitionInAnim,
+                    TransitionOutAnim = transitionOutAnim
                 }
             });
         }
