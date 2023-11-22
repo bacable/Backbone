@@ -226,12 +226,12 @@ namespace Backbone.Graphics
 
             if(charsWithoutWidths.Count > 0)
             {
-                Debug.WriteLine("Missing character widths: {0}", string.Join(',', charsWithoutWidths));
+                Debug.WriteLine("Missing character widths: " + string.Join(',', charsWithoutWidths));
             }
 
             if (charsWithoutModels.Count > 0)
             {
-                Debug.WriteLine("Missing character models: {0}", string.Join(',', charsWithoutModels));
+                Debug.WriteLine("Missing character models: " + string.Join(',', charsWithoutModels));
             }
         }
 
