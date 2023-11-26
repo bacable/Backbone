@@ -11,24 +11,32 @@ namespace Backbone.Graphics.Particles
         private Model particleModel;
         private float particleLife;
         private float particleGravity;
+        private float particleScale;
+        private bool shouldInvertY;
         private GraphicsDevice graphicsDevice;
 
-        public ParticleEmitter(GraphicsDevice graphics, Model particleModel, float particleLife, float particleGravity)
+        public ParticleEmitter(GraphicsDevice graphics, Model particleModel, float particleLife, float particleGravity, float particleScale, bool shouldInvertY = false)
         {
             this.graphicsDevice = graphics;
             this.particleModel = particleModel;
             this.particleLife = particleLife;
             this.particleGravity = particleGravity;
+            this.particleScale = particleScale;
+            this.shouldInvertY = shouldInvertY;
+
             particles = new List<Particle>();
         }
 
         public void Emit(Vector3 position, Vector3 velocity, Vector3 angularVelocity, int count)
         {
-            position.Y = graphicsDevice.Viewport.Height - position.Y;
+            if(shouldInvertY)
+            {
+                position.Y = graphicsDevice.Viewport.Height - position.Y;
+            }
 
             for (int i = 0; i < count; i++)
             {
-                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity));
+                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale));
             }
         }
 

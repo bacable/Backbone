@@ -14,8 +14,9 @@ namespace Backbone.Graphics.Particles
         public float Gravity;
         public float Alpha; // Transparency component
         private float Alive = 0;
+        private float Scale = 1f;
 
-        public Particle(Model model, Vector3 position, Vector3 velocity, Vector3 angularVelocity, float life, float gravity)
+        public Particle(Model model, Vector3 position, Vector3 velocity, Vector3 angularVelocity, float life, float gravity, float scale)
         {
             Model = model;
             Position = position;
@@ -24,12 +25,13 @@ namespace Backbone.Graphics.Particles
             Life = life;
             Gravity = gravity;
             Alpha = 1.0f; // Fully opaque initially
+            Scale = scale;
             UpdateWorldMatrix();
         }
 
         private void UpdateWorldMatrix()
         {
-            World = Matrix.CreateTranslation(Position);
+            World = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(Position);
         }
 
         public void Update(GameTime gameTime)
@@ -52,7 +54,7 @@ namespace Backbone.Graphics.Particles
                 AngularVelocity.Normalize();
                 float rotationSpeed = rotationAmount / elapsed;
                 Quaternion rotation = Quaternion.CreateFromAxisAngle(AngularVelocity, rotationSpeed * Alive);
-                World = Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(Position);
+                World = Matrix.CreateScale(Scale) * Matrix.CreateFromQuaternion(rotation) * Matrix.CreateTranslation(Position);
             }
 
             // Update particle life
