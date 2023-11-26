@@ -23,9 +23,18 @@ namespace Backbone.Graphics
         private Rectangle Size { get; set; }
         private Movable3D BackPanel { get; set; }
         private TextGroup Header { get; set; }
-        private MenuContainer Menu { get; set; }
+        public MenuContainer Menu { get; set; }
 
         public bool IsActive { get; set; } = false;
+        public Vector3 InactivePosition { get; set; }
+        public Vector3 ActivePosition { get; set; }
+        public float TransitionDuraton { get; set; }
+
+        public Movable3D AttachTo {  get
+            {
+                return BackPanel;
+            }
+        }
 
         public bool IsAnimating
         {
@@ -58,6 +67,10 @@ namespace Backbone.Graphics
         {
             this.settings = settings;
 
+            InactivePosition = settings.InactivePosition;
+            ActivePosition = settings.ActivePosition;
+            TransitionDuraton = settings.TransitionDuration;
+
             Size = settings.Size;
 
             if(BackgroundModel == null)
@@ -83,6 +96,8 @@ namespace Backbone.Graphics
                     Menu = settings.Menu,
                     ParentMovable = BackPanel,
                     Position = settings.MenuPosition,
+                    SelectedColor = settings.SelectedColor,
+                    UnselectedColor = settings.UnselectedColor,
                 };
                 optionGroup = new OptionGroup(oGroupSettings);
             }
@@ -120,7 +135,7 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            if(settings.VisibleWhileInactive || IsActive)
+            if(settings.VisibleWhileInactive || IsActive || IsAnimating)
             {
                 BackPanel.Draw(view, projection);
 
@@ -140,7 +155,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(settings.VisibleWhileInactive && command.State == MouseEvent.Release)
+            if(!settings.VisibleWhileInactive || command.State == MouseEvent.Release)
             {
                 // Handle click of backpanel, if set up to do something
                 // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,

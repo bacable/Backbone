@@ -13,6 +13,8 @@
         SpecialAction2, //think Y on controller
         SpecialAction3, //think L on controller
         SpecialAction4, //think R on controller
+        LeftShoulder, // LB on controller
+        RightShoulder, // RB on controller
         Select1,
         Select2,
         Select3,

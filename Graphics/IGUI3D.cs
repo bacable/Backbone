@@ -18,6 +18,10 @@ namespace Backbone.Graphics
         void HandleMouse(HandleMouseCommand command);
         void TransitionIn();
         void TransitionOut();
+        public void Dispose()
+        {
+            //Empty default implementation
+        }
     }
 }
 

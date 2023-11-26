@@ -38,6 +38,15 @@ namespace Backbone.Graphics
             }
         }
 
+        public void Click()
+        {
+            this.chooser.Next();
+            if (ClickAnimation != null)
+            {
+                Icon.Run(ClickAnimation());
+            }
+        }
+
         public string Value
         {
             get { return chooser.SelectedOption.Value; }
@@ -69,11 +78,7 @@ namespace Backbone.Graphics
             {
                 if (Icon.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
                 {
-                    this.chooser.Next();
-                    if(ClickAnimation != null)
-                    {
-                        Icon.Run(ClickAnimation());
-                    }
+                    Click();
                 }
             }
         }

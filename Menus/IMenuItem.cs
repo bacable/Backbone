@@ -13,6 +13,7 @@
         void Prev();
         void Click();
         // TODO: Change IMenuItem to a Template so instead of object we can use T
+        IMenuItem GetByName(string name);
         public object GetValue();
         void SetValue(object value);
     }

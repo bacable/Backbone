@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SharpDX.Direct3D9;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Backbone.Menus
@@ -25,10 +26,10 @@ namespace Backbone.Menus
 
         public void SetValue(string name, object value)
         {
-            var item = Items.FirstOrDefault(x => x.Name.Equals(name));
-            if(item != null)
+            var requestedItem = GetByName(name);
+            if(requestedItem != null)
             {
-                item.SetValue(value);
+                requestedItem.SetValue(value);
             }
         }
 
@@ -54,11 +55,6 @@ namespace Backbone.Menus
             {
                 return Items[SelectedIndex];
             }
-        }
-
-        public IMenuItem Get(string name)
-        {
-            return Items.FirstOrDefault(x => x.Name == name);
         }
 
         public void Next()
@@ -99,13 +95,29 @@ namespace Backbone.Menus
 
         public void NextOption()
         {
-            Items[SelectedIndex].Next();
+            var tab = Items[SelectedIndex] as MenuTab;
+            if(tab != null)
+            {
+                tab.NextOption();
+            }
+            else
+            {
+                Items[SelectedIndex].Next();
+            }
             Observer?.UpdateSelectedOption();
         }
 
         public void PrevOption()
         {
-            Items[SelectedIndex].Prev();
+            var tab = Items[SelectedIndex] as MenuTab;
+            if (tab != null)
+            {
+                tab.PrevOption();
+            }
+            else
+            {
+                Items[SelectedIndex].Prev();
+            }
             Observer?.UpdateSelectedOption();
         }
 
@@ -117,7 +129,7 @@ namespace Backbone.Menus
         // find item in container with the following name and then return its value
         public object GetValue(string name)
         {
-            var item = Items.FirstOrDefault(x => x.Name.Equals(name));
+            var item = GetByName(name);
             if(item != null)
             {
                 return item.GetValue();
@@ -128,12 +140,31 @@ namespace Backbone.Menus
                     throw new System.Exception("Check the code, shouldn't be an issue");
                 #endif
             }
+            return null;
         }
 
         public object GetValue()
         {
             // shouldn't be called
             return null;
+        }
+
+        public IMenuItem GetByName(string name)
+        {
+            IMenuItem returnItem = null;
+
+            for (var i = 0; i < Items.Count; i++)
+            {
+                var item = Items[i];
+                var requestedItem = item.GetByName(name);
+                if (requestedItem != null)
+                {
+                    returnItem = requestedItem;
+                    break;
+                }
+            }
+
+            return returnItem;
         }
 
         public bool CanNext

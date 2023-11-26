@@ -6,11 +6,13 @@ namespace Backbone.Input
     public class HandleMouseCommand
     {
         public Vector2 MousePosition { get; set; }
+        public float MouseScroll { get; set; }
         public Matrix View { get; set; }
         public Matrix Projection { get; set; }
         public Viewport Viewport { get; set; }
         public MouseEvent State { get; set; }
         public Vector2 WorldPosition { get; set; }
         public Vector2 Ratio { get; set; }
+        public bool HasMoved { get; set; }
     }
 }

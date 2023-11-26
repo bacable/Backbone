@@ -37,5 +37,10 @@ namespace Backbone.Events
 
             return default(TReturn);
         }
+
+        public static void Unregister(IProvider<TReturn, TRequest> provider)
+        {
+            Providers.Remove(provider);
+        }
     }
 }

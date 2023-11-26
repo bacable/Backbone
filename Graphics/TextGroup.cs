@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Backbone.UI;
+using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace Backbone.Graphics
 {
@@ -80,6 +82,8 @@ namespace Backbone.Graphics
 
         public float Left { get; set; }
         public float Right { get; set; }
+
+        public string Color { get; set; }
         public Vector3 Position { get; set; } = Vector3.Zero;
 
         // first is the int to pass in the index of the letter (matters for some anims),
@@ -151,8 +155,13 @@ namespace Backbone.Graphics
 
         public void SetText(string text)
         {
+            List<char> charsWithoutModels = new List<char>();
+            List<char> charsWithoutWidths = new List<char>();
+
             // TODO: remove once we have lower case letters
             text = text.ToUpper();
+
+            if (Text.Equals(text)) return; // don't do any updates if the text hasn't changed, especially since this can destroy existing animations
 
             Text = text;
 
@@ -174,7 +183,19 @@ namespace Backbone.Graphics
 
                 if(character != ' ')
                 {
-                    var halfCharWidth = 0.5f * (baseScale * LetterWidths[text[i]]);
+                    if (!LetterModels.ContainsKey(text[i]))
+                    {
+                        charsWithoutModels.Add(text[i]);
+                        character = '-';
+                    }
+
+                    if (!LetterWidths.ContainsKey(text[i]))
+                    {
+                        charsWithoutWidths.Add(text[i]);
+                        character = '-';
+                    }
+
+                    var halfCharWidth = 0.5f * (baseScale * LetterWidths[character]);
                     var currentPlusHalfChar = currentPositionX + halfCharWidth;
 
                     var model = new Movable3D(LetterModels[character], new Vector3(currentPlusHalfChar, Position.Y, Position.Z), baseScale);
@@ -200,7 +221,17 @@ namespace Backbone.Graphics
                     }
                 }
 
-                currentPositionX += baseScale * LetterWidths[text[i]];
+                currentPositionX += baseScale * LetterWidths[character];
+            }
+
+            if(charsWithoutWidths.Count > 0)
+            {
+                Debug.WriteLine("Missing character widths: " + string.Join(',', charsWithoutWidths));
+            }
+
+            if (charsWithoutModels.Count > 0)
+            {
+                Debug.WriteLine("Missing character models: " + string.Join(',', charsWithoutModels));
             }
         }
 
@@ -284,6 +315,15 @@ namespace Backbone.Graphics
             if(this.TransitionInAnimation != null)
             {
                 this.Run(TransitionInAnimation, true);
+            }
+        }
+
+        public void AddPositionToText(Vector3 add)
+        {
+            for(var i=0; i<Letters.Count; i++)
+            {
+                var letter = Letters[i];
+                letter.UpdatePosition(new Vector3(letter.Position.X + add.X, letter.Position.Y + add.Y, letter.Position.Z + add.Z));
             }
         }
     }

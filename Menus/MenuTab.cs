@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Backbone.Menus
 {
@@ -10,35 +11,54 @@ namespace Backbone.Menus
         public MenuItemType Type { get; set; } = MenuItemType.Tab;
         public bool IsSelected { get; set; }
 
-        public bool CanPrev => throw new NotImplementedException();
+        public bool CanPrev => true;
 
-        public bool CanNext => throw new NotImplementedException();
+        public bool CanNext => true;
 
-        public string DisplayText { get; set; }
+        public string DisplayText { get; set; } = string.Empty;
 
         public void Click()
         {
-            throw new NotImplementedException();
+        }
+
+        public IMenuItem GetByName(string name)
+        {
+            return Container.GetByName(name);
         }
 
         public object GetValue()
         {
-            throw new NotImplementedException();
+            return Container.GetValue();
         }
 
         public void Next()
         {
-            throw new NotImplementedException();
+            Container.Next();
         }
 
         public void Prev()
         {
-            throw new NotImplementedException();
+            Container.Prev();
+        }
+
+        public void NextOption()
+        {
+            Container.NextOption();
+        }
+
+        public void PrevOption()
+        {
+            Container.PrevOption();
         }
 
         public void SetValue(object value)
         {
             throw new NotImplementedException();
+        }
+
+        internal List<IMenuItem> getItems()
+        {
+            return Container.Items;
         }
     }
 }

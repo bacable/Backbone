@@ -10,6 +10,5 @@ namespace Backbone.Input
         Click,
         Pressed,
         Release,
-        Moved
     }
 }

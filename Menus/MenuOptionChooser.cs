@@ -134,7 +134,7 @@ namespace Backbone.Menus
                 int foundIndex = -1;
                 for (var i = 0; i < Options.Count; i++)
                 {
-                    if (Options[i].Value.Equals(matchString))
+                    if (Options[i].Value.ToLower().Equals(matchString.ToLower()))
                     {
                         foundIndex = i;
                         break;
@@ -159,5 +159,11 @@ namespace Backbone.Menus
                 return Options[SelectedIndex].Value;
             }
         }
+
+        public IMenuItem GetByName(string name)
+        {
+            return (this.Name == name) ? this : null;
+        }
+
     }
 }
