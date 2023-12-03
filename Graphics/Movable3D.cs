@@ -212,6 +212,11 @@ namespace Backbone.Graphics
             return Collision2D.IntersectCircle(position, new Vector2(xpos, ypos), overrideRadius ?? collisionRadius ?? 0f);
         }
 
+        public void ClearAnim()
+        {
+            queuedActions.Clear();
+        }
+
         public void Run(IAction3D action)
         {
             this.Run(action, true);
