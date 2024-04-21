@@ -61,8 +61,8 @@ namespace Backbone.Graphics
 
         private List<IAction3D> queuedActions = new List<IAction3D>();
 
-        public string Color1 = ColorHex.DefaultColorHexCodes[ColorType.White];
-        public string Color2 = ColorHex.DefaultColorHexCodes[ColorType.White];
+        public string Color1 { get; set; } = ColorHex.DefaultColorHexCodes[ColorType.White];
+        public string Color2 { get; set; } = ColorHex.DefaultColorHexCodes[ColorType.White];
         //public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
         public string ColorText = ColorHex.DefaultColorHexCodes[ColorType.DefaultText];
 

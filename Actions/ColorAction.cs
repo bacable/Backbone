@@ -2,8 +2,6 @@
 using Backbone.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Diagnostics;
-using static Backbone.Actions.RotateAction;
 
 namespace ProximityND.Backbone.Actions
 {
@@ -49,7 +47,6 @@ namespace ProximityND.Backbone.Actions
             Color currentColor = Color.Lerp(sourceColor, targetColor, percent);
 
             var debugColor = ColorHex.ConvertFromColor(currentColor);
-            Debug.WriteLine(debugColor);
 
             string colorHexString = ColorHex.ConvertFromColor(currentColor);
 
