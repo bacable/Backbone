@@ -2,10 +2,10 @@
 using Backbone.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using static Backbone.Actions.RotateAction;
 
 namespace ProximityND.Backbone.Actions
 {
+    // TODO: make this generic and not just based on color1 and color2 (use mesh color properties instead)
     public class ColorAction : IAction3D
     {
         Color sourceColor;
@@ -44,8 +44,10 @@ namespace ProximityND.Backbone.Actions
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             elapsedTime += elapsed;
 
-            float percent = ActionMath.LerpFloat(elapsed, 0f, 1f, duration);
+            float percent = ActionMath.LerpFloat(elapsedTime, 0f, 1f, duration);
             Color currentColor = Color.Lerp(sourceColor, targetColor, percent);
+
+            var debugColor = ColorHex.ConvertFromColor(currentColor);
 
             string colorHexString = ColorHex.ConvertFromColor(currentColor);
 

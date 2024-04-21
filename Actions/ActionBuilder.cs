@@ -96,6 +96,22 @@ namespace Backbone.Actions
             return new ChangeScreenAction<T>(switchToScreen);
         }
 
+        /// <summary>
+        /// Takes in an object, a string name of a property on that object, and a new value, and will change the property of that object
+        /// Will immediately make that change and finish the action.
+        /// Mainly used to adjust a value during an existing sequence of actions, either after a set delay, or more likely in the middle of an
+        /// animation.
+        /// </summary>
+        /// <typeparam name="T">The type for the property value.</typeparam>
+        /// <param name="targetObject">The object that has the property we want to change.</param>
+        /// <param name="propertyName">The name of the property on the object we want to change.</param>
+        /// <param name="newPropertyValue">The new value we want that property to become.</param>
+        /// <returns></returns>
+        public static IAction3D ChangeObjectProperty<T>(object targetObject, string propertyName, T newPropertyValue)
+        {
+            return new ChangeObjectPropertyAction<T>(targetObject, propertyName, newPropertyValue);
+        }
+
         public static IAction3D AddVelocity(Vector3 v0, Vector3 p0, float g, float duration)
         {
             return new PhysicsParticleAction(v0, p0, g, duration);
