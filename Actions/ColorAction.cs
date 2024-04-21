@@ -2,6 +2,7 @@
 using Backbone.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Diagnostics;
 using static Backbone.Actions.RotateAction;
 
 namespace ProximityND.Backbone.Actions
@@ -44,8 +45,11 @@ namespace ProximityND.Backbone.Actions
             float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
             elapsedTime += elapsed;
 
-            float percent = ActionMath.LerpFloat(elapsed, 0f, 1f, duration);
+            float percent = ActionMath.LerpFloat(elapsedTime, 0f, 1f, duration);
             Color currentColor = Color.Lerp(sourceColor, targetColor, percent);
+
+            var debugColor = ColorHex.ConvertFromColor(currentColor);
+            Debug.WriteLine(debugColor);
 
             string colorHexString = ColorHex.ConvertFromColor(currentColor);
 
