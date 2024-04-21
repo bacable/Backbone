@@ -5,6 +5,7 @@ using System.Collections.Generic;
 
 namespace ProximityND.Backbone.Actions
 {
+    // TODO: make this generic and not just based on color1 and color2 (use mesh color properties instead)
     public class ColorAction : IAction3D
     {
         Color sourceColor;
