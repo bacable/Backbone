@@ -101,13 +101,14 @@ namespace Backbone.Graphics
         private void DrawGrid(BasicEffect effect)
         {
             Color gridColor = Color.LightGray;
+            float z = Origin.Z - 20;
 
             // Draw vertical lines
             for (int i = 0; i < XAxisSegments; i++)
             {
                 float x = Origin.X + Width * i / (XAxisSegments - 1);
-                Vector3 startPoint = new Vector3(x, Origin.Y, Origin.Z);
-                Vector3 endPoint = new Vector3(x, Origin.Y + Height, Origin.Z);
+                Vector3 startPoint = new Vector3(x, Origin.Y, z);
+                Vector3 endPoint = new Vector3(x, Origin.Y + Height, z);
 
                 XAxisValues[i] = new Vector2(x, Origin.Y); // Store grid values
 
@@ -128,8 +129,8 @@ namespace Backbone.Graphics
             for (int i = 0; i < YAxisSegments; i++)
             {
                 float y = Origin.Y + Height * i / (YAxisSegments - 1);
-                Vector3 startPoint = new Vector3(Origin.X, y, Origin.Z);
-                Vector3 endPoint = new Vector3(Origin.X + Width, y, Origin.Z);
+                Vector3 startPoint = new Vector3(Origin.X, y, z);
+                Vector3 endPoint = new Vector3(Origin.X + Width, y, z);
 
                 YAxisValues[i] = new Vector2(Origin.X, y); // Store grid values
 
