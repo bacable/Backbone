@@ -146,13 +146,13 @@ namespace Backbone.Graphics
             int numLines = GraphData.Count;
             float teamDepth = Depth / (numLines * 2); // Change depth difference between team lines
 
-            float xDistance = Width / MaxCount;
+            float xDistance = Width / (MaxCount - 1);
 
-            for (int i = 0; i < numLines; i++)
+            for (int teamIndex = 0; teamIndex < numLines; teamIndex++)
             {
-                var data = GraphData[i];
+                var data = GraphData[teamIndex];
 
-                float z = Origin.Z - i * 2 * teamDepth;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
+                float z = Origin.Z - teamIndex * 2 * teamDepth;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
                 var height = (data.Values.Length == 0 || data.Values[0] == 0) ? 0: data.Values[0] / MaxValue; // prevent no data and divide by zero error
                 Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * height, z);
 
@@ -162,24 +162,21 @@ namespace Backbone.Graphics
                 for (int j = 1; j < data.Values.Length; j++)
                 {
                     float x = Origin.X + xDistance * j;
-                    //float y = Origin.Y + Height * teamData[i][j] + (i * 5);
                     var height2 = (data.Values[j] == 0) ? 0 : data.Values[j] / MaxValue;
                     float y = Origin.Y + Height * height2;
                     Vector3 currentPoint = new Vector3(x, y, z);
 
-                    if (j % segmentsPerXAxis == 0)
+                    
+                    VertexPositionColor[] vertices = new VertexPositionColor[]
                     {
-                        VertexPositionColor[] vertices = new VertexPositionColor[]
-                        {
-                    new VertexPositionColor(previousPoint, data.Color),
-                    new VertexPositionColor(currentPoint, data.Color)
-                        };
+                        new VertexPositionColor(previousPoint, data.Color),
+                        new VertexPositionColor(currentPoint, data.Color)
+                    };
 
-                        foreach (EffectPass pass in effect.CurrentTechnique.Passes)
-                        {
-                            pass.Apply();
-                            DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, data.Color);
-                        }
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+                    {
+                        pass.Apply();
+                        DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, data.Color);
                     }
 
                     previousPoint = currentPoint;
