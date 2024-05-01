@@ -30,6 +30,10 @@ namespace Backbone.Graphics
         public Vector3 ActivePosition { get; set; }
         public float TransitionDuraton { get; set; }
 
+        public Func<IAction3D> TransitionInAnimation {  get; set; }
+        public Func<IAction3D> TransitionOutAnimation { get; set; }
+
+
         public Movable3D AttachTo {  get
             {
                 return BackPanel;
@@ -71,13 +75,18 @@ namespace Backbone.Graphics
             ActivePosition = settings.ActivePosition;
             TransitionDuraton = settings.TransitionDuration;
 
+            TransitionInAnimation = settings.TransitionInAnimation;
+            TransitionOutAnimation = settings.TransitionOutAnimation;
+
+            var startPosition = TransitionInAnimation != null ? settings.OffscreenPosition : settings.InactivePosition;
+
             Size = settings.Size;
 
             if(BackgroundModel == null)
             {
                 throw new NullReferenceException("Windows Background Model not set");
             }
-            BackPanel = new Movable3D(BackgroundModel, settings.InactivePosition, settings.BackPanelScale.X);
+            BackPanel = new Movable3D(BackgroundModel, startPosition, settings.BackPanelScale.X);
 
             if(settings.Header != null)
             {
@@ -235,12 +244,20 @@ namespace Backbone.Graphics
 
         public void TransitionIn()
         {
-
+            if (this.TransitionInAnimation != null)
+            {
+                var anim = TransitionInAnimation();
+                BackPanel.Run(anim, true);
+            }
         }
 
         public void TransitionOut()
         {
-
+            if (this.TransitionOutAnimation != null)
+            {
+                var anim = TransitionOutAnimation();
+                BackPanel.Run(anim, true);
+            }
         }
 
         public void Reposition(Vector3 newPosition)
