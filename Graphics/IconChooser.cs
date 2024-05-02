@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
 
 namespace Backbone.Graphics
 {
@@ -17,6 +19,9 @@ namespace Backbone.Graphics
         public float? OverrideCollisionRadius = null;
 
         public Func<IAction3D> ClickAnimation { get; set; } = null;
+
+        public Func<IAction3D> TransitionOutAnimation { get; set; } = null;
+        public Func<IAction3D> TransitionInAnimation { get; set; } = null;
 
         public Action<string> OnChange
         {
@@ -72,6 +77,11 @@ namespace Backbone.Graphics
             this.chooser.SetValue(newValue);
         }
 
+        public void SetAlpha(float alpha)
+        {
+            Icon.SetAlpha(alpha);
+        }
+
         public void HandleMouse(HandleMouseCommand command)
         {
             if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
@@ -85,10 +95,26 @@ namespace Backbone.Graphics
 
         public void TransitionIn()
         {
+            if (this.TransitionInAnimation != null)
+            {
+                foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
+                {
+                    var anim = TransitionInAnimation();
+                    entry.Value.Run(anim);
+                }
+            }
         }
 
         public void TransitionOut()
         {
+            if (this.TransitionOutAnimation != null)
+            {
+                foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
+                {
+                    var anim = TransitionOutAnimation();
+                    entry.Value.Run(anim);
+                }
+            }
         }
 
         public void Draw(Matrix view, Matrix projection)
@@ -101,9 +127,9 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            if(Icon != null)
+            foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
             {
-                Icon.Update(gameTime);
+                entry.Value.Update(gameTime);
             }
         }
     }

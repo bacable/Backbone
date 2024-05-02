@@ -152,6 +152,11 @@ namespace Backbone.Graphics
             return letterId == (Letters.Count - 1);
         }
 
+        public void SetAlpha(float alpha)
+        {
+            Letters.ForEach((x) => x.Alpha = alpha);
+        }
+
 
         public void SetText(string text)
         {

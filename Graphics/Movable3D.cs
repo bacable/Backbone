@@ -241,5 +241,10 @@ namespace Backbone.Graphics
         {
             return Position;
         }
+
+        public void SetAlpha(float alpha)
+        {
+            Alpha = alpha;
+        }
     }
 }

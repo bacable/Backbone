@@ -1,4 +1,5 @@
-﻿using Backbone.Menus;
+﻿using Backbone.Actions;
+using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -48,5 +49,9 @@ namespace Backbone.Graphics
 
         public string SelectedColor { get; internal set; } = "#FFFFFF";
         public string UnselectedColor { get; internal set; } = "#AAAAAA";
+        public Func<IAction3D> TransitionInAnimation { get; internal set; } = null;
+        public Func<IAction3D> TransitionOutAnimation { get; internal set; } = null;
+        public Vector3 OffscreenPosition { get; internal set; } = Vector3.Zero;
+
     }
 }

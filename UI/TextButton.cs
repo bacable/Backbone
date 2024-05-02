@@ -16,7 +16,7 @@ namespace Backbone.UI
         bool checkInput = true;
 
         float resetHasClickedSeconds = 0.0f;
-
+        public bool Enabled { get; set; } = true;
 
         public TextButton(TextButtonSettings<T> settings)
         {
@@ -68,7 +68,7 @@ namespace Backbone.UI
             }
 
             // put small collision into textgroup later after we do some calculations
-            if (checkInput && (hasClicked || keyPressed))
+            if (Enabled && checkInput && (hasClicked || keyPressed))
             {
                 hasClicked = false;
 
