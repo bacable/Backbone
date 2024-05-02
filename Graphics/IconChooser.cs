@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 
 namespace Backbone.Graphics
@@ -96,8 +97,11 @@ namespace Backbone.Graphics
         {
             if (this.TransitionInAnimation != null)
             {
-                var anim = TransitionInAnimation();
-                Icon.Run(anim);
+                foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
+                {
+                    var anim = TransitionInAnimation();
+                    entry.Value.Run(anim);
+                }
             }
         }
 
@@ -105,8 +109,11 @@ namespace Backbone.Graphics
         {
             if (this.TransitionOutAnimation != null)
             {
-                var anim = TransitionOutAnimation();
-                Icon.Run(anim);
+                foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
+                {
+                    var anim = TransitionOutAnimation();
+                    entry.Value.Run(anim);
+                }
             }
         }
 
@@ -120,9 +127,9 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            if(Icon != null)
+            foreach (KeyValuePair<string, IInteractive> entry in valueToIcons)
             {
-                Icon.Update(gameTime);
+                entry.Value.Update(gameTime);
             }
         }
     }
