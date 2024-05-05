@@ -20,6 +20,12 @@ namespace ProximityND.Backbone.Graphics
         public Func<string> GetHeaderText { get; set; } = null;
         public Func<int, IAction3D> TransitionInAnim { get; set; } = null;
         public Func<int, IAction3D> TransitionOutAnim { get; set; } = null;
+
+        /// <summary>
+        /// How much to adjust the position to accomodate for transiton animation, so that all tabs show at the right position.
+        /// Pretty hacky, but I don't feel like doing this accurately right now.
+        /// </summary>
+        public Vector3 TransitionPositionOffset {  get; set; } = Vector3.Zero;
     }
 
     public class PageBar<T> : IGUI3D
@@ -33,7 +39,7 @@ namespace ProximityND.Backbone.Graphics
 
         public PageBar(PageBarSettings<T> settings)
         {
-            var initialHeaderText = (getHeaderText != null) ? getHeaderText() : "HEADER";
+            var initialHeaderText = (settings.GetHeaderText != null) ? settings.GetHeaderText() : "HEADER";
             var initialColor = (getHeaderColor != null) ? getHeaderColor() : "#FFFFFF";
 
             // Initialize tabNameText
@@ -50,6 +56,12 @@ namespace ProximityND.Backbone.Graphics
 
             LeftArrowButton = CreateArrowButton("<", settings.LeftArrowEvent, InputAction.LeftShoulder, new Vector3(settings.Position.X - 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
             RightArrowButton = CreateArrowButton(">", settings.RightArrowEvent, InputAction.RightShoulder, new Vector3(settings.Position.X + 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
+
+            tabNameText.Position = new Vector3(
+                settings.Position.X + settings.TransitionPositionOffset.X,
+                settings.Position.Y + settings.TransitionPositionOffset.Y,
+                settings.Position.Z + settings.TransitionPositionOffset.Z
+            );
 
             getHeaderColor = settings.GetHeaderColor;
             getHeaderText = settings.GetHeaderText;
@@ -70,13 +82,16 @@ namespace ProximityND.Backbone.Graphics
 
         public void TransitionIn()
         {
+            tabNameText.TransitionIn();
+            LeftArrowButton?.TransitionIn();
+            RightArrowButton?.TransitionIn();
         }
 
         public void TransitionOut()
         {
             tabNameText.TransitionOut();
-            LeftArrowButton.TransitionOut();
-            RightArrowButton.TransitionOut();
+            LeftArrowButton?.TransitionOut();
+            RightArrowButton?.TransitionOut();
         }
 
         public void Update(GameTime gameTime)
@@ -126,6 +141,13 @@ namespace ProximityND.Backbone.Graphics
                     TransitionOutAnim = transitionOutAnim
                 }
             });
+        }
+
+        public void SetAlpha(float alpha)
+        {
+            tabNameText.SetAlpha(alpha);
+            LeftArrowButton.SetAlpha(alpha);
+            RightArrowButton.SetAlpha(alpha);
         }
     }
 }
