@@ -115,5 +115,10 @@ namespace Backbone.UI
             Text.Draw(view, projection);
         }
 
+        public void SetAlpha(float alpha)
+        {
+            Text.SetAlpha(alpha);
+        }
+
     }
 }
