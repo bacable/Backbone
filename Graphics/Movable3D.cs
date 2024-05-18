@@ -64,7 +64,7 @@ namespace Backbone.Graphics
         public string Color1 { get; set; } = ColorHex.DefaultColorHexCodes[ColorType.White];
         public string Color2 { get; set; } = ColorHex.DefaultColorHexCodes[ColorType.White];
         //public string ColorBkg = ColorHex.DefaultColorHexCodes[ColorType.Gray];
-        public string ColorText = ColorHex.DefaultColorHexCodes[ColorType.DefaultText];
+        public string ColorText { get; set; } = ColorHex.DefaultColorHexCodes[ColorType.DefaultText];
 
         public Movable3D(Model model, Vector3 startPosition, float scale)
         {
