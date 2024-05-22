@@ -48,7 +48,10 @@ namespace Backbone.Actions
                 else
                 {
                     PropertyInfo propertyInfo = objType.GetProperty(kvp.Key);
-                    propertyInfo.SetValue(movable, Convert.ChangeType(kvp.Value, propertyInfo.PropertyType), null);
+                    if(propertyInfo != null)
+                    {
+                        propertyInfo.SetValue(movable, Convert.ChangeType(kvp.Value, propertyInfo.PropertyType), null);
+                    }
                 }
             }
         }
