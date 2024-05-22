@@ -23,24 +23,34 @@ namespace Backbone.Actions
 
         public bool Update(Movable3D movable, GameTime gameTime)
         {
-            movable.Model = movableSettings.Model;
-            movable.MeshProperties = movableSettings.MeshProperties;
+            Execute(movable, movableSettings);
+            return true;
+        }
+
+        /// <summary>
+        /// Can call this directly and externally to change settings on a movable
+        /// </summary>
+        /// <param name="movable">The movable that needs its settings changed</param>
+        /// <param name="settings">The settings you'd like to change on the movable</param>
+        public static void Execute(Movable3D movable, MovableSettings settings)
+        {
+            movable.Model = settings.Model;
+            movable.MeshProperties = settings.MeshProperties;
 
             var objType = movable.GetType();
 
-            foreach (var kvp in movableSettings.Properties)
+            foreach (var kvp in settings.Properties)
             {
-                if(kvp.Key.ToUpper() == "ALPHA")
+                if (kvp.Key.ToUpper() == "ALPHA")
                 {
                     movable.SetAlpha((float)kvp.Value);
-                } else
+                }
+                else
                 {
                     PropertyInfo propertyInfo = objType.GetProperty(kvp.Key);
                     propertyInfo.SetValue(movable, Convert.ChangeType(kvp.Value, propertyInfo.PropertyType), null);
                 }
             }
-
-            return true;
         }
     }
 }
