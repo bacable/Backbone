@@ -91,6 +91,11 @@ namespace Backbone.Actions
             return new ChangeModelAction(newModel);
         }
 
+        public static IAction3D ChangeMovableSettings(MovableSettings settings)
+        {
+            return new ChangeMovableSettingsAction(settings);
+        }
+
         public static IAction3D ChangeScreen<T>(T switchToScreen)
         {
             return new ChangeScreenAction<T>(switchToScreen);
