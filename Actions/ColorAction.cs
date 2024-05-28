@@ -13,10 +13,14 @@ namespace ProximityND.Backbone.Actions
         float duration;
         float elapsedTime = 0f;
 
-        public ColorAction(string source, string target, float duration)
+        private List<string> meshNames = new List<string>(); //names of meshes to adjust
+
+        public ColorAction(string source, string target, List<string> meshNames, float duration)
         {
             sourceColor = ColorHex.ConvertFromHex(source);
             targetColor = ColorHex.ConvertFromHex(target);
+
+            this.meshNames = meshNames;
             this.duration = duration;
         }
 
@@ -47,12 +51,24 @@ namespace ProximityND.Backbone.Actions
             float percent = ActionMath.LerpFloat(elapsedTime, 0f, 1f, duration);
             Color currentColor = Color.Lerp(sourceColor, targetColor, percent);
 
-            var debugColor = ColorHex.ConvertFromColor(currentColor);
-
             string colorHexString = ColorHex.ConvertFromColor(currentColor);
 
-            movable.Color1 = colorHexString;
-            movable.Color2 = colorHexString;
+            // apply new color to all meshNames
+            meshNames.ForEach(mesh =>
+            {
+                if (mesh.Equals("Color1"))
+                {
+                    movable.Color1 = colorHexString;
+                }
+                else if (mesh.Equals("Color2"))
+                {
+                    movable.Color2 = colorHexString;
+                }
+                else
+                {
+                    movable.UpdateColor(mesh, colorHexString);
+                }
+            });
 
             return (elapsedTime >= duration);
         }
