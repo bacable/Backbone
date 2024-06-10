@@ -414,6 +414,9 @@
   <data name="RoundFinished" xml:space="preserve">
     <value>Ronda Terminada</value>
   </data>
+  <data name="Rumble" xml:space="preserve">
+    <value>Vibración</value>
+  </data>
   <data name="RunToTheFinishLine" xml:space="preserve">
     <value>Corre Hasta La Meta</value>
   </data>

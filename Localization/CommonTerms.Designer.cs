@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Backbone.Localization {
+namespace ProximityND.Backbone.Localization {
     using System;
     
     
@@ -957,6 +957,15 @@ namespace Backbone.Localization {
         internal static string RoundFinished {
             get {
                 return ResourceManager.GetString("RoundFinished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rumble.
+        /// </summary>
+        internal static string Rumble {
+            get {
+                return ResourceManager.GetString("Rumble", resourceCulture);
             }
         }
         
