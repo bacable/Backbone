@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace Backbone.Input
 {
     public class RumbleManager
     {
         private static Dictionary<PlayerIndex, RumbleEffect> _rumbleEffects = new Dictionary<PlayerIndex, RumbleEffect>();
+        public static RumbleSetting Setting { get; set; } = RumbleSetting.GameMenu;
 
         public static void Update(GameTime gameTime)
         {
@@ -29,10 +30,27 @@ namespace Backbone.Input
             }
         }
 
-        public static void Rumble(PlayerIndex playerIndex, float leftMotor, float rightMotor, float durationInSeconds)
+        public static void Rumble(PlayerIndex playerIndex, float leftMotor, float rightMotor, float durationInSeconds, string category)
         {
+            if (!ShouldRumble(category)) return;
+
             _rumbleEffects[playerIndex] = new RumbleEffect(leftMotor, rightMotor, durationInSeconds);
             GamePad.SetVibration(playerIndex, leftMotor, rightMotor);
+        }
+
+        public static bool ShouldRumble(string category)
+        {
+            var categoryType = EnumHelper<RumbleCategory>.FromString(category);
+
+            switch(categoryType)
+            {
+                case RumbleCategory.Game:
+                    return Setting == RumbleSetting.Game || Setting == RumbleSetting.GameMenu;
+                case RumbleCategory.Menu:
+                    return Setting == RumbleSetting.Menu || Setting == RumbleSetting.GameMenu;
+                default:
+                    return false;
+            }
         }
 
         private class RumbleEffect

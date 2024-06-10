@@ -282,6 +282,9 @@
   <data name="Round" xml:space="preserve">
     <value>Round</value>
   </data>
+  <data name="Rumble" xml:space="preserve">
+    <value>Vibration</value>
+  </data>
   <data name="SaveGame" xml:space="preserve">
     <value>Spielstand</value>
   </data>

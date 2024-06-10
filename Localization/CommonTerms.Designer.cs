@@ -961,6 +961,15 @@ namespace Backbone.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Rumble.
+        /// </summary>
+        internal static string Rumble {
+            get {
+                return ResourceManager.GetString("Rumble", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Run To The Finish Line.
         /// </summary>
         internal static string RunToTheFinishLine {
