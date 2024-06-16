@@ -1,6 +1,7 @@
 ﻿using Backbone.Actions;
 using Backbone.Graphics;
 using Microsoft.Xna.Framework;
+using SharpDX.MediaFoundation;
 using System.Collections.Generic;
 
 namespace ProximityND.Backbone.Actions
@@ -71,6 +72,14 @@ namespace ProximityND.Backbone.Actions
             });
 
             return (elapsedTime >= duration);
+        }
+
+        public static string Execute(string sourceColor, string targetColor, float percent)
+        {
+            var source = ColorHex.ConvertFromHex(sourceColor);
+            var target = ColorHex.ConvertFromHex(targetColor);
+            var newColor = Color.Lerp(source, target, percent);
+            return ColorHex.ConvertFromColor(newColor);
         }
     }
 }

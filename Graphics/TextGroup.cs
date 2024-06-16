@@ -292,14 +292,20 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            // If the base is moving, we will need to recalculate the bounding sphere for
-            // collision
-            if(parent != null && parent.IsAnimating)
+            try
             {
-                recalculateBoundingSphere = true;
-            }
+                // If the base is moving, we will need to recalculate the bounding sphere for
+                // collision
+                if (parent != null && parent.IsAnimating)
+                {
+                    recalculateBoundingSphere = true;
+                }
 
-            Letters.ForEach(x => x.Update(gameTime));
+                Letters.ForEach(x => x.Update(gameTime));
+            } catch (Exception e)
+            {
+                Debug.WriteLine("Backbone->TextGroup:" + e.Message);
+            }
         }
 
         public void UpdateRelativeToParent()
