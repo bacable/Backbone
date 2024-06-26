@@ -102,8 +102,10 @@ namespace Backbone.Graphics
             if(queuedActions != null && queuedActions.Count > 0)
             {
                 var currentAction = queuedActions[0];
+                
                 // if true, it's finished with the animation
-                if(currentAction.Update(this, gameTime))
+                // NOTE: Somehow even with a valid queuedAction the currentAction became null when debugging, so I'm checking it again here
+                if(currentAction != null && currentAction.Update(this, gameTime))
                 {
                     queuedActions.Remove(currentAction);
                 }
