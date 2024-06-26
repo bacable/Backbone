@@ -263,7 +263,13 @@ namespace Backbone.Graphics
 
         public void Draw(Matrix view, Matrix projection)
         {
-            Letters.ForEach(x => x.Draw(view, projection));
+            try
+            {
+                Letters.ForEach(x => x.Draw(view, projection));
+            } catch (Exception e)
+            {
+                Debug.WriteLine("TextGroup -> Draw Text = {0}: {1}", Text, e.Message);
+            }
         }
 
         public void HandleMouse(HandleMouseCommand command)

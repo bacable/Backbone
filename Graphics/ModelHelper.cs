@@ -8,6 +8,8 @@ namespace Backbone.Graphics
     {
         public static void Draw(ModelDrawSettings settings)
         {
+            if (settings.Model == null) return;
+
             foreach (ModelMesh mesh in settings.Model.Meshes)
             {
 
