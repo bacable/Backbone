@@ -2,6 +2,7 @@ using System;
 using System.Xml.Serialization;
 using System.IO;
 using System.IO.IsolatedStorage;
+using System.Diagnostics;
 
 namespace Backbone.Storage
 {
@@ -17,7 +18,7 @@ namespace Backbone.Storage
             {
                 var isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Domain | IsolatedStorageScope.Assembly, null, null);
 
-                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream(fileName, FileMode.OpenOrCreate, isoStore))
+                using (IsolatedStorageFileStream isoStream = new IsolatedStorageFileStream(fileName, FileMode.Create, isoStore))
                 {
                     using (StreamWriter writer = new StreamWriter(isoStream))
                     {
