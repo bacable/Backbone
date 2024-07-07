@@ -223,7 +223,7 @@
     <value>Support</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Excluir</value>
   </data>
   <data name="Dice" xml:space="preserve">
     <value>Dice</value>
@@ -283,7 +283,7 @@
     <value>Map</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Start</value>
+    <value>Começar</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
     <value>{0} Medal</value>
