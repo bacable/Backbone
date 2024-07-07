@@ -211,7 +211,7 @@
     <value>Geel</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Continue</value>
+    <value>Doorgaan</value>
   </data>
   <data name="Controls" xml:space="preserve">
     <value>Besturing</value>
@@ -223,7 +223,7 @@
     <value>Support</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Verwijderen</value>
   </data>
   <data name="Dice" xml:space="preserve">
     <value>Dobbelstenen</value>
@@ -283,7 +283,7 @@
     <value>Kaart</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Start</value>
+    <value>Begin</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
     <value>{0} Medaille</value>

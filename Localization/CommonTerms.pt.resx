@@ -127,7 +127,7 @@
     <value>Arrows</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Back</value>
+    <value>Voltar</value>
   </data>
   <data name="Board" xml:space="preserve">
     <value>Board</value>
@@ -223,7 +223,7 @@
     <value>Support</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Excluir</value>
   </data>
   <data name="Dice" xml:space="preserve">
     <value>Dice</value>
@@ -283,7 +283,7 @@
     <value>Map</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Start</value>
+    <value>Começar</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
     <value>{0} Medal</value>

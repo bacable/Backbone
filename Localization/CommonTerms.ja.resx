@@ -223,7 +223,7 @@
     <value>Support</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>削除</value>
   </data>
   <data name="Dice" xml:space="preserve">
     <value>Dice</value>
@@ -286,7 +286,7 @@
     <value>地図</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Start</value>
+    <value>開始</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
     <value>{0} Medal</value>
