@@ -190,7 +190,7 @@ namespace Backbone.Graphics
 
                 var settings = new ModelDrawSettings()
                 {
-                    Alpha = Alpha,
+                    Alpha = Parent != null ? Parent.Alpha * Alpha : Alpha,
                     MeshProperties = MeshProperties,
                     Model = Model,
                     Projection = projection,
