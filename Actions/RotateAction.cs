@@ -11,6 +11,8 @@ namespace Backbone.Actions
         public enum Coordinate { X, Y, Z }
         public List<IAction3D> SubActions { get; set; }
 
+        public bool RepeatForever { get; set; } = false;
+
         private float target;
         private float duration;
         private Coordinate coordinate;
@@ -71,7 +73,18 @@ namespace Backbone.Actions
                     break;
             }
 
-            return (elapsedTime >= duration);
+            if (elapsedTime >= duration)
+            {
+                if(RepeatForever)
+                {
+                    elapsedTime -= duration;
+                } else
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }

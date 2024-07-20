@@ -115,7 +115,7 @@ namespace Backbone.Graphics
 
         }
 
-        private void UpdateMatrix()
+        public void UpdateMatrix()
         {
             float rotXRadians = (Parent != null) ? DegToRad(RotationX + Parent.RotationX) : DegToRad(RotationX);
             float rotYRadians = (Parent != null) ? DegToRad(RotationY + Parent.RotationY) : DegToRad(RotationY);
@@ -223,6 +223,11 @@ namespace Backbone.Graphics
         {
             Position = newPosition;
             UpdateMatrix();
+        }
+
+        public void ClearAnimations()
+        {
+            queuedActions.Clear();
         }
 
         public void UpdateColor(string meshName, string newColor)
