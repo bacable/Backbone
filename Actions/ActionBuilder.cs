@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Backbone.Actions;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Backbone.Actions
 {
@@ -20,18 +18,18 @@ namespace Backbone.Actions
             return new FadeToAction(target, duration);
         }
 
-        public static IAction3D RotateX(float target, float duration)
+        public static IAction3D RotateX(float target, float duration, ActionAnimationType animationType = ActionAnimationType.Parametric)
         {
-            return new RotateAction(RotateAction.Coordinate.X, target, duration);
+            return new RotateAction(RotateAction.Coordinate.X, target, duration, animationType);
         }
-        public static IAction3D RotateY(float target, float duration)
+        public static IAction3D RotateY(float target, float duration, ActionAnimationType animationType = ActionAnimationType.Parametric)
         {
-            return new RotateAction(RotateAction.Coordinate.Y, target, duration);
+            return new RotateAction(RotateAction.Coordinate.Y, target, duration, animationType);
         }
 
-        public static IAction3D RotateZ(float target, float duration)
+        public static IAction3D RotateZ(float target, float duration, ActionAnimationType animationType = ActionAnimationType.Parametric)
         {
-            return new RotateAction(RotateAction.Coordinate.Z, target, duration);
+            return new RotateAction(RotateAction.Coordinate.Z, target, duration, animationType);
         }
 
         public static IAction3D MoveBy(Vector3 by, float duration)
@@ -100,6 +98,11 @@ namespace Backbone.Actions
         public static IAction3D ChangeScreen<T>(T switchToScreen)
         {
             return new ChangeScreenAction<T>(switchToScreen);
+        }
+
+        public static IAction3D FunctionCallAction<T>(Func<T> function, T parameter)
+        {
+            return new FunctionCallAction<T>(function, parameter);
         }
 
         /// <summary>

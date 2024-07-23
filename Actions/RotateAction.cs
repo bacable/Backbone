@@ -1,8 +1,6 @@
 ﻿using Backbone.Graphics;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Backbone.Actions
 {
@@ -20,12 +18,14 @@ namespace Backbone.Actions
         private bool hasStarted = false;
         private float source = 0f;
         private float elapsedTime = 0f;
+        private ActionAnimationType animationType;
 
-        public RotateAction(Coordinate coordinate, float rotateAmount, float duration)
+        public RotateAction(Coordinate coordinate, float rotateAmount, float duration, ActionAnimationType animationType)
         {
             this.target = rotateAmount;
             this.duration = duration;
             this.coordinate = coordinate;
+            this.animationType = animationType;
         }
 
         public void Reset()
@@ -58,7 +58,12 @@ namespace Backbone.Actions
                 }
             }
 
-            currentFloat = ActionMath.LerpFloat(elapsedTime, source, target, duration);
+            if (elapsedTime >= duration && RepeatForever)
+            {
+                elapsedTime -= duration;
+            }
+
+            currentFloat = ActionMath.LerpFloat(elapsedTime, source, target, duration, animationType);
             
             switch(coordinate)
             {
@@ -73,15 +78,9 @@ namespace Backbone.Actions
                     break;
             }
 
-            if (elapsedTime >= duration)
+            if (elapsedTime >= duration && !RepeatForever)
             {
-                if(RepeatForever)
-                {
-                    elapsedTime -= duration;
-                } else
-                {
-                    return true;
-                }
+                return true;
             }
 
             return false;

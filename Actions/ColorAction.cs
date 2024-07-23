@@ -1,10 +1,8 @@
-﻿using Backbone.Actions;
-using Backbone.Graphics;
+﻿using Backbone.Graphics;
 using Microsoft.Xna.Framework;
-using SharpDX.MediaFoundation;
 using System.Collections.Generic;
 
-namespace ProximityND.Backbone.Actions
+namespace Backbone.Actions
 {
     // TODO: make this generic and not just based on color1 and color2 (use mesh color properties instead)
     public class ColorAction : IAction3D
