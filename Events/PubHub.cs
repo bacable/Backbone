@@ -151,6 +151,8 @@ namespace Backbone.Events
                 if(kvp.Value.Contains(subscriber))
                 {
                     Subscriptions[kvp.Key].Remove(subscriber);
+                    RegisteredGroupActions.Clear();
+                    Prerequisites.Clear();
                 }
             }
         }

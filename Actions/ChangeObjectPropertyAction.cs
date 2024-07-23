@@ -1,16 +1,10 @@
-﻿using Backbone.Actions;
-using Backbone.Graphics;
-using Backbone.RPG;
+﻿using Backbone.Graphics;
 using Microsoft.Xna.Framework;
-using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ProximityND.Backbone.Actions
+namespace Backbone.Actions
 {
     /// <summary>
     /// Takes in an object, a string name of a property on that object, and a new value, and will change the property of that object

@@ -1,6 +1,7 @@
 ﻿using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 
 namespace Backbone.Graphics.Particles
@@ -39,6 +40,21 @@ namespace Backbone.Graphics.Particles
                 particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale));
             }
         }
+
+        public void Emit(Vector3 position, Func<Vector3> velocityFunction, Vector3 angularVelocity, int count)
+        {
+            if (shouldInvertY)
+            {
+                position.Y = graphicsDevice.Viewport.Height - position.Y;
+            }
+
+            for (int i = 0; i < count; i++)
+            {
+                var velocity = velocityFunction.Invoke();
+                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale));
+            }
+        }
+
 
         public void Update(GameTime gameTime)
         {
