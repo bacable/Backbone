@@ -9,7 +9,7 @@ namespace Backbone.Sound
     public static class SoundManager<T>
     {
 
-        public static bool ShouldPlay = false;
+        public static bool ShouldPlay = true;
 
         private static Dictionary<T, SoundEffect> sounds = new Dictionary<T, SoundEffect>();
 
