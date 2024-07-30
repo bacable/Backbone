@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Backbone.Graphics
 {
@@ -55,7 +56,7 @@ namespace Backbone.Graphics
 
         public static void SetFullScreen(bool isFullScreen)
         {
-            ScreenSettings.Graphics.IsFullScreen = false;// isFullScreen;
+            ScreenSettings.Graphics.IsFullScreen = isFullScreen;
             ScreenSettings.Graphics.ApplyChanges();
         }
 
@@ -63,7 +64,21 @@ namespace Backbone.Graphics
         {
             Screens[screenType] = screen;
         }
-        public static void SwitchTo(T screen)
+        public static void SwitchTo(T screen, int delayMilliseconds = 0)
+        {
+            if(delayMilliseconds > 0)
+            {
+                Task.Delay(delayMilliseconds).ContinueWith(t =>
+                {
+                    SwitchToScreen(screen);
+                });
+            } else
+            {
+                SwitchToScreen(screen);
+            }
+        }
+
+        private static void SwitchToScreen(T screen)
         {
             if (ScreenStack.Count > 0)
             {
@@ -77,6 +92,7 @@ namespace Backbone.Graphics
             IScreen newScreen = Screens[screen];
             newScreen.Initialize();
             ScreenStack.Push(newScreen);
+
         }
 
         public static void PushOverlayScreen(T overlay)
@@ -114,82 +130,88 @@ namespace Backbone.Graphics
 
         public static void Update(ScreenUpdateCommand command)
         {
-            if (ScreenStack.Count == 0)
+            try
             {
-                return;
-            }
-
-            InputHelper.UpdateBefore();
-
-            IScreen topScreen = ScreenStack.Peek();
-            topScreen.Update(command.GameTime);
-
-            var currentMouseState = Mouse.GetState();
-
-            var hasMoved = currentMouseState.Y != LastMouseState.Y || currentMouseState.X != LastMouseState.X;
-
-            // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
-            var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
-                                (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
-                                MouseEvent.None;
-
-            // Positive number = scroll down, negative number = scroll up.
-            var mouseScroll = (PreviousMouseScroll - currentMouseState.ScrollWheelValue) / 12.0f;
-
-            PreviousMouseScroll = currentMouseState.ScrollWheelValue;
-
-            if (mouseState != MouseEvent.None || hasMoved)
-            {
-                Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
-
-                var mouseToWorldPosX = mouseLocation.X - ScreenSettings.ResolutionWidth / 2;
-                var mouseToWorldPosY = (mouseLocation.Y - ScreenSettings.ResolutionHeight / 2f) * -1f;
-                var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
-
-                var handleMouseCommand = new HandleMouseCommand()
+                if (ScreenStack.Count == 0)
                 {
-                    MousePosition = mouseLocation,
-                    MouseScroll = mouseScroll,
-                    Projection = command.Projection,
-                    View = command.View,
-                    Viewport = command.Viewport,
-                    State = mouseState,
-                    HasMoved = hasMoved,
-                    WorldPosition = worldPosition,
-                    Ratio = new Vector2(ScreenSettings.HorizontalRatio, ScreenSettings.VerticalRatio),
-                };
+                    return;
+                }
 
-                topScreen.HandleMouse(handleMouseCommand);
-            }
+                InputHelper.UpdateBefore();
 
-            LastMouseState = currentMouseState;
+                IScreen topScreen = ScreenStack.Peek();
+                topScreen.Update(command.GameTime);
 
-            for (int i = 0; i < OverlayInfos.Count; i++)
-            {
-                OverlayInfo info = OverlayInfos[i];
-                if (info.IsFading)
+                var currentMouseState = Mouse.GetState();
+
+                var hasMoved = currentMouseState.Y != LastMouseState.Y || currentMouseState.X != LastMouseState.X;
+
+                // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
+                var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
+                                    (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
+                                    MouseEvent.None;
+
+                // Positive number = scroll down, negative number = scroll up.
+                var mouseScroll = (PreviousMouseScroll - currentMouseState.ScrollWheelValue) / 12.0f;
+
+                PreviousMouseScroll = currentMouseState.ScrollWheelValue;
+
+                if (mouseState != MouseEvent.None || hasMoved)
                 {
-                    float alphaDifference = info.TargetAlpha - info.CurrentAlpha;
-                    float alphaChange = alphaDifference * (float)command.GameTime.ElapsedGameTime.TotalSeconds * 6.0f;
-                    info.CurrentAlpha += alphaChange;
+                    Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
-                    if (Math.Abs(info.CurrentAlpha - info.TargetAlpha) < 1)
+                    var mouseToWorldPosX = mouseLocation.X - ScreenSettings.ResolutionWidth / 2;
+                    var mouseToWorldPosY = (mouseLocation.Y - ScreenSettings.ResolutionHeight / 2f) * -1f;
+                    var worldPosition = new Vector2(mouseToWorldPosX, mouseToWorldPosY);
+
+                    var handleMouseCommand = new HandleMouseCommand()
                     {
-                        info.CurrentAlpha = info.TargetAlpha;
-                        info.IsFading = false;
+                        MousePosition = mouseLocation,
+                        MouseScroll = mouseScroll,
+                        Projection = command.Projection,
+                        View = command.View,
+                        Viewport = command.Viewport,
+                        State = mouseState,
+                        HasMoved = hasMoved,
+                        WorldPosition = worldPosition,
+                        Ratio = new Vector2(ScreenSettings.HorizontalRatio, ScreenSettings.VerticalRatio),
+                    };
 
-                        if (info.TargetAlpha == 0)
+                    topScreen.HandleMouse(handleMouseCommand);
+                }
+
+                LastMouseState = currentMouseState;
+
+                for (int i = 0; i < OverlayInfos.Count; i++)
+                {
+                    OverlayInfo info = OverlayInfos[i];
+                    if (info.IsFading)
+                    {
+                        float alphaDifference = info.TargetAlpha - info.CurrentAlpha;
+                        float alphaChange = alphaDifference * (float)command.GameTime.ElapsedGameTime.TotalSeconds * 6.0f;
+                        info.CurrentAlpha += alphaChange;
+
+                        if (Math.Abs(info.CurrentAlpha - info.TargetAlpha) < 1)
                         {
-                            IScreen topScreen2 = ScreenStack.Pop();
-                            topScreen2.Cleanup();
-                            OverlayInfos.RemoveAt(i);
+                            info.CurrentAlpha = info.TargetAlpha;
+                            info.IsFading = false;
+
+                            if (info.TargetAlpha == 0)
+                            {
+                                IScreen topScreen2 = ScreenStack.Pop();
+                                topScreen2.Cleanup();
+                                OverlayInfos.RemoveAt(i);
+                            }
                         }
                     }
                 }
+
+                InputHelper.UpdateAfter();
             }
-
-            InputHelper.UpdateAfter();
-
+            catch (Exception ex)
+            {
+                Debug.WriteLine("ScreenManager:Update - {0}", ex.Message);
+            }
         }
 
         public static void Draw(Matrix view, Matrix projection, SpriteBatch spriteBatch)
