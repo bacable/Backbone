@@ -4,10 +4,10 @@ using Backbone.Graphics;
 using Backbone.Input;
 using Backbone.UI;
 using Microsoft.Xna.Framework;
-using ProximityND.Enums;
 using System;
+using System.Drawing.Imaging;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     public class PageBarSettings<T>
     {
@@ -20,6 +20,8 @@ namespace ProximityND.Backbone.Graphics
         public Func<string> GetHeaderText { get; set; } = null;
         public Func<int, IAction3D> TransitionInAnim { get; set; } = null;
         public Func<int, IAction3D> TransitionOutAnim { get; set; } = null;
+
+        public string ButtonColor { get; set; } = "#000000";
 
         /// <summary>
         /// How much to adjust the position to accomodate for transiton animation, so that all tabs show at the right position.
@@ -54,8 +56,8 @@ namespace ProximityND.Backbone.Graphics
                 TransitionOutAnim = settings.TransitionOutAnim,
             });
 
-            LeftArrowButton = CreateArrowButton("<", settings.LeftArrowEvent, InputAction.LeftShoulder, new Vector3(settings.Position.X - 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
-            RightArrowButton = CreateArrowButton(">", settings.RightArrowEvent, InputAction.RightShoulder, new Vector3(settings.Position.X + 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim);
+            LeftArrowButton = CreateArrowButton("<", settings.LeftArrowEvent, InputAction.LeftShoulder, new Vector3(settings.Position.X - 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim, settings.ButtonColor);
+            RightArrowButton = CreateArrowButton(">", settings.RightArrowEvent, InputAction.RightShoulder, new Vector3(settings.Position.X + 300f, settings.Position.Y, settings.Position.Z), settings.TransitionInAnim, settings.TransitionOutAnim, settings.ButtonColor);
 
             tabNameText.Position = new Vector3(
                 settings.Position.X + settings.TransitionPositionOffset.X,
@@ -119,7 +121,7 @@ namespace ProximityND.Backbone.Graphics
             RightArrowButton.Update(gameTime);
         }
 
-        private TextButton<T> CreateArrowButton(string text, T clickEvent, InputAction assignedInput, Vector3 position, Func<int, IAction3D> transitionInAnim, Func<int, IAction3D> transitionOutAnim)
+        private TextButton<T> CreateArrowButton(string text, T clickEvent, InputAction assignedInput, Vector3 position, Func<int, IAction3D> transitionInAnim, Func<int, IAction3D> transitionOutAnim, string color)
         {
             return new TextButton<T>(new TextButtonSettings<T>()
             {
@@ -131,7 +133,7 @@ namespace ProximityND.Backbone.Graphics
                 CanClickMultipleTimes = true,
                 TextGroupSettings = new TextGroupSettings()
                 {
-                    Color = ProviderHub<string, ThemeElementType>.Request(ThemeElementType.ButtonTextColor),
+                    Color = color,
                     Id = 0,
                     Parent = Movable3D.Empty(),
                     Position = position,

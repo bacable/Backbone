@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-namespace ProximityND.Backbone.UI
+namespace Backbone.UI
 {
     public interface ITooltipProvider
     {

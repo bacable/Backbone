@@ -3,12 +3,9 @@ using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
-namespace ProximityND.Backbone.UI
+namespace Backbone.UI
 {
     public struct TooltipColors
     {
@@ -25,16 +22,18 @@ namespace ProximityND.Backbone.UI
         private bool isTooltipVisible; // Flag indicating if the tooltip is currently visible
         private TooltipColors colors;
         private Vector2 position;
+        private SpriteFont font;
 
         private const float TooltipDelay = 2f; // Delay in seconds before showing the tooltip
 
-        public TooltipManager(IScreen screen, TooltipColors colors)
+        public TooltipManager(IScreen screen, TooltipColors colors, SpriteFont font)
         {
             this.screen = screen;
             this.colors = colors;
             tooltipText = string.Empty;
             hoverTime = 0f;
             isTooltipVisible = false;
+            this.font = font;
         }
 
         public void UpdateColors(TooltipColors newColors)
@@ -126,9 +125,16 @@ namespace ProximityND.Backbone.UI
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if(isTooltipVisible)
+            try
             {
-                spriteBatch.DrawString(ContentStore.BasicFont, tooltipText, position, colors.Text, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                if (isTooltipVisible)
+                {
+                    spriteBatch.DrawString(font, tooltipText, position, colors.Text, 0f, Vector2.Zero, 0.6f, SpriteEffects.None, 0f);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
             }
         }
     }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProximityND.Backbone.Graphics
+﻿namespace Backbone.Graphics
 {
     public class Color3D
     {

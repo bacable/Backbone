@@ -1,13 +1,9 @@
-﻿using Backbone.Events;
-using Backbone.Input;
+﻿using Backbone.Input;
 using Backbone.Menus;
+using Backbone.UI;
 using Microsoft.Xna.Framework;
-using ProximityND.Backbone.UI;
-using ProximityND.Config;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Windows.Forms;
 
 namespace Backbone.Graphics
 {

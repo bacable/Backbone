@@ -4,8 +4,6 @@ using Backbone.Input;
 using Backbone.Menus;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Backbone.Graphics;
-using ProximityND.GUI3D.Enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     public class IconGridChooser : IGUI3D
     {

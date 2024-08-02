@@ -1,8 +1,6 @@
 ﻿using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ProximityND.Enums;
-using ProximityND.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +40,7 @@ namespace Backbone.Graphics
         public GraphicsDevice GraphicsDevice { get; set; }
         public string HorizontalAxisLabel { get; set; } = string.Empty;
         public string VerticalAxisLabel { get; set; } = string.Empty;
+        public string TextColor { get; set; } = "#000000";
     }
 
 
@@ -69,6 +68,8 @@ namespace Backbone.Graphics
         private Vector2[] YAxisValues { get; set; }
         private GraphLineWidths LineWidths { get; set; }
         private GraphicsDevice GraphicsDevice { get; set; }
+
+        private string TextColor { get; set; }
         
         private BasicEffect basicEffect;
 
@@ -92,6 +93,7 @@ namespace Backbone.Graphics
             GraphicsDevice = settings.GraphicsDevice;
             HorizontalAxisLabel = settings.HorizontalAxisLabel;
             VerticalAxisLabel = settings.VerticalAxisLabel;
+            TextColor = settings.TextColor;
 
             basicEffect = new BasicEffect(settings.GraphicsDevice);
             basicEffect.VertexColorEnabled = true;
@@ -100,14 +102,12 @@ namespace Backbone.Graphics
 
         public void SetupLabels(AxisSettings horizontalAxisSettings, AxisSettings verticalAxisSettings)
         {
-            var textColor = ColorProvider.Get(ThemeElementType.TextColor);
-
             var axisLabelScale = 50f;
 
             var horizAxisLabel = new TextGroup(new TextGroupSettings()
             {
                 Alignment = UI.TextAlign.Right,
-                Color = textColor,
+                Color = TextColor,
                 Id = 0,
                 Parent = Movable3D.Empty(),
                 Position = new Vector3(Origin.X - 20f, Origin.Y - 40f, -1),
@@ -125,7 +125,7 @@ namespace Backbone.Graphics
                 var horizNumSegment = new TextGroup(new TextGroupSettings()
                 {
                     Alignment = UI.TextAlign.Right,
-                    Color = textColor,
+                    Color = TextColor,
                     Id = i,
                     Parent = Movable3D.Empty(),
                     Position = new Vector3(Origin.X + xAxisPositionXGap * i + 10.0f, Origin.Y - 40f, -1),
@@ -138,7 +138,7 @@ namespace Backbone.Graphics
             var vertAxisLabel = new TextGroup(new TextGroupSettings()
             {
                 Alignment = UI.TextAlign.Left,
-                Color = textColor,
+                Color = TextColor,
                 Id = 0,
                 Parent = Movable3D.Empty(),
                 Position = new Vector3(Origin.X + Width + 150f, Origin.Y + Height, -1),
@@ -157,7 +157,7 @@ namespace Backbone.Graphics
                 var vertNumSegment = new TextGroup(new TextGroupSettings()
                 {
                     Alignment = UI.TextAlign.Left,
-                    Color = textColor,
+                    Color = TextColor,
                     Id = i,
                     Parent = Movable3D.Empty(),
                     Position = new Vector3(Origin.X + Width + 25.0f, Origin.Y + yAxisPositionXGap * i, -1),
