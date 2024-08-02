@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProximityND.Backbone.AI
+﻿namespace Backbone.AI
 {
     public interface IMoveState<T>
     {

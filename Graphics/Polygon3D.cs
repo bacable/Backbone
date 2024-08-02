@@ -1,9 +1,8 @@
-﻿using Backbone.Graphics;
-using Backbone.Input;
+﻿using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ProximityND.Backbone.Graphics
+namespace Backbone.Graphics
 {
     public class Polygon3D : IGUI3D
     {
