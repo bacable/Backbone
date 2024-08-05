@@ -44,6 +44,14 @@ namespace Backbone.Menus
             }
         }
 
+        public void SetSelectedIndex(int index)
+        {
+            if(SelectedIndex >= -1 && SelectedIndex < Items.Count)
+            {
+                SelectedIndex = index;
+            }
+        }
+
         public void Click()
         {
             Items[SelectedIndex].Click();
@@ -53,7 +61,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return Items[SelectedIndex];
+                return SelectedIndex > -1 ? Items[SelectedIndex] : null;
             }
         }
 
