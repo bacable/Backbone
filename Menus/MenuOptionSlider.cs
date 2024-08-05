@@ -18,12 +18,13 @@ namespace Backbone.Menus
         public Action<int> OnChange { get; set; } = null;
         public MenuItemType Type { get; set; } = MenuItemType.OptionSlider;
         public bool IsSelected { get; set; } = false;
+        public bool WrapAround { get; set; } = false;
 
         public bool CanPrev
         {
             get
             {
-                return Value > Minimum;
+                return Value > Minimum || WrapAround;
             }
         }
 
@@ -31,7 +32,7 @@ namespace Backbone.Menus
         {
             get
             {
-                return Value < Maximum;
+                return Value < Maximum || WrapAround;
             }
         }
 
@@ -76,7 +77,11 @@ namespace Backbone.Menus
         public void Next()
         {
             var oldValue = Value;
-            Value = Math.Min(Maximum, Value + StepAmount);
+            Value = WrapAround ?
+                (Value + StepAmount > Maximum) ? 
+                    Minimum :
+                    Value + StepAmount :
+                Math.Min(Maximum, Value + StepAmount);
 
             if (Value != oldValue && OnChange != null)
             {
@@ -87,7 +92,11 @@ namespace Backbone.Menus
         public void Prev()
         {
             var oldValue = Value;
-            Value = Math.Max(Minimum, Value - StepAmount);
+            Value = WrapAround ? 
+                (Value - StepAmount < Minimum) ? 
+                    Maximum : 
+                    Value - StepAmount :
+                Math.Max(Minimum, Value - StepAmount);
 
             if(Value != oldValue && OnChange != null)
             {
