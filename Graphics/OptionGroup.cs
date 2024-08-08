@@ -25,6 +25,21 @@ namespace Backbone.Graphics
             }
         }
 
+        public int SelectedIndex {
+            get
+            {
+                return Options.FindIndex(x => x.Item.IsSelected);
+            }
+            set
+            {
+                for (int i = 0; i < Options.Count; i++)
+                {
+                    var option = Options[i];
+                    option.Item.IsSelected = (i == value);
+                }
+            }
+        }
+
         string selectedColor = "#FFFFFF";
         string unselectedColor = "#AAAAAA";
 
