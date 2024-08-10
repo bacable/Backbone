@@ -1,4 +1,5 @@
-﻿using Backbone.Input;
+﻿using Backbone.Actions;
+using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,6 +14,7 @@ namespace Backbone.Graphics.Particles
         private float particleLife;
         private float particleGravity;
         private float particleScale;
+        private List<Vector3> particleColors = new List<Vector3>() { Vector3.Zero };
         private bool shouldInvertY;
         private GraphicsDevice graphicsDevice;
 
@@ -37,8 +39,15 @@ namespace Backbone.Graphics.Particles
 
             for (int i = 0; i < count; i++)
             {
-                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale));
+                var colorIndex = i % particleColors.Count;
+                var color = particleColors[colorIndex];
+                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale, color));
             }
+        }
+        public void SetColors(params Vector3[] colors)
+        {
+            particleColors.Clear();
+            particleColors.AddRange(colors);
         }
 
         public void Emit(Vector3 position, Func<Vector3> velocityFunction, Vector3 angularVelocity, int count)
@@ -51,7 +60,9 @@ namespace Backbone.Graphics.Particles
             for (int i = 0; i < count; i++)
             {
                 var velocity = velocityFunction.Invoke();
-                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale));
+                var colorIndex = i % particleColors.Count;
+                var color = particleColors[colorIndex];
+                particles.Add(new Particle(particleModel, position, velocity, angularVelocity, particleLife, particleGravity, particleScale, color));
             }
         }
 
@@ -83,6 +94,11 @@ namespace Backbone.Graphics.Particles
                         effect.View = view;
                         effect.Projection = projection;
                         effect.Alpha = particle.Alpha;
+
+                        if(particle.Color != Vector3.Zero)
+                        {
+                            effect.DiffuseColor = particle.Color;
+                        }
                     }
                     mesh.Draw();
                 }
