@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace Backbone.Graphics.Particles
 {
@@ -10,13 +11,14 @@ namespace Backbone.Graphics.Particles
         public Vector3 Position;
         public Vector3 Velocity;
         public Vector3 AngularVelocity;
+        public Vector3 Color = Vector3.Zero;
         public float Life;
         public float Gravity;
         public float Alpha; // Transparency component
         private float Alive = 0;
         private float Scale = 1f;
 
-        public Particle(Model model, Vector3 position, Vector3 velocity, Vector3 angularVelocity, float life, float gravity, float scale)
+        public Particle(Model model, Vector3 position, Vector3 velocity, Vector3 angularVelocity, float life, float gravity, float scale, Vector3 color)
         {
             Model = model;
             Position = position;
@@ -26,6 +28,7 @@ namespace Backbone.Graphics.Particles
             Gravity = gravity;
             Alpha = 1.0f; // Fully opaque initially
             Scale = scale;
+            Color = color;
             UpdateWorldMatrix();
         }
 

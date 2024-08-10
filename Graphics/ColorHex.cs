@@ -59,5 +59,24 @@ namespace Backbone.Graphics
             return new Microsoft.Xna.Framework.Color(r, g, b, a);
         }
 
+        public static string DarkenColor(string color, float percentage)
+        {
+            return ConvertFromColor(Microsoft.Xna.Framework.Color.Lerp(ConvertFromHex(color), Microsoft.Xna.Framework.Color.Black, percentage));
+        }
+
+        public static Microsoft.Xna.Framework.Color DarkenColor(Microsoft.Xna.Framework.Color color, float percentage)
+        {
+            return Microsoft.Xna.Framework.Color.Lerp(color, Microsoft.Xna.Framework.Color.Black, percentage);
+        }
+
+        public static Microsoft.Xna.Framework.Color LightenColor(Microsoft.Xna.Framework.Color color, float percentage)
+        {
+            return Microsoft.Xna.Framework.Color.Lerp(color, Microsoft.Xna.Framework.Color.White, percentage);
+        }
+
+        public static string LightenColor(string color, float percentage)
+        {
+            return ConvertFromColor(Microsoft.Xna.Framework.Color.Lerp(ConvertFromHex(color), Microsoft.Xna.Framework.Color.White, percentage));
+        }
     }
 }
