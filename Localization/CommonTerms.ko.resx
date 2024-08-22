@@ -238,7 +238,7 @@
     <value>Eliminated</value>
   </data>
   <data name="ExitGame" xml:space="preserve">
-    <value>Exit Game</value>
+    <value>게임 종료</value>
   </data>
   <data name="Finished" xml:space="preserve">
     <value>Finished</value>
@@ -319,7 +319,7 @@
     <value>Missions</value>
   </data>
   <data name="MusicVolume" xml:space="preserve">
-    <value>Music Volume</value>
+    <value>음악 볼륨</value>
   </data>
   <data name="NewGame" xml:space="preserve">
     <value>New Game</value>
@@ -430,7 +430,7 @@
     <value>Save Game</value>
   </data>
   <data name="SFXVolume" xml:space="preserve">
-    <value>Sound Volume</value>
+    <value>소리 볼륨</value>
   </data>
   <data name="Show" xml:space="preserve">
     <value>Show</value>
