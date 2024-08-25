@@ -89,7 +89,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if (command.State == MouseEvent.Pressed)
+            if (command.State == MouseEvent.LeftButtonPressed)
             {
                 foreach(var icon in valueToIcons)
                 {

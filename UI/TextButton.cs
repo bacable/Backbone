@@ -27,7 +27,7 @@ namespace Backbone.UI
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(command.State == MouseEvent.Pressed)
+            if(command.State == MouseEvent.LeftButtonPressed)
             {
                 if (Collision3D.HasSphereCollision(command, Text.Letters, settings.LetterCollisionRadius, Text.World.Value, Text.GroupBoundingSphere))
                 {

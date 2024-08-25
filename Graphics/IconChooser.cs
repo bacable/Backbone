@@ -52,6 +52,15 @@ namespace Backbone.Graphics
             }
         }
 
+        public void Prev()
+        {
+            this.chooser.Prev();
+            if (ClickAnimation != null)
+            {
+                Icon.Run(ClickAnimation());
+            }
+        }
+
         public string Value
         {
             get { return chooser.SelectedOption.Value; }
@@ -84,11 +93,18 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(command.State == MouseEvent.Release && Icon != null && Icon.IsInteractive)
+            if(command.State == MouseEvent.LeftButtonReleased && Icon != null && Icon.IsInteractive)
             {
                 if (Icon.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
                 {
                     Click();
+                }
+            }
+            else if(command.State == MouseEvent.RightButtonReleased && Icon != null && Icon.IsInteractive)
+            {
+                if (Icon.Intersects(command.Viewport, command.WorldPosition, Vector2.Zero, command.Ratio, OverrideCollisionRadius))
+                {
+                    Prev();
                 }
             }
         }

@@ -7,8 +7,9 @@ namespace Backbone.Input
     public enum MouseEvent
     {
         None,
-        Click,
-        Pressed,
-        Release,
+        LeftButtonPressed,
+        LeftButtonReleased,
+        RightButtonPressed,
+        RightButtonReleased
     }
 }
