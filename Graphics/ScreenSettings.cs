@@ -24,6 +24,22 @@ namespace Backbone.Graphics
             }
         }
 
+        public static int BaseHeight
+        {
+            get
+            {
+                return DEFAULT_SCREEN_HEIGHT;
+            }
+        }
+
+        public static int BaseWidth
+        {
+            get
+            {
+                return DEFAULT_SCREEN_WIDTH;
+            }
+        }
+
         public static int ResolutionWidth
         {
             get; set;
