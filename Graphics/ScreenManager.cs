@@ -145,8 +145,10 @@ namespace Backbone.Graphics
                 var hasMoved = currentMouseState.Y != LastMouseState.Y || currentMouseState.X != LastMouseState.X;
 
                 // TODO: switch how mouse is handled to events fired to pubhub, make a backbone class, handle 
-                var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Release :
-                                    (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.Pressed :
+                var mouseState = (currentMouseState.LeftButton == ButtonState.Released && LastMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.LeftButtonReleased :
+                                    (currentMouseState.LeftButton == ButtonState.Pressed) ? MouseEvent.LeftButtonPressed :
+                                    (currentMouseState.RightButton == ButtonState.Released && LastMouseState.RightButton == ButtonState.Pressed) ? MouseEvent.RightButtonReleased :
+                                    (currentMouseState.RightButton == ButtonState.Pressed) ? MouseEvent.RightButtonPressed :
                                     MouseEvent.None;
 
                 // Positive number = scroll down, negative number = scroll up.

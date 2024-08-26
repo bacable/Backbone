@@ -228,7 +228,7 @@ namespace Backbone.Graphics
             if (Collision2D.IntersectRect(command.Viewport, command.WorldPosition, command.Ratio, modifiedBoundingBox))
             {
                 UpdateSelected(option.Item);
-                if (command.State == settings.ClickType)
+                if (command.State == settings.LeftClickType)
                 {
                     if (option.Item.Type == MenuItemType.Button)
                     {
@@ -239,6 +239,19 @@ namespace Backbone.Graphics
                     {
                         shouldStopUpdating = !settings.UpdateAfterClick;
                         option.Item.Next();
+                    }
+                }
+                else if(command.State == settings.RightClickType)
+                {
+                    // don't need to check for button, shouldn't be able to right click select a button, just left click
+                    // just need to check previous and go previous for choosers and sliders
+                    if (option.Item.Type == MenuItemType.OptionChooser || option.Item.Type == MenuItemType.OptionSlider)
+                    {
+                        shouldStopUpdating = !settings.UpdateAfterClick;
+                        if (option.Item.CanPrev)
+                        {
+                            option.Item.Prev();
+                        }
                     }
                 }
                 UpdateSelectedOption();
@@ -256,7 +269,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if (!shouldStopUpdating && (command.HasMoved && command.State == MouseEvent.None || command.State == settings.ClickType))
+            if (!shouldStopUpdating && (command.HasMoved && command.State == MouseEvent.None || command.State == settings.LeftClickType || command.State == settings.RightClickType))
             {
                 int newSelection = -1;
 

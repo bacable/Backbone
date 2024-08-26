@@ -22,6 +22,7 @@ namespace Backbone.Graphics
         public string SelectedColor { get; set; } = "#FFFFFF";
         public string UnselectedColor { get; set; } = "#AAAAAA";
         public bool UpdateAfterClick { get; set; } = true;
-        public MouseEvent ClickType { get; set; } = MouseEvent.Release;
+        public MouseEvent LeftClickType { get; set; } = MouseEvent.LeftButtonReleased;
+        public MouseEvent RightClickType { get; set; } = MouseEvent.RightButtonReleased;
     }
 }
