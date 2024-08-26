@@ -162,7 +162,7 @@ namespace Backbone.Graphics
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(!settings.VisibleWhileInactive || command.State == MouseEvent.LeftButtonReleased)
+            if(!settings.VisibleWhileInactive || command.State == MouseEvent.LeftButtonReleased || command.State == MouseEvent.RightButtonReleased)
             {
                 // Handle click of backpanel, if set up to do something
                 // TODO: need to make this a 2D rectangular collision instead of ray to sphere collision. Okay-ish for now,
