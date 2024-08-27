@@ -459,6 +459,9 @@
   <data name="Versus" xml:space="preserve">
     <value>Versus</value>
   </data>
+  <data name="VSync" xml:space="preserve">
+    <value>VSync</value>
+  </data>
   <data name="WaitingLobby" xml:space="preserve">
     <value>Waiting Lobby</value>
   </data>

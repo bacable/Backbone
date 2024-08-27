@@ -309,6 +309,9 @@
   <data name="Tutorial" xml:space="preserve">
     <value>Tutorial</value>
   </data>
+  <data name="VSync" xml:space="preserve">
+    <value>VSync</value>
+  </data>
   <data name="Warning" xml:space="preserve">
     <value>Achtung</value>
   </data>

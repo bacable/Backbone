@@ -247,7 +247,7 @@
     <value>Flying</value>
   </data>
   <data name="FullScreen" xml:space="preserve">
-    <value>Full Screen</value>
+    <value>전체 화면</value>
   </data>
   <data name="GameOver" xml:space="preserve">
     <value>Game Over</value>
@@ -340,10 +340,10 @@
     <value>On</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Options</value>
+    <value>옵션</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
+    <value>일시정지</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Play</value>
@@ -391,7 +391,7 @@
     <value>Recharge</value>
   </data>
   <data name="Resolution" xml:space="preserve">
-    <value>Resolution</value>
+    <value>해상도</value>
   </data>
   <data name="Restart" xml:space="preserve">
     <value>Restart</value>
@@ -418,7 +418,7 @@
     <value>Round Finished</value>
   </data>
   <data name="Rumble" xml:space="preserve">
-    <value>Rumble</value>
+    <value>진동</value>
   </data>
   <data name="RunToTheFinishLine" xml:space="preserve">
     <value>Run To The Finish Line</value>
@@ -451,7 +451,7 @@
     <value>Teams</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>테마</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>
@@ -464,6 +464,9 @@
   </data>
   <data name="Versus" xml:space="preserve">
     <value>Versus</value>
+  </data>
+  <data name="VSync" xml:space="preserve">
+    <value>수직 동기화</value>
   </data>
   <data name="WaitingLobby" xml:space="preserve">
     <value>Waiting Lobby</value>

@@ -1105,6 +1105,15 @@ namespace Backbone.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VSync.
+        /// </summary>
+        internal static string VSync {
+            get {
+                return ResourceManager.GetString("VSync", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Waiting Lobby.
         /// </summary>
         internal static string WaitingLobby {
