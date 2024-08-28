@@ -283,7 +283,7 @@
     <value>Main Menu</value>
   </data>
   <data name="Map" xml:space="preserve">
-    <value>Map</value>
+    <value>맵</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
     <value>삭제</value>
@@ -364,28 +364,28 @@
     <value>Rank</value>
   </data>
   <data name="RankShort1" xml:space="preserve">
-    <value>첫 번째</value>
+    <value>첫째</value>
   </data>
   <data name="RankShort2" xml:space="preserve">
-    <value>두 번째</value>
+    <value>두째</value>
   </data>
   <data name="RankShort3" xml:space="preserve">
-    <value>세 번째</value>
+    <value>세째</value>
   </data>
   <data name="RankShort4" xml:space="preserve">
-    <value>네 번째</value>
+    <value>네째</value>
   </data>
   <data name="RankShort5" xml:space="preserve">
-    <value>다섯 번째</value>
+    <value>다섯째</value>
   </data>
   <data name="RankShort6" xml:space="preserve">
-    <value>여섯 번째</value>
+    <value>여섯째</value>
   </data>
   <data name="RankShort7" xml:space="preserve">
-    <value>일곱 번째</value>
+    <value>일곱째</value>
   </data>
   <data name="RankShort8" xml:space="preserve">
-    <value>여덟 번째</value>
+    <value>여덟째</value>
   </data>
   <data name="Recharge" xml:space="preserve">
     <value>Recharge</value>
