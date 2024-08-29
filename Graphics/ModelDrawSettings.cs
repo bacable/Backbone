@@ -17,5 +17,7 @@ namespace Backbone.Graphics
         public Matrix Projection { get; set; }
         public float Alpha { get; set; }
         public Dictionary<string, MeshProperty> MeshProperties { get; set; } = new Dictionary<string, MeshProperty>();
+        public Effect CustomEffect { get; set; } = null;
+        public BasicEffect BasicEffect { get; set; } = null;
     }
 }

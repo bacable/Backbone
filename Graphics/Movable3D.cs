@@ -1,6 +1,7 @@
 ﻿using Backbone.Actions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -187,6 +188,19 @@ namespace Backbone.Graphics
                 MeshProperties["NumberFront"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
                 MeshProperties["NumberBack"] = new MeshProperty() { Color = ColorHex.Get(ColorText) };
 
+                /*
+                var settings2 = new ModelDrawSettings()
+                {
+                    Alpha = Parent != null ? Parent.Alpha * Alpha : Alpha,
+                    MeshProperties = MeshProperties,
+                    Model = Model,
+                    Projection = projection,
+                    View = view,
+                    World = World,
+                    CustomEffect = ContentStore.ShaderEffects[ProximityND.Enums.ShaderType.Outline]
+                };
+                ModelHelper.Draw(settings2);*/
+
                 var settings = new ModelDrawSettings()
                 {
                     Alpha = Parent != null ? Parent.Alpha * Alpha : Alpha,
@@ -194,9 +208,12 @@ namespace Backbone.Graphics
                     Model = Model,
                     Projection = projection,
                     View = view,
-                    World = World
+                    World = World,
+                    CustomEffect = null,
                 };
                 ModelHelper.Draw(settings);
+
+
             }
         }
 
