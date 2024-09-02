@@ -328,7 +328,7 @@
     <value>Not Ready</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Off</value>
+    <value>Desligado</value>
   </data>
   <data name="Okay" xml:space="preserve">
     <value>Okay</value>
@@ -458,6 +458,9 @@
   </data>
   <data name="Versus" xml:space="preserve">
     <value>Versus</value>
+  </data>
+  <data name="VSync" xml:space="preserve">
+    <value>VSync</value>
   </data>
   <data name="WaitingLobby" xml:space="preserve">
     <value>Waiting Lobby</value>

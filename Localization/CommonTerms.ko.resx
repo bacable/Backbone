@@ -118,88 +118,160 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Apply" xml:space="preserve">
-    <value>Anwenden</value>
+    <value>Apply</value>
+  </data>
+  <data name="ArcadeMode" xml:space="preserve">
+    <value>Arcade</value>
+  </data>
+  <data name="Arrows" xml:space="preserve">
+    <value>Arrows</value>
   </data>
   <data name="Back" xml:space="preserve">
-    <value>Zurück</value>
+    <value>뒤로</value>
+  </data>
+  <data name="Board" xml:space="preserve">
+    <value>Board</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Abbrechen</value>
+    <value>Cancel</value>
   </data>
   <data name="Cards" xml:space="preserve">
-    <value>Karten</value>
+    <value>Cards</value>
   </data>
   <data name="ChangeLanguage" xml:space="preserve">
-    <value>Sprache ändern</value>
+    <value>Change Language</value>
+  </data>
+  <data name="ChessBishop" xml:space="preserve">
+    <value>Bishop</value>
+  </data>
+  <data name="ChessCastling" xml:space="preserve">
+    <value>Castling</value>
+  </data>
+  <data name="ChessCheck" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="ChessCheckmate" xml:space="preserve">
+    <value>Checkmate</value>
+  </data>
+  <data name="ChessKing" xml:space="preserve">
+    <value>King</value>
+  </data>
+  <data name="ChessKnight" xml:space="preserve">
+    <value>Knight</value>
+  </data>
+  <data name="ChessPawn" xml:space="preserve">
+    <value>Pawn</value>
+  </data>
+  <data name="ChessPieces" xml:space="preserve">
+    <value>Pieces</value>
+  </data>
+  <data name="ChessQueen" xml:space="preserve">
+    <value>Queen</value>
+  </data>
+  <data name="ChessRook" xml:space="preserve">
+    <value>Rook</value>
+  </data>
+  <data name="ChessStalemate" xml:space="preserve">
+    <value>Stalemate</value>
   </data>
   <data name="CloseMenu" xml:space="preserve">
-    <value>Menü schließen</value>
+    <value>Close menu</value>
   </data>
   <data name="ColorBlack" xml:space="preserve">
-    <value>Schwarz</value>
+    <value>Black</value>
   </data>
   <data name="ColorBlue" xml:space="preserve">
-    <value>Blau</value>
+    <value>Blue</value>
   </data>
   <data name="ColorBrown" xml:space="preserve">
-    <value>Braun</value>
+    <value>Brown</value>
   </data>
   <data name="ColorGray" xml:space="preserve">
-    <value>Grau</value>
+    <value>Gray</value>
   </data>
   <data name="ColorGreen" xml:space="preserve">
-    <value>Grün</value>
+    <value>Green</value>
   </data>
   <data name="ColorOrange" xml:space="preserve">
     <value>Orange</value>
   </data>
   <data name="ColorPink" xml:space="preserve">
-    <value>Rosa</value>
+    <value>Pink</value>
   </data>
   <data name="ColorPurple" xml:space="preserve">
-    <value>Lila</value>
+    <value>Purple</value>
   </data>
   <data name="ColorRed" xml:space="preserve">
-    <value>Rot</value>
+    <value>Red</value>
   </data>
   <data name="ColorWhite" xml:space="preserve">
-    <value>Weiß</value>
+    <value>White</value>
   </data>
   <data name="ColorYellow" xml:space="preserve">
-    <value>Gelb</value>
+    <value>Yellow</value>
   </data>
   <data name="Continue" xml:space="preserve">
-    <value>Fortfahren</value>
+    <value>계속</value>
   </data>
   <data name="Controls" xml:space="preserve">
-    <value>Steuerung</value>
+    <value>Controls</value>
   </data>
   <data name="Credits" xml:space="preserve">
-    <value>Mitwirkende</value>
+    <value>Credits</value>
+  </data>
+  <data name="CustomerSupprt" xml:space="preserve">
+    <value>Support</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Löschen</value>
+    <value>삭제</value>
+  </data>
+  <data name="Dice" xml:space="preserve">
+    <value>Dice</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading</value>
+  </data>
+  <data name="ElementDiamond" xml:space="preserve">
+    <value>Diamond</value>
+  </data>
+  <data name="Eliminated" xml:space="preserve">
+    <value>Eliminated</value>
   </data>
   <data name="ExitGame" xml:space="preserve">
-    <value>Exit Game</value>
+    <value>게임 종료</value>
+  </data>
+  <data name="Finished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="Flying" xml:space="preserve">
+    <value>Flying</value>
+  </data>
+  <data name="FullScreen" xml:space="preserve">
+    <value>전체 화면</value>
   </data>
   <data name="GameOver" xml:space="preserve">
     <value>Game Over</value>
   </data>
   <data name="Hide" xml:space="preserve">
-    <value>Audblenden</value>
+    <value>Hide</value>
   </data>
   <data name="HowToPlay" xml:space="preserve">
     <value>How To Play</value>
   </data>
   <data name="Inventory" xml:space="preserve">
-    <value>Inventar</value>
+    <value>Inventory</value>
+  </data>
+  <data name="InXSpaces" xml:space="preserve">
+    <value>In {0} Spaces</value>
   </data>
   <data name="Items" xml:space="preserve">
-    <value>Gegenstände</value>
+    <value>Items</value>
   </data>
   <data name="KeyItems" xml:space="preserve">
-    <value>Wichtige Gegenstände</value>
+    <value>Key Items</value>
+  </data>
+  <data name="Ladder" xml:space="preserve">
+    <value>Ladder</value>
   </data>
   <data name="Level" xml:space="preserve">
     <value>Level</value>
@@ -207,122 +279,212 @@
   <data name="Loser" xml:space="preserve">
     <value>Loser</value>
   </data>
+  <data name="MainMenu" xml:space="preserve">
+    <value>Main Menu</value>
+  </data>
   <data name="Map" xml:space="preserve">
-    <value>Karte</value>
+    <value>맵</value>
   </data>
   <data name="MatchStart" xml:space="preserve">
-    <value>Starten</value>
+    <value>삭제</value>
   </data>
   <data name="MedalMetal" xml:space="preserve">
-    <value>{0}medaille</value>
+    <value>{0} Medal</value>
   </data>
   <data name="MetalBronze" xml:space="preserve">
     <value>Bronze</value>
   </data>
   <data name="MetalCopper" xml:space="preserve">
-    <value>Kupfer</value>
+    <value>Copper</value>
   </data>
   <data name="MetalGold" xml:space="preserve">
     <value>Gold</value>
   </data>
   <data name="MetalIron" xml:space="preserve">
-    <value>Eisen</value>
+    <value>Iron</value>
   </data>
   <data name="MetalPlatinum" xml:space="preserve">
-    <value>Platin</value>
+    <value>Platinum</value>
   </data>
   <data name="MetalSilver" xml:space="preserve">
-    <value>Silber</value>
+    <value>Silver</value>
   </data>
   <data name="MetalSteel" xml:space="preserve">
-    <value>Stahl</value>
+    <value>Steel</value>
   </data>
   <data name="Minutes" xml:space="preserve">
-    <value>Minuten</value>
+    <value>Minutes</value>
+  </data>
+  <data name="Missions" xml:space="preserve">
+    <value>Missions</value>
   </data>
   <data name="MusicVolume" xml:space="preserve">
-    <value>Musiklautstärke</value>
+    <value>음악 볼륨</value>
   </data>
   <data name="NewGame" xml:space="preserve">
-    <value>Neues Spiel</value>
+    <value>New Game</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>Nein</value>
+    <value>아니요</value>
+  </data>
+  <data name="NotReady" xml:space="preserve">
+    <value>Not Ready</value>
   </data>
   <data name="Off" xml:space="preserve">
-    <value>Aus</value>
+    <value>끄기</value>
   </data>
   <data name="Okay" xml:space="preserve">
     <value>Okay</value>
   </data>
   <data name="On" xml:space="preserve">
-    <value>An</value>
+    <value>On</value>
   </data>
   <data name="Options" xml:space="preserve">
-    <value>Optionen</value>
+    <value>옵션</value>
   </data>
   <data name="Paused" xml:space="preserve">
-    <value>Pausiert</value>
+    <value>일시정지</value>
   </data>
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="Players" xml:space="preserve">
+    <value>Players</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
   <data name="PressButtonToStart" xml:space="preserve">
-    <value>Drücke {0} zum Starten</value>
+    <value>Press {0} To Start</value>
+  </data>
+  <data name="Qualified" xml:space="preserve">
+    <value>Qualified</value>
   </data>
   <data name="Rank" xml:space="preserve">
-    <value>Rang</value>
+    <value>Rank</value>
+  </data>
+  <data name="RankShort1" xml:space="preserve">
+    <value>첫째</value>
+  </data>
+  <data name="RankShort2" xml:space="preserve">
+    <value>두째</value>
+  </data>
+  <data name="RankShort3" xml:space="preserve">
+    <value>세째</value>
+  </data>
+  <data name="RankShort4" xml:space="preserve">
+    <value>네째</value>
+  </data>
+  <data name="RankShort5" xml:space="preserve">
+    <value>다섯째</value>
+  </data>
+  <data name="RankShort6" xml:space="preserve">
+    <value>여섯째</value>
+  </data>
+  <data name="RankShort7" xml:space="preserve">
+    <value>일곱째</value>
+  </data>
+  <data name="RankShort8" xml:space="preserve">
+    <value>여덟째</value>
+  </data>
+  <data name="Recharge" xml:space="preserve">
+    <value>Recharge</value>
+  </data>
+  <data name="Resolution" xml:space="preserve">
+    <value>해상도</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="RestartGame" xml:space="preserve">
+    <value>Restart Game</value>
   </data>
   <data name="Resume" xml:space="preserve">
-    <value>Fortfahren</value>
+    <value>Resume</value>
+  </data>
+  <data name="Retrieve" xml:space="preserve">
+    <value>Retrieve</value>
   </data>
   <data name="RollDice" xml:space="preserve">
     <value>Roll Dice</value>
   </data>
+  <data name="Rookie" xml:space="preserve">
+    <value>Rookie</value>
+  </data>
   <data name="Round" xml:space="preserve">
     <value>Round</value>
   </data>
+  <data name="RoundFinished" xml:space="preserve">
+    <value>Round Finished</value>
+  </data>
   <data name="Rumble" xml:space="preserve">
-    <value>Vibration</value>
+    <value>진동</value>
+  </data>
+  <data name="RunToTheFinishLine" xml:space="preserve">
+    <value>Run To The Finish Line</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
   </data>
   <data name="SaveGame" xml:space="preserve">
-    <value>Spielstand</value>
+    <value>Save Game</value>
   </data>
   <data name="SFXVolume" xml:space="preserve">
-    <value>SFX-Lautstärke</value>
+    <value>소리 볼륨</value>
   </data>
   <data name="Show" xml:space="preserve">
-    <value>Zeige</value>
+    <value>Show</value>
+  </data>
+  <data name="Spectator" xml:space="preserve">
+    <value>Spectator</value>
   </data>
   <data name="Stats" xml:space="preserve">
-    <value>Statistiken</value>
+    <value>Stats</value>
+  </data>
+  <data name="StoryMode" xml:space="preserve">
+    <value>Story</value>
+  </data>
+  <data name="Summary" xml:space="preserve">
+    <value>Summary</value>
   </data>
   <data name="Teams" xml:space="preserve">
     <value>Teams</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Thema</value>
+    <value>테마</value>
   </data>
   <data name="Turn" xml:space="preserve">
     <value>Turn</value>
   </data>
+  <data name="TurnForName" xml:space="preserve">
+    <value>{0}'s Turn</value>
+  </data>
   <data name="Tutorial" xml:space="preserve">
     <value>Tutorial</value>
   </data>
+  <data name="Versus" xml:space="preserve">
+    <value>Versus</value>
+  </data>
   <data name="VSync" xml:space="preserve">
-    <value>VSync</value>
+    <value>수직 동기화</value>
+  </data>
+  <data name="WaitingLobby" xml:space="preserve">
+    <value>Waiting Lobby</value>
   </data>
   <data name="Warning" xml:space="preserve">
-    <value>Achtung</value>
+    <value>Warning</value>
   </data>
   <data name="Winner" xml:space="preserve">
     <value>Winner</value>
+  </data>
+  <data name="Wow" xml:space="preserve">
+    <value>Wow</value>
   </data>
   <data name="XP" xml:space="preserve">
     <value>XP</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Ja</value>
+    <value>예</value>
   </data>
   <data name="YouLose" xml:space="preserve">
     <value>You Lose!</value>
