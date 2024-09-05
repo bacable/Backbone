@@ -110,11 +110,13 @@ namespace Backbone.Input
                 // if they are pressed, otherwise check the buttons
                 if (isThumbstickPressing(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
 
                 if (isButtonPressing(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
             }
@@ -127,7 +129,12 @@ namespace Backbone.Input
                 // in a text box
                 if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
 
-                return CurrentKeyboardState.IsKeyDown(key);
+                var keyReturn = CurrentKeyboardState.IsKeyDown(key);
+                if (keyReturn)
+                {
+                    RumbleManager.IsActive = false;
+                }
+                return keyReturn;
             }
 
             return false;
@@ -144,11 +151,13 @@ namespace Backbone.Input
                 // if they are pressed, otherwise check the buttons
                 if (isThumbstickPressed(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
 
                 if (isButtonPressed(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
             }
@@ -161,7 +170,13 @@ namespace Backbone.Input
                 // in a text box
                 if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
 
-                return (!LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyDown(key));
+                var keyReturn = (!LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyDown(key));
+
+                if(keyReturn)
+                {
+                    RumbleManager.IsActive = false;
+                }
+                return keyReturn;
             }
 
             return false;
@@ -178,11 +193,13 @@ namespace Backbone.Input
                 // if they are pressed, otherwise check the buttons
                 if (isThumbstickReleased(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
 
                 if(isButtonReleased(action))
                 {
+                    RumbleManager.IsActive = true;
                     return true;
                 }
             }
@@ -195,7 +212,12 @@ namespace Backbone.Input
                 // in a text box
                 if (IsTextTyping && isSupportedTextTypingKey(key)) return false;
 
-                return (LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyUp(key));
+                var keyReturn = (LastKeyboardState.IsKeyDown(key) && CurrentKeyboardState.IsKeyUp(key));
+                if(keyReturn)
+                {
+                    RumbleManager.IsActive = false;
+                }
+                return keyReturn;
             }
 
             return false;

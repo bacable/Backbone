@@ -158,6 +158,8 @@ namespace Backbone.Graphics
 
                 if (mouseState != MouseEvent.None || hasMoved)
                 {
+                    RumbleManager.IsActive = false;
+
                     Vector2 mouseLocation = new Vector2(Mouse.GetState().X, Mouse.GetState().Y);
 
                     var mouseToWorldPosX = mouseLocation.X - ScreenSettings.ResolutionWidth / 2;
