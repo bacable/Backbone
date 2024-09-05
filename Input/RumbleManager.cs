@@ -9,6 +9,8 @@ namespace Backbone.Input
         private static Dictionary<PlayerIndex, RumbleEffect> _rumbleEffects = new Dictionary<PlayerIndex, RumbleEffect>();
         public static RumbleSetting Setting { get; set; } = RumbleSetting.GameMenu;
 
+        public static bool IsActive { get; set; } = true;
+
         public static void Update(GameTime gameTime)
         {
             List<PlayerIndex> toRemove = new List<PlayerIndex>();
@@ -41,6 +43,8 @@ namespace Backbone.Input
         public static bool ShouldRumble(string category)
         {
             var categoryType = EnumHelper<RumbleCategory>.FromString(category);
+
+            if (!IsActive) return false;
 
             switch(categoryType)
             {
