@@ -1,6 +1,8 @@
 ﻿using Backbone.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ProximityND.Backbone.Graphics;
+using SharpDX.Direct3D9;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -42,6 +44,7 @@ namespace Backbone.Graphics
         public string HorizontalAxisLabel { get; set; } = string.Empty;
         public string VerticalAxisLabel { get; set; } = string.Empty;
         public string TextColor { get; set; } = "#000000";
+        public float TransitionDurationSeconds { get; set; } = 0.5f;
     }
 
 
@@ -70,6 +73,10 @@ namespace Backbone.Graphics
         private GraphLineWidths LineWidths { get; set; }
         private GraphicsDevice GraphicsDevice { get; set; }
 
+        private float alpha = 0.5f;
+        private TransitionState transitionState = TransitionState.None;
+        private float transitionDuration = 0.5f;
+
         private string TextColor { get; set; }
         
         private BasicEffect basicEffect;
@@ -95,6 +102,8 @@ namespace Backbone.Graphics
             HorizontalAxisLabel = settings.HorizontalAxisLabel;
             VerticalAxisLabel = settings.VerticalAxisLabel;
             TextColor = settings.TextColor;
+
+            transitionDuration = settings.TransitionDurationSeconds;
 
             basicEffect = new BasicEffect(settings.GraphicsDevice);
             basicEffect.VertexColorEnabled = true;
@@ -243,15 +252,18 @@ namespace Backbone.Graphics
 
         private void DrawGrid(BasicEffect effect)
         {
-            Color gridColor = Color.LightGray;
+            Color gridColor = new Color(Color.LightGray, alpha);
             float z = Origin.Z - 20;
 
             // Draw vertical lines
             for (int i = 0; i < XAxisSegments; i++)
             {
                 float x = Origin.X + Width * i / (XAxisSegments - 1);
-                Vector3 startPoint = new Vector3(x, Origin.Y, z);
-                Vector3 endPoint = new Vector3(x, Origin.Y + Height, z);
+
+                float xOffset = (i == 0) ? (LineWidths.Outer / 2f) : (i == XAxisSegments - 1) ? -1 * (LineWidths.Outer / 2f) : 0; // Adjust for line width (outer lines are thicker)
+                
+                Vector3 startPoint = new Vector3(x + xOffset, Origin.Y, z);
+                Vector3 endPoint = new Vector3(x + xOffset, Origin.Y + Height, z);
 
                 XAxisValues[i] = new Vector2(x, Origin.Y); // Store grid values
 
@@ -296,12 +308,13 @@ namespace Backbone.Graphics
             {
                 var data = GraphData[teamIndex];
 
+                var teamColor = new Color(data.Color, alpha);
+
                 float z = Origin.Z - teamIndex * 2 * teamDepth;// (i * 2 + 1) * teamDepth; // Shift team lines forward in depth and ensure no overlap
                 var height = (data.Values.Length == 0 || data.Values[0] == 0) ? 0: data.Values[0] / MaxValue; // prevent no data and divide by zero error
                 Vector3 previousPoint = new Vector3(Origin.X, Origin.Y + Height * height, z);
 
                 int segmentsPerXAxis = Math.Max(data.Values.Length / (XAxisSegments - 1), 1);
-
 
                 for (int j = 1; j < data.Values.Length; j++)
                 {
@@ -313,17 +326,18 @@ namespace Backbone.Graphics
                     
                     VertexPositionColor[] vertices = new VertexPositionColor[]
                     {
-                        new VertexPositionColor(previousPoint, data.Color),
-                        new VertexPositionColor(currentPoint, data.Color)
+                        new VertexPositionColor(previousPoint, teamColor),
+                        new VertexPositionColor(currentPoint, teamColor)
                     };
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                     {
                         pass.Apply();
-                        DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, data.Color);
+                        DrawThinRectangle(GraphicsDevice, effect, previousPoint, currentPoint, LineWidths.Values, teamColor);
                     }
 
-                    previousPoint = currentPoint;
+                    var offsetForOverlap = 0.5f; // looks a little disconnected withou
+                    previousPoint = new Vector3(currentPoint.X - 0.15f, currentPoint.Y,   currentPoint.Z);
                 }
             }
         }
@@ -353,8 +367,33 @@ namespace Backbone.Graphics
 
         public void Update(GameTime gameTime)
         {
-            verticalAxisLabels.ForEach(label => label.Update(gameTime));
-            horizontalAxisLabels.ForEach(label => label.Update(gameTime));
+            if (transitionState == TransitionState.In)
+            {
+                alpha += (float)gameTime.ElapsedGameTime.TotalSeconds / transitionDuration;
+                if (alpha >= 1.0f)
+                {
+                    alpha = 1.0f;
+                    transitionState = TransitionState.None;
+                }
+            }
+            else if (transitionState == TransitionState.Out)
+            {
+                alpha -= (float)gameTime.ElapsedGameTime.TotalSeconds / transitionDuration;
+                if (alpha <= 0.0f)
+                {
+                    alpha = 0.0f;
+                    transitionState = TransitionState.None;
+                }
+            }
+
+            verticalAxisLabels.ForEach(label => {
+                label.SetAlpha(alpha);
+                label.Update(gameTime);
+            });
+            horizontalAxisLabels.ForEach(label => {
+                label.SetAlpha(alpha);
+                label.Update(gameTime);
+            });
         }
 
         public void HandleMouse(HandleMouseCommand command)
@@ -363,10 +402,14 @@ namespace Backbone.Graphics
 
         public void TransitionIn()
         {
+            alpha = 0.0f;
+            transitionState = TransitionState.In;
         }
 
         public void TransitionOut()
         {
+            alpha = 1.0f;
+            transitionState = TransitionState.Out;
         }
     }
 }
