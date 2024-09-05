@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Backbone.Graphics
@@ -118,9 +119,12 @@ namespace Backbone.Graphics
 
             var xNumberRange = horizontalAxisSettings.MaxValue - horizontalAxisSettings.MinValue;
             var xAxisPositionXGap = (int)(Width / (horizontalAxisSettings.NumSegments - 1));
+
+            var xAxisValues = getAxisValues(horizontalAxisSettings, xNumberRange, horizontalAxisSettings.NumSegments);
+
             for (var i = 1; i < horizontalAxisSettings.NumSegments; i++)
             {
-                var xAxisValue = (int)Math.Floor(horizontalAxisSettings.MinValue + (int)Math.Ceiling((float)(xNumberRange * (i + 1))) / (float)verticalAxisSettings.NumSegments);
+                var xAxisValue = (int)Math.Floor(horizontalAxisSettings.MinValue + (int)Math.Ceiling((float)(xNumberRange * (i + 1))) / (float)horizontalAxisSettings.NumSegments);
 
                 var horizNumSegment = new TextGroup(new TextGroupSettings()
                 {
@@ -130,7 +134,7 @@ namespace Backbone.Graphics
                     Parent = Movable3D.Empty(),
                     Position = new Vector3(Origin.X + xAxisPositionXGap * i + 10.0f, Origin.Y - 40f, -1),
                     Scale = axisLabelScale,
-                    Text = xAxisValue.ToString(),
+                    Text = xAxisValues[i],
                 });
                 horizontalAxisLabels.Add(horizNumSegment);
             }
@@ -150,10 +154,10 @@ namespace Backbone.Graphics
             var yNumberRange = verticalAxisSettings.MaxValue - verticalAxisSettings.MinValue;
             var yAxisPositionXGap = (int)(Height / (verticalAxisSettings.NumSegments - 1));
 
+            var yAxisValues = getAxisValues(verticalAxisSettings, yNumberRange, verticalAxisSettings.NumSegments);
+
             for (var i = 1; i < verticalAxisSettings.NumSegments; i++)
             {
-                var yAxisValue = (int)Math.Floor(verticalAxisSettings.MinValue + (int)Math.Ceiling((float)(yNumberRange * (i + 1))) / (float)verticalAxisSettings.NumSegments);
-
                 var vertNumSegment = new TextGroup(new TextGroupSettings()
                 {
                     Alignment = UI.TextAlign.Left,
@@ -162,10 +166,37 @@ namespace Backbone.Graphics
                     Parent = Movable3D.Empty(),
                     Position = new Vector3(Origin.X + Width + 25.0f, Origin.Y + yAxisPositionXGap * i, -1),
                     Scale = axisLabelScale,
-                    Text = yAxisValue.ToString(),
+                    Text = yAxisValues[i],
                 });
                 verticalAxisLabels.Add(vertNumSegment);
             }
+        }
+
+        private string[] getAxisValues(AxisSettings axisSettings, int numberRange, int numSegments)
+        {
+            var axisValues = new string[axisSettings.NumSegments];
+
+            for (var i = 1; i < axisSettings.NumSegments; i++)
+            {
+                var axisValue = ((int)Math.Floor(axisSettings.MinValue + (int)Math.Ceiling((float)(numberRange * (i + 1))) / (float)numSegments)).ToString();
+                axisValues[i] = axisValue;
+            }
+
+            //now loop through backwards and remove anything that matches the most recent valid value (don't need to show multiple times)
+            var previousValue = string.Empty;
+            for (var i = axisValues.Length - 1; i > 0; i--)
+            {
+                if (axisValues[i] == previousValue)
+                {
+                    axisValues[i] = string.Empty;
+                }
+                else
+                {
+                    previousValue = axisValues[i];
+                }
+            }
+
+            return axisValues;
         }
 
         public void SetGraphData(List<GraphData> graphData)
