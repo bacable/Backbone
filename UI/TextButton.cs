@@ -16,7 +16,19 @@ namespace Backbone.UI
         bool checkInput = true;
 
         float resetHasClickedSeconds = 0.0f;
-        public bool Enabled { get; set; } = true;
+
+        private bool enabled = true;
+        public bool Enabled { get
+            {
+                return enabled;
+            } set
+            {
+                if(enabled != value)
+                {
+                    Text.SetAlpha(value ? 1.0f : 0.4f, 0.4f);
+                    enabled = value;
+                }
+            } }
 
         public TextButton(TextButtonSettings<T> settings)
         {
