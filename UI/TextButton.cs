@@ -68,6 +68,8 @@ namespace Backbone.UI
         {
             Text.Update(gameTime);
 
+            if (Text.IsAnimating) { return; }
+
             var keyPressed = InputHelper.IsKeyUp(settings.AssignedInput);
 
             if(hasClicked)
