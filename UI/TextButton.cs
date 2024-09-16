@@ -3,6 +3,7 @@ using Backbone.Graphics;
 using Backbone.Input;
 using Microsoft.Xna.Framework;
 using System;
+using System.Diagnostics;
 
 namespace Backbone.UI
 {
@@ -16,7 +17,19 @@ namespace Backbone.UI
         bool checkInput = true;
 
         float resetHasClickedSeconds = 0.0f;
-        public bool Enabled { get; set; } = true;
+
+        private bool enabled = true;
+        public bool Enabled { get
+            {
+                return enabled;
+            } set
+            {
+                if(enabled != value)
+                {
+                    Text.SetAlpha(value ? 1.0f : 0.4f, 0.4f);
+                    enabled = value;
+                }
+            } }
 
         public TextButton(TextButtonSettings<T> settings)
         {
@@ -27,12 +40,11 @@ namespace Backbone.UI
 
         public void HandleMouse(HandleMouseCommand command)
         {
-            if(command.State == MouseEvent.LeftButtonPressed)
+            if(command.State == MouseEvent.LeftButtonPressed && !hasClicked)
             {
                 if (Collision3D.HasSphereCollision(command, Text.Letters, settings.LetterCollisionRadius, Text.World.Value, Text.GroupBoundingSphere))
                 {
-                    hasClicked = true;
-                    resetHasClickedSeconds = settings.ClickAnimationDuration;
+                    StartClickAnimation();
                 }
             }
         }
@@ -52,27 +64,13 @@ namespace Backbone.UI
             Text.SetColor(hexCode);
         }
 
-        public void Update(GameTime gameTime)
+        private void StartClickAnimation()
         {
-            Text.Update(gameTime);
-
-            var keyPressed = InputHelper.IsKeyUp(settings.AssignedInput);
-
-            if(hasClicked)
+            if (Enabled && checkInput && resetHasClickedSeconds <= 0.0f)
             {
-                resetHasClickedSeconds -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                if(resetHasClickedSeconds < 0.0f)
-                {
-                    hasClicked = false;
-                }
-            }
+                resetHasClickedSeconds = settings.ClickAnimationDuration + 0.3f; // add a little extra so doesn't register again right away
 
-            // put small collision into textgroup later after we do some calculations
-            if (Enabled && checkInput && (hasClicked || keyPressed))
-            {
-                hasClicked = false;
-
-                if(!settings.CanClickMultipleTimes)
+                if (!settings.CanClickMultipleTimes)
                 {
                     checkInput = false;
                 }
@@ -82,7 +80,24 @@ namespace Backbone.UI
                     x.Run(ClickAnimation(x.Id, x.Position, Text.IsLast(x.Id)));
                 });
             }
+        }
 
+        public void Update(GameTime gameTime)
+        {
+            Text.Update(gameTime);
+
+            if (Text.IsAnimating) { return; }
+
+            if(resetHasClickedSeconds > 0f)
+            {
+                resetHasClickedSeconds = Math.Max(0f, resetHasClickedSeconds - (float)gameTime.ElapsedGameTime.TotalSeconds);
+            }
+
+            // put small collision into textgroup later after we do some calculations
+            if (InputHelper.IsKeyUp(settings.AssignedInput))
+            {
+                StartClickAnimation();
+            }
         }
 
         private IAction3D ClickAnimation(int id, Vector3 originalPosition, bool isLast = false)

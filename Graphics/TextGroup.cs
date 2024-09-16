@@ -151,9 +151,19 @@ namespace Backbone.Graphics
             return letterId == (Letters.Count - 1);
         }
 
-        public void SetAlpha(float alpha)
+        public void SetAlpha(float alpha, float duration = 0f)
         {
-            Letters.ForEach((x) => x.Alpha = alpha);
+            if(duration != 0f)
+            {
+                Letters.ForEach((letter) =>
+                {
+                    var fade = ActionBuilder.FadeTo(alpha, duration);
+                    letter.Run(fade, false);
+                });
+            } else
+            {
+                Letters.ForEach((x) => x.Alpha = alpha);
+            }
         }
 
 
